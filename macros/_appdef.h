@@ -1,0 +1,22 @@
+//
+//  _appdef.h
+//
+//  Created by fallen.ink on 4/6/16.
+//
+//
+
+#ifndef _appdef_h
+#define _appdef_h
+
+// app 相关
+#define app_build       [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
+
+#define app_version     [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+
+#define app_display_name    [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"] // CFBundleDisplayName 这些字符串，在用source code方式打开info.plist文件，可以看到类似的键值
+
+#define app_bundle_name [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleNameKey] // 对应 info.plist 中 key 为 bundle name 的value，当前设置的是：$(PRODUCT_NAME)
+
+#define app_bundle_id   [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey] // 对应 info.plist 中 key 为 bundle identifier 的value，当前设置的是：$(PRODUCT_BUNDLE_IDENTIFIER)
+
+#endif /* _appdef_h */
