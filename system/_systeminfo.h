@@ -1,12 +1,22 @@
 //
-//  _systeminfo.h
-//  component
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/     \_|       \/____/
 //
-//  Created by fallen.ink on 4/7/16.
-//  Copyright © 2016 OpenTeam. All rights reserved.
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
-#import "foundation/_foundation.h"
+#import "_precompile.h"
+#import "_singleton.h"
+#import "_property.h"
 
 #pragma mark -
 

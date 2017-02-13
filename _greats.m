@@ -14,9 +14,5 @@
 //  Welcome!
 //
 
-#ifndef _vendor_ubersignals_h
-#define _vendor_ubersignals_h
+#import "_greats.h"
 
-#import "vendor/UberSignals/UberSignals.h"
-
-#endif /* _vendor_ubersignals_h */

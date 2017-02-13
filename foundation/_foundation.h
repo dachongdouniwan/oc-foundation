@@ -1,9 +1,17 @@
 //
-//  _foundation.h
-//  QQing
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/     \_|       \/____/
 //
-//  Created by fallen.ink on 3/20/16.
+//	Copyright BinaryArtists development team and other contributors
 //
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
 #import <Foundation/Foundation.h>

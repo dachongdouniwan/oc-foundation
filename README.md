@@ -4,7 +4,7 @@ oc framework 之 foundation , replace suite.oc/suite.basis.
 ----------
 ### 分割
 
-1. [suite.basis](https://github.com/BinaryArtists/suite.basis)
+1. [suite.great](https://github.com/BinaryArtists/suite.great)
 	基础部件
 2. [suite.tool](https://github.com/BinaryArtists/suite.tool)
 	工具部件，包括了：utility、model、network、cache、database
@@ -17,16 +17,16 @@ oc framework 之 foundation , replace suite.oc/suite.basis.
 	UI组件，主要分两部分：对系统视图层的扩展，和用到的第三方UI组件
 7. [suite.hybrid](https://github.com/BinaryArtists/suite.hybrid)
 	混合框架使用，该框架以weex为蓝本；兼顾对其他开源方案的学习与尝试
+
 ----------
-### 使用注意
+### 分块
 
-1. 设置头文件搜索路径
-2. 包含以下系统库：
-
-
-
-
-
+1. 基础类：类加载、容器的安全访问、调试、编码、异常、键值观察、命名空间、通知、性能、属性定义、协议预定义、运行时处理、单例辅助类、字符串生成器、方法交换、线程类、定时器、校验、拦截器
+2. 宏
+3. 系统
+4. 事件
+5. 资源
+6. 其他
 
 
 

@@ -1,13 +1,21 @@
 //
-//  _debug.m
-//  component
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/     \_|       \/____/
 //
-//  Created by fallen.ink on 4/13/16.
-//  Copyright © 2016 OpenTeam. All rights reserved.
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
 #import <execinfo.h>
-#import "foundation/_foundation.h"
+#import "_precompile.h"
 #import "_debug.h"
 
 #pragma mark -
@@ -18,9 +26,11 @@
 #pragma mark -
 
 @interface _CallFrame()
+
 + (NSUInteger)hexValueFromString:(NSString *)text;
 + (id)parseFormat1:(NSString *)line;
 + (id)parseFormat2:(NSString *)line;
+
 @end
 
 #pragma mark -

@@ -1,24 +1,30 @@
 //
-//  Aspects.m
-//  Aspects - A delightful, simple library for aspect oriented programming.
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/     \_|       \/____/
 //
-//  Copyright (c) 2014 Peter Steinberger. Licensed under the MIT license.
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
-#import "Aspects.h"
+#import "_aspects.h"
 #import <libkern/OSAtomic.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
-
-#define AspectLog(...)
-//#define AspectLog(...) do { NSLog(__VA_ARGS__); }while(0)
-#define AspectLogError(...) do { NSLog(__VA_ARGS__); }while(0)
 
 // Block internals.
 typedef NS_OPTIONS(int, AspectBlockFlags) {
 	AspectBlockFlagsHasCopyDisposeHelpers = (1 << 25),
 	AspectBlockFlagsHasSignature          = (1 << 30)
 };
+
 typedef struct _AspectBlock {
 	__unused Class isa;
 	AspectBlockFlags flags;
@@ -38,53 +44,68 @@ typedef struct _AspectBlock {
 } *AspectBlockRef;
 
 @interface AspectInfo : NSObject <AspectInfo>
+
 - (id)initWithInstance:(__unsafe_unretained id)instance invocation:(NSInvocation *)invocation;
+
 @property (nonatomic, unsafe_unretained, readonly) id instance;
 @property (nonatomic, strong, readonly) NSArray *arguments;
 @property (nonatomic, strong, readonly) NSInvocation *originalInvocation;
+
 @end
 
 // Tracks a single aspect.
 @interface AspectIdentifier : NSObject
+
 + (instancetype)identifierWithSelector:(SEL)selector object:(id)object options:(AspectOptions)options block:(id)block error:(NSError **)error;
+
 - (BOOL)invokeWithInfo:(id<AspectInfo>)info;
+
 @property (nonatomic, assign) SEL selector;
 @property (nonatomic, strong) id block;
 @property (nonatomic, strong) NSMethodSignature *blockSignature;
 @property (nonatomic, weak) id object;
 @property (nonatomic, assign) AspectOptions options;
+
 @end
 
 // Tracks all aspects for an object/class.
 @interface AspectsContainer : NSObject
+
 - (void)addAspect:(AspectIdentifier *)aspect withOptions:(AspectOptions)injectPosition;
 - (BOOL)removeAspect:(id)aspect;
 - (BOOL)hasAspects;
+
 @property (atomic, copy) NSArray *beforeAspects;
 @property (atomic, copy) NSArray *insteadAspects;
 @property (atomic, copy) NSArray *afterAspects;
+
 @end
 
 @interface AspectTracker : NSObject
+
 - (id)initWithTrackedClass:(Class)trackedClass;
+
 @property (nonatomic, strong) Class trackedClass;
 @property (nonatomic, readonly) NSString *trackedClassName;
 @property (nonatomic, strong) NSMutableSet *selectorNames;
 @property (nonatomic, strong) NSMutableDictionary *selectorNamesToSubclassTrackers;
+
 - (void)addSubclassTracker:(AspectTracker *)subclassTracker hookingSelectorName:(NSString *)selectorName;
 - (void)removeSubclassTracker:(AspectTracker *)subclassTracker hookingSelectorName:(NSString *)selectorName;
 - (BOOL)subclassHasHookedSelectorName:(NSString *)selectorName;
 - (NSSet *)subclassTrackersHookingSelectorName:(NSString *)selectorName;
+
 @end
 
 @interface NSInvocation (Aspects)
+
 - (NSArray *)aspects_arguments;
 @end
 
 #define AspectPositionFilter 0x07
 
 #define AspectError(errorCode, errorDescription) do { \
-AspectLogError(@"Aspects: %@", errorDescription); \
+loge(@"Aspects: %@", errorDescription); \
 if (error) { *error = [NSError errorWithDomain:AspectErrorDomain code:errorCode userInfo:@{NSLocalizedDescriptionKey: errorDescription}]; }}while(0)
 
 NSString *const AspectErrorDomain = @"AspectErrorDomain";
