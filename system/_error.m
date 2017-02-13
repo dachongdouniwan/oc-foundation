@@ -64,7 +64,7 @@
         [self code] == [error code]) {
         return YES;
     } else if ([self code] == [error code]) {
-        DDLogWarn(@"error 相比，code相等，domain不同, %@, %@", self, error);
+        LOG(@"error 相比，code相等，domain不同, %@, %@", self, error);
         
         return YES;
     }
