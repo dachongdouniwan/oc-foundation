@@ -44,54 +44,41 @@
 @def_prop_strong( NSString *,		clazz );
 @def_prop_strong( NSString *,		method );
 
-- (id)init
-{
-    self = [super init];
-    if ( self )
-    {
+- (id)init {
+    if (self = [super init]) {
         _type = CallFrameType_Unknown;
     }
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     self.process = nil;
     self.clazz = nil;
     self.method = nil;
 }
 
-- (NSString *)description
-{
-    if ( CallFrameType_ObjectC == _type )
-    {
+- (NSString *)description {
+    if ( CallFrameType_ObjectC == _type ) {
         return [NSString stringWithFormat:@"[O] %@(0x%08x + %llu) -> [%@ %@]", _process, (unsigned int)_entry, (unsigned long long)_offset, _clazz, _method];
-    }
-    else if ( CallFrameType_NativeC == _type )
-    {
+    } else if ( CallFrameType_NativeC == _type ) {
         return [NSString stringWithFormat:@"[C] %@(0x%08x + %llu) -> %@", _process, (unsigned int)_entry, (unsigned long long)_offset, _method];
-    }
-    else
-    {
+    } else {
         return [NSString stringWithFormat:@"[X] <unknown>(0x%08x + %llu)", (unsigned int)_entry, (unsigned long long)_offset];
     }
 }
 
-+ (NSUInteger)hexValueFromString:(NSString *)text
-{
++ (NSUInteger)hexValueFromString:(NSString *)text {
     unsigned int number = 0;
     [[NSScanner scannerWithString:text] scanHexInt:&number];
     return (NSUInteger)number;
 }
 
-+ (id)parseFormat1:(NSString *)line
-{
++ (id)parseFormat1:(NSString *)line {
     //	example: peeper  0x00001eca -[PPAppDelegate application:didFinishLaunchingWithOptions:] + 106
     
     static __strong NSRegularExpression * __regex = nil;
     
-    if ( nil == __regex )
-    {
+    if ( nil == __regex ) {
         NSError * error = NULL;
         NSString * expr = @"^[0-9]*\\s*([a-z0-9_]+)\\s+(0x[0-9a-f]+)\\s+-\\[([a-z0-9_]+)\\s+([a-z0-9_:]+)]\\s+\\+\\s+([0-9]+)$";
         
@@ -100,11 +87,9 @@
     
     NSTextCheckingResult * result = [__regex firstMatchInString:line options:0 range:NSMakeRange(0, [line length])];
     
-    if ( result && (__regex.numberOfCaptureGroups + 1) == result.numberOfRanges )
-    {
+    if ( result && (__regex.numberOfCaptureGroups + 1) == result.numberOfRanges ) {
         _CallFrame * frame = [[_CallFrame alloc] init];
-        if ( frame )
-        {
+        if ( frame ) {
             frame.type = CallFrameType_ObjectC;
             frame.process = [line substringWithRange:[result rangeAtIndex:1]];
             frame.entry = [self hexValueFromString:[line substringWithRange:[result rangeAtIndex:2]]];
@@ -269,18 +254,15 @@ static void __uncaughtSignalHandler( int signal )
 #endif
 }
 
-- (void)trace
-{
+- (void)trace {
     [self trace:MAX_CALLSTACK_DEPTH];
 }
 
-- (void)trace:(NSInteger)depth
-{
+- (void)trace:(NSInteger)depth {
     NSArray * callstack = [self callstack:depth];
     
-    if ( callstack && callstack.count )
-    {
-        loge( [callstack description] );
+    if ( callstack && callstack.count ) {
+        LOG(@"%@", [callstack description]);
     }
 }
 

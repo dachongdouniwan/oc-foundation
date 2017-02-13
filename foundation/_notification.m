@@ -21,7 +21,7 @@
 
 #pragma mark -
 
-@implementation NSNotification(Extension)
+@implementation NSNotification ( Extension )
 
 #pragma mark -
 
@@ -41,54 +41,51 @@
 
 #pragma mark -
 
-@implementation NSObject(NotificationResponder)
+@implementation NSObject ( NotificationResponder )
 
-- (void)handleNotification:(NSNotification *)notification
-{
+- (void)handleNotification:(NSNotification *)notification {
 }
 
-- (void)observeNotification:(NSString *)notificationName
-{
+- (void)observeNotification:(NSString *)notificationName {
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:notificationName
                                                   object:nil];
     
-    NSArray * array = [notificationName componentsSeparatedByString:@"."];
-    if ( array && array.count > 1 )
-    {
-        //		NSString * prefix = (NSString *)[array objectAtIndex:0];
-        NSString * clazz = (NSString *)[array objectAtIndex:1];
-        NSString * name = (NSString *)[array objectAtIndex:2];
-        
-        {
-            NSString * selectorName;
-            SEL selector;
-            
-            selectorName = [NSString stringWithFormat:@"handleNotification_%@_%@:", clazz, name];
-            selector = NSSelectorFromString(selectorName);
-            
-            if ( [self respondsToSelector:selector] )
-            {
-                [[NSNotificationCenter defaultCenter] addObserver:self
-                                                         selector:selector
-                                                             name:notificationName
-                                                           object:nil];
-                return;
-            }
-            
-            selectorName = [NSString stringWithFormat:@"handleNotification_%@:", clazz];
-            selector = NSSelectorFromString(selectorName);
-            
-            if ( [self respondsToSelector:selector] )
-            {
-                [[NSNotificationCenter defaultCenter] addObserver:self
-                                                         selector:selector
-                                                             name:notificationName
-                                                           object:nil];
-                return;
-            }
-        }
-    }
+    // 没必要带来这样的学习成本
+//    NSArray * array = [notificationName componentsSeparatedByString:@"."];
+//    if ( array && array.count > 1 ) {
+//        //		NSString * prefix = (NSString *)[array objectAtIndex:0];
+//        NSString * clazz = (NSString *)[array objectAtIndex:1];
+//        NSString * name = (NSString *)[array objectAtIndex:2];
+//        
+//        {
+//            NSString * selectorName;
+//            SEL selector;
+//            
+//            selectorName = [NSString stringWithFormat:@"handleNotification_%@_%@:", clazz, name];
+//            selector = NSSelectorFromString(selectorName);
+//            
+//            if ( [self respondsToSelector:selector] ) {
+//                [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                         selector:selector
+//                                                             name:notificationName
+//                                                           object:nil];
+//                return;
+//            }
+//            
+//            selectorName = [NSString stringWithFormat:@"handleNotification_%@:", clazz];
+//            selector = NSSelectorFromString(selectorName);
+//            
+//            if ( [self respondsToSelector:selector] )
+//            {
+//                [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                         selector:selector
+//                                                             name:notificationName
+//                                                           object:nil];
+//                return;
+//            }
+//        }
+//    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleNotification:)
@@ -96,17 +93,14 @@
                                                object:nil];
 }
 
-- (void)observeAllNotifications
-{
+- (void)observeAllNotifications {
     NSArray * methods = [[self class] methodsWithPrefix:@"handleNotification_" untilClass:[NSObject class]];
     
-    if ( nil == methods || 0 == methods.count )
-    {
+    if ( nil == methods || 0 == methods.count ) {
         return;
     }
     
-    for ( NSString * selectorName in methods )
-    {
+    for ( NSString * selectorName in methods ) {
         SEL sel = NSSelectorFromString( selectorName );
         if ( NULL == sel )
             continue;
@@ -119,15 +113,13 @@
     }
 }
 
-- (void)unobserveNotification:(NSString *)name
-{
+- (void)unobserveNotification:(NSString *)name {
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:name
                                                   object:nil];
 }
 
-- (void)unobserveAllNotifications
-{
+- (void)unobserveAllNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -137,35 +129,23 @@
 
 @implementation NSObject (NotificationSender)
 
-+ (BOOL)postNotification:(NSString *)name
-{
-    logi( @"Notification '%@'", [name stringByReplacingOccurrencesOfString:@"notify." withString:@""] );
-    
++ (BOOL)postNotification:(NSString *)name {
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
     return YES;
 }
 
-- (BOOL)postNotification:(NSString *)name
-{
+- (BOOL)postNotification:(NSString *)name {
     return [[self class] postNotification:name];
 }
 
-+ (BOOL)postNotification:(NSString *)name withObject:(NSObject *)object
-{
++ (BOOL)postNotification:(NSString *)name withObject:(NSObject *)object {
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:object];
     return YES;
 }
 
-- (BOOL)postNotification:(NSString *)name withObject:(NSObject *)object
-{
+- (BOOL)postNotification:(NSString *)name withObject:(NSObject *)object {
     return [[self class] postNotification:name withObject:object];
 }
-
-@end
-
-#pragma mark -
-
-@implementation _Notification
 
 @end
 

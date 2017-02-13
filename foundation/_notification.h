@@ -18,28 +18,29 @@
 
 #pragma mark -
 
-#undef	notification
+#undef  notification
 #define notification( name ) \
-static_property( name )
+        static_property( name )
 
-#undef	def_notification
+#undef  def_notification
 #define def_notification( name ) \
-def_static_property2( name, @"notification", NSStringFromClass([self class]) )
+        def_static_property2( name, @"notification", NSStringFromClass([self class]) ) // 用于route, 但这里没用到
 
-#undef	def_notification_alias
+#undef  def_notification_alias
 #define def_notification_alias( name, alias ) \
-alias_static_property( name, alias )
+        alias_static_property( name, alias )
 
-#undef	makeNotification
-#define	makeNotification( ... ) \
-macro_string( macro_join(notification, __VA_ARGS__) )
+#undef  makeNotification
+#define makeNotification( ... ) \
+        macro_string( macro_join(notification, __VA_ARGS__) )
 
-#undef	handleNotification
-#define	handleNotification( ... ) \
-- (void) macro_join( handleNotification, __VA_ARGS__):(NSNotification *)notification
+#undef  handleNotification
+#define handleNotification( ... ) \
+        - (void) macro_join( handleNotification, __VA_ARGS__):(NSNotification *)notification
 
 #undef  notification_nameof_int
-#define notification_nameof_int( _int_value_ ) ([NSString stringWithFormat:@"notification.temp.%ld", (long)_int_value_])
+#define notification_nameof_int( _int_value_ ) \
+        ([NSString stringWithFormat:@"notification.temp.%ld", (long)_int_value_])
 
 #pragma mark -
 
@@ -67,7 +68,7 @@ typedef NSNotification NotificationType;
 
 @interface NSObject ( NotificationResponder )
 
-- (void)handleNotification:(NSNotification *)notification;
+- (void)handleNotification:(NSNotification *)notification; // 通知响应函数模板 ^_^
 
 - (void)observeNotification:(NSString *)name;
 - (void)observeAllNotifications;
@@ -89,8 +90,3 @@ typedef NSNotification NotificationType;
 
 @end
 
-#pragma mark - 
-
-@interface _Notification : NSObject
-
-@end

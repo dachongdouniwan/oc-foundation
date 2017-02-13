@@ -16,8 +16,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "_module.h"
-
 #pragma mark -
 
 // class

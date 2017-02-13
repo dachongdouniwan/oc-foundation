@@ -19,6 +19,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "_systeminfo.h"
 #import "_keychain.h"
+#import "foundation/_foundation.h"
 
 #pragma mark -
 

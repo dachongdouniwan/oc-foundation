@@ -37,7 +37,7 @@
 /**
  *  迭代追加字符串
  *
- *  @param strings   字符串数组
+ *  @param objs   字符串数组
  *  @param separator 分隔符
  */
 - (void)add:(NSArray *)objs withSeparator:(NSString *)separator;
@@ -45,7 +45,7 @@
 /**
  *  生成字符串
  *
- *  @return
+ *  @return nsstring
  */
 - (NSString *)build;
 
@@ -59,7 +59,7 @@
 /**
  *  是否为空
  *
- *  @return
+ *  @return bool
  */
 - (BOOL)empty;
 

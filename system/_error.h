@@ -97,7 +97,7 @@ def_error_1( __name, [NSError SamuraiErrorDomain], __value, __desc)
 @interface NSError (Handler) // NSError的属性：domain、code、userinfo.....
 
 /**
- *  @function:  error 存入字典的 key
+ *  @description:  error 存入字典的 key
  
  *  @named:     'stored' means error be stored
  
@@ -109,7 +109,7 @@ def_error_1( __name, [NSError SamuraiErrorDomain], __value, __desc)
 @prop_readonly( NSNumber *, codeKey )
 
 /**
- *  @function:  通用的存入UserInfo的key
+ *  @description:  通用的存入UserInfo的key
  */
 @nsstring( messagedKey )
 

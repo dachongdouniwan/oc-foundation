@@ -14,6 +14,7 @@
 //  Welcome!
 //
 
+#import "_precompile.h"
 #import "_aspects.h"
 #import <libkern/OSAtomic.h>
 #import <objc/runtime.h>
@@ -104,9 +105,13 @@ typedef struct _AspectBlock {
 
 #define AspectPositionFilter 0x07
 
-#define AspectError(errorCode, errorDescription) do { \
-loge(@"Aspects: %@", errorDescription); \
-if (error) { *error = [NSError errorWithDomain:AspectErrorDomain code:errorCode userInfo:@{NSLocalizedDescriptionKey: errorDescription}]; }}while(0)
+#define AspectError(errorCode, errorDescription) \
+        do { \
+            LOG(@"Aspects: %@", errorDescription); \
+            if (error) { \
+                *error = [NSError errorWithDomain:AspectErrorDomain code:errorCode userInfo:@{NSLocalizedDescriptionKey: errorDescription}]; \
+            } \
+        }while(0)
 
 NSString *const AspectErrorDomain = @"AspectErrorDomain";
 static NSString *const AspectsSubclassSuffix = @"_Aspects_";
@@ -304,7 +309,8 @@ static void aspect_prepareClassAndHookSelector(NSObject *self, SEL selector, NSE
 
         // We use forwardInvocation to hook in.
         class_replaceMethod(klass, selector, aspect_getMsgForwardIMP(self, selector), typeEncoding);
-        AspectLog(@"Aspects: Installed hook for -[%@ %@].", klass, NSStringFromSelector(selector));
+        
+        LOG(@"Aspects: Installed hook for -[%@ %@].", klass, NSStringFromSelector(selector));
     }
 }
 
@@ -331,7 +337,8 @@ static void aspect_cleanupHookedClassAndSelector(NSObject *self, SEL selector) {
         NSCAssert(originalMethod, @"Original implementation for %@ not found %@ on %@", NSStringFromSelector(selector), NSStringFromSelector(aliasSelector), klass);
 
         class_replaceMethod(klass, selector, originalIMP, typeEncoding);
-        AspectLog(@"Aspects: Removed hook for -[%@ %@].", klass, NSStringFromSelector(selector));
+        
+        LOG(@"Aspects: Removed hook for -[%@ %@].", klass, NSStringFromSelector(selector));
     }
 
     // Deregister global tracked selector
@@ -349,7 +356,8 @@ static void aspect_cleanupHookedClassAndSelector(NSObject *self, SEL selector) {
             Class originalClass = NSClassFromString([className stringByReplacingOccurrencesOfString:AspectsSubclassSuffix withString:@""]);
             NSCAssert(originalClass != nil, @"Original class must exist");
             object_setClass(self, originalClass);
-            AspectLog(@"Aspects: %@ has been restored.", NSStringFromClass(originalClass));
+            
+            LOG(@"Aspects: %@ has been restored.", NSStringFromClass(originalClass));
 
             // We can only dispose the class pair if we can ensure that no instances exist using our subclass.
             // Since we don't globally track this, we can't ensure this - but there's also not much overhead in keeping it around.
@@ -416,7 +424,8 @@ static void aspect_swizzleForwardInvocation(Class klass) {
     if (originalImplementation) {
         class_addMethod(klass, NSSelectorFromString(AspectsForwardInvocationSelectorName), originalImplementation, "v@:@");
     }
-    AspectLog(@"Aspects: %@ is now aspect aware.", NSStringFromClass(klass));
+    
+    LOG(@"Aspects: %@ is now aspect aware.", NSStringFromClass(klass));
 }
 
 static void aspect_undoSwizzleForwardInvocation(Class klass) {
@@ -427,7 +436,7 @@ static void aspect_undoSwizzleForwardInvocation(Class klass) {
     IMP originalImplementation = method_getImplementation(originalMethod ?: objectMethod);
     class_replaceMethod(klass, @selector(forwardInvocation:), originalImplementation, "v@:@");
 
-    AspectLog(@"Aspects: %@ has been restored.", NSStringFromClass(klass));
+    LOG(@"Aspects: %@ has been restored.", NSStringFromClass(klass));
 }
 
 static void aspect_hookedGetClass(Class class, Class statedClass) {
@@ -855,7 +864,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 
     // Be extra paranoid. We already check that on hook registration.
     if (numberOfArguments > originalInvocation.methodSignature.numberOfArguments) {
-        AspectLogError(@"Block has too many arguments. Not calling %@", info);
+        LOG(@"Block has too many arguments. Not calling %@", info);
         return NO;
     }
 
@@ -871,7 +880,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 		NSGetSizeAndAlignment(type, &argSize, NULL);
         
 		if (!(argBuf = reallocf(argBuf, argSize))) {
-            AspectLogError(@"Failed to allocate memory for block invocation.");
+            LOG(@"Failed to allocate memory for block invocation.");
 			return NO;
 		}
         

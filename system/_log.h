@@ -103,7 +103,7 @@ typedef enum {
 @prop_strong( NSMutableArray *,		buffer );
 @prop_assign( LogLevel,				filter );
 
-@prop_copy( BlockType,				outputHandler );
+@prop_copy( id,                     outputHandler );
 
 - (void)toggle;
 - (void)enable;
