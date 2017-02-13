@@ -837,7 +837,7 @@
     NSData * result = [NSJSONSerialization dataWithJSONObject:self options:NSJSONWritingPrettyPrinted error:&error];
     if ( nil == result )
     {
-        loge( @"%@", error );
+        LOG( @"%@", error );
         return nil;
     }
     
@@ -850,7 +850,7 @@
     NSObject * result = [NSJSONSerialization JSONObjectWithData:[self toData] options:NSJSONReadingAllowFragments error:&error];
     if ( nil == result )
     {
-        loge( @"%@", error );
+        LOG( @"%@", error );
         return nil;
     }
     
