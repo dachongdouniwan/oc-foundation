@@ -1,9 +1,17 @@
 //
-//  NSMutableString+Extension.m
-//  component
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/     \_|       \/____/
 //
-//  Created by fallen.ink on 10/30/15.
-//  Copyright © 2015 OpenTeam. All rights reserved.
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
 #import "NSMutableString+Extension.h"

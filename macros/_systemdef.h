@@ -1,5 +1,17 @@
-// Author: Tang Qiao
-// Date:   2012-3-2
+//
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/     \_|       \/____/
+//
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 // The macro is inspired from:
 //     http://stackoverflow.com/questions/3339722/check-iphone-ios-version

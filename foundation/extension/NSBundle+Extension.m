@@ -1,9 +1,17 @@
 //
-//  NSBundle+Utility.m
-//  component
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/     \_|       \/____/
 //
-//  Created by Ben on 15/8/5.
-//  Copyright (c) 2015年 OpenTeam. All rights reserved.
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
 #import "NSBundle+Extension.h"

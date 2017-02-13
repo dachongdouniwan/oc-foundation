@@ -1,9 +1,17 @@
 //
-//  constdef.h
-//  FATodos
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/     \_|       \/____/
 //
-//  Created by pad on 16/3/6.
-//  Copyright © 2016年 fallen.ink. All rights reserved.
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
 // 常用的沙盒目录
@@ -20,19 +28,19 @@
 #define _ self
 
 // 特殊数值
-#undef invalid_int32
+#undef  invalid_int32
 #define invalid_int32 INT32_MAX
 
-#undef invalid_int64
+#undef  invalid_int64
 #define invalid_int64 INT64_MAX
 
-#undef invalid_float
+#undef  invalid_float
 #define invalid_float MAXFLOAT
 
-#undef invalid_bool
+#undef  invalid_bool
 #define invalid_bool NO
 
-#undef MIN_FLOAT
+#undef  MIN_FLOAT
 #define MIN_FLOAT 0.000001f
 
 // 特定的字符串

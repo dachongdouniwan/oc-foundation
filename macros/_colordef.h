@@ -1,9 +1,17 @@
 //
-//  _colordef.h
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/     \_|       \/____/
 //
+//	Copyright BinaryArtists development team and other contributors
 //
-//  Created by fallen.ink on 12/6/15.
-//  Copyright © 2015 fallen.ink. All rights reserved.
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
 #ifndef _colordef_h

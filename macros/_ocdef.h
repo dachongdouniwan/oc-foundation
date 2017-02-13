@@ -1,9 +1,17 @@
 //
-//  _ocdef.h
-//  component
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/     \_|       \/____/
 //
-//  Created by fallen.ink on 5/24/16.
-//  Copyright © 2016 OpenTeam. All rights reserved.
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 //  oc语言级，便于使用的宏控
 
