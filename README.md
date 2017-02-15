@@ -1,7 +1,7 @@
 Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：gan ba dei>)
 
-	* [hackers-painters/samurai-native](https://github.com/hackers-painters/samurai-native), 很有趣，“黑客与画家”，Joe Zhou gives named orgnization “二进制艺术家”, Cheers。
-	* [shaojiankui/JKCategories](https://github.com/shaojiankui/JKCategories)
+* [hackers-painters/samurai-native](https://github.com/hackers-painters/samurai-native), 很有趣，“黑客与画家”，Joe Zhou gives named orgnization “二进制艺术家”, Cheers。
+* [shaojiankui/JKCategories](https://github.com/shaojiankui/JKCategories)
 
 ----------
 ### 分割
