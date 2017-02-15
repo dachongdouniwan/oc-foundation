@@ -101,6 +101,8 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
 @def_prop_readonly( double,				availableMemory );
 @def_prop_readonly( double,				usedMemory );
 
+@def_prop_readonly( double,				availableDisk );
+
 @def_prop_readonly( NSString *,         buildCode );
 @def_prop_readonly( int32_t,            intAppVersion );
 @def_prop_readonly( NSString *,         appVersion );
@@ -592,6 +594,15 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
     }
     
     return taskInfo.resident_size / 1024.0 / 1024.0;
+}
+
+#pragma mark - Disk
+
+
+- (double)availableDisk {
+    NSDictionary *attributes = [NSFileManager.defaultManager attributesOfFileSystemForPath:path_of_document error:nil];
+    
+    return [attributes[NSFileSystemFreeSize] unsignedLongLongValue] / (double)0x100000;
 }
 
 #pragma mark -

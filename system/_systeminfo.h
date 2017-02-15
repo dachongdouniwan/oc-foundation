@@ -93,6 +93,8 @@ extern BOOL IS_SCREEN_55_INCH;
 @prop_readonly( double,				availableMemory ); // 获取当前设备可用内存(单位：MB）
 @prop_readonly( double,				usedMemory ); // 获取当前任务所占用的内存（单位：MB）
 
+@prop_readonly( double,				availableDisk ); // 获取当前设备可用磁盘空间(单位：MB）
+
 @prop_readonly( NSString *,         buildCode ); // build 号
 @prop_readonly( int32_t,            intAppVersion );
 @prop_readonly( NSString *,         appVersion );
