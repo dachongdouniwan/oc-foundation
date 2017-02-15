@@ -1,4 +1,7 @@
-几乎是从samurai-core中拷贝过来的，^_^
+Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：gan ba dei>)
+
+	* [hackers-painters/samurai-native](https://github.com/hackers-painters/samurai-native), 很有趣，“黑客与画家”，Joe Zhou gives named orgnization “二进制艺术家”, Cheers。
+	* [shaojiankui/JKCategories](https://github.com/shaojiankui/JKCategories)
 
 ----------
 ### 分割
@@ -32,3 +35,5 @@
 
 	> 大部分文件，均为小写字母命名文件。
 	> 很大可能重名的文件，以下划线开头。
+
+----------
