@@ -18,6 +18,7 @@
 #define path_of_app_home    NSHomeDirectory()
 #define path_of_temp        NSTemporaryDirectory()
 #define path_of_document    [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+#define path_of_library    [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 #define path_of_cache       [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
 #define path_for_png_res( _name_ )    [[NSBundle mainBundle] pathForResource:(_name_) ofType:@"png"]

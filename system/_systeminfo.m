@@ -103,6 +103,8 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
 
 @def_prop_readonly( double,				availableDisk );
 
+@def_prop_readonly( NSString *,         appSize );
+
 @def_prop_readonly( NSString *,         buildCode );
 @def_prop_readonly( int32_t,            intAppVersion );
 @def_prop_readonly( NSString *,         appVersion );
@@ -598,11 +600,36 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
 
 #pragma mark - Disk
 
-
 - (double)availableDisk {
     NSDictionary *attributes = [NSFileManager.defaultManager attributesOfFileSystemForPath:path_of_document error:nil];
     
     return [attributes[NSFileSystemFreeSize] unsignedLongLongValue] / (double)0x100000;
+}
+
+- (NSString *)appSize {
+    unsigned long long docSize   =  [self jk_sizeOfFolder:path_of_document];
+    unsigned long long libSize   =  [self jk_sizeOfFolder:path_of_library];
+    unsigned long long cacheSize =  [self jk_sizeOfFolder:path_of_cache];
+    
+    unsigned long long total = docSize + libSize + cacheSize;
+    
+    NSString *folderSizeStr = [NSByteCountFormatter stringFromByteCount:total countStyle:NSByteCountFormatterCountStyleFile];
+    return folderSizeStr;
+}
+
+-(unsigned long long)jk_sizeOfFolder:(NSString *)folderPath
+{
+    NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:nil];
+    NSEnumerator *contentsEnumurator = [contents objectEnumerator];
+    
+    NSString *file;
+    unsigned long long folderSize = 0;
+    
+    while (file = [contentsEnumurator nextObject]) {
+        NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[folderPath stringByAppendingPathComponent:file] error:nil];
+        folderSize += [[fileAttributes objectForKey:NSFileSize] intValue];
+    }
+    return folderSize;
 }
 
 #pragma mark -

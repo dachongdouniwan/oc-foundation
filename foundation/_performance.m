@@ -49,9 +49,9 @@
 #if __LOGGING__
         
         CFTimeInterval time1 = [[_tags objectForKey:name1] doubleValue];
-        CFTimeInterval time2 = CACurrentMediaTime();
+        CFTimeInterval time2 = CACurrentMediaTime(); // this method returns, units to seconds
         
-        logi( @"Time '%@' = %.0f(ms)", tag, fabs(time2 - time1) );
+        logi( @"Time '%@' = %.0f(ms)", tag, fabs((time2 - time1)*1000) );
         
 #endif	// #if __LOGGING__
         
