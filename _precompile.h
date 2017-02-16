@@ -1,24 +1,116 @@
-// Import this file when U really need !
+//
+//  _preheaders.h
+//  kata
+//
+//  Created by fallen.ink on 16/02/2017.
+//  Copyright © 2017 fallenink. All rights reserved.
+//
 
 // ----------------------------------
-// Version
+// Unix include headers
 // ----------------------------------
 
-#undef  __VERSION__
-#define __VERSION__         ("0.1.0")
+#import <stdio.h>
+#import <stdlib.h>
+#import <stdint.h>
+#import <string.h>
+#import <assert.h>
+#import <errno.h>
 
-#define __MUST_ON__         (1)
-#define __MUST_OFF__        (0)
+#import <sys/errno.h>
+#import <sys/sockio.h>
+#import <sys/ioctl.h>
+#import <sys/types.h>
+#import <sys/socket.h>
+#import <sys/stat.h>
+#import <sys/mman.h>
 
-#define __ON__              (1)
-#define __OFF__             (0)
-#define __AUTO__            (DEBUG)
+#import <math.h>
+#import <unistd.h>
+#import <limits.h>
+#import <execinfo.h>
+
+#import <netdb.h>
+#import <net/if.h>
+#import <net/if_dl.h>
+#import <netinet/in.h>
+#import <netinet6/in6.h>
+#import <arpa/inet.h>
+#import <ifaddrs.h>
+
+#import <mach/mach.h>
+#import <mach/machine.h>
+#import <machine/endian.h>
+#import <malloc/malloc.h>
+
+#import <sys/utsname.h>
+
+#import <fcntl.h>
+#import <dirent.h>
+#import <dlfcn.h>
+#import <spawn.h>
+
+#import <mach-o/fat.h>
+#import <mach-o/dyld.h>
+#import <mach-o/arch.h>
+#import <mach-o/nlist.h>
+#import <mach-o/loader.h>
+#import <mach-o/getsect.h>
+
+#import <zlib.h>
+
+#ifdef __IPHONE_8_0
+#import <spawn.h>
+#endif
 
 // ----------------------------------
-// Debug predefine
+// Mac/iOS include headers
 // ----------------------------------
 
-#define __DEBUG__       (__ON__)    /// 調試模式
-#define __TESTING__     (__OFF__)   /// 單元測試
-#define __LOGGING__     (__ON__)    /// 日誌模式
-#define __SERVICE__     (__ON__)    /// 後臺服務
+#ifdef __OBJC__
+
+#import <Availability.h>
+#import <Foundation/Foundation.h>
+
+#if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+
+#import <UIKit/UIKit.h>
+#import <UIKit/UIGestureRecognizerSubclass.h>
+#import <CoreText/CoreText.h>
+#import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <TargetConditionals.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+
+#import <AVFoundation/AVFoundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <CoreVideo/CoreVideo.h>
+#import <CoreMedia/CoreMedia.h>
+#import <CoreImage/CoreImage.h>
+#import <CoreLocation/CoreLocation.h>
+
+#import <objc/runtime.h>
+#import <objc/message.h>
+#import <dlfcn.h>
+
+#else	// #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+
+#import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
+#import <WebKit/WebKit.h>
+
+#import <objc/objc-class.h>
+
+#endif	// #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+
+#import <CommonCrypto/CommonDigest.h>
+
+#endif	// #ifdef __OBJC__
+
+// ----------------------------------
+// 预定义宏
+// ----------------------------------
+
+#import "macros/_def.h"
