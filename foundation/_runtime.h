@@ -34,7 +34,7 @@
  
  - returns: Class
  */
-#undef  classof
+#undef  classof // classofname
 #define classof( x )		NSClassFromString(@ #x)
 
 /**
@@ -93,11 +93,5 @@
 
 /*! 所有父类 */
 - (NSArray *)parents;
-
-@end
-
-#pragma mark -
-
-@interface _Runtime : NSObject
 
 @end

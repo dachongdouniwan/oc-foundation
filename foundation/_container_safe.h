@@ -16,9 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
-#pragma mark - NSObject (SafeValueWithJSON) 
+#pragma mark - NSObject ( SafeValueWithJSON )
 
-@interface NSObject (SafeValueWithJSON)
+@interface NSObject ( SafeValueWithJSON )
 
 - (id)safeValueFromJSON;
 
@@ -38,7 +38,7 @@
 
 #pragma mark - NSArray
 
-@interface NSArray (SafeValue)
+@interface NSArray ( SafeValue )
 
 - (id)safeObjectAtIndex:(NSUInteger)index;
 - (id)safeSubarrayWithRange:(NSRange)range;
@@ -52,15 +52,15 @@
 
 @end
 
-@interface NSArray (SafeInvoke)
+@interface NSArray ( SafeInvoke )
 
 - (id)objectAtIndexIfIndexInBounds:(NSUInteger)index;
 
 @end
 
-#pragma mark - NSDictionary (SafeValue) 
+#pragma mark - NSDictionary ( SafeValue )
 
-@interface NSDictionary (SafeValue)
+@interface NSDictionary ( SafeValue )
 /**
  @brief   取一个安全的NSString对象
  @return  akey对应的实例不是NSString则返回nil

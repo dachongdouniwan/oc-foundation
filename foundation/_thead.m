@@ -16,6 +16,10 @@
 
 #import "_thead.h"
 
+// ----------------------------------
+// Source code
+// ----------------------------------
+
 #pragma mark -
 
 @interface GCDGroup ()

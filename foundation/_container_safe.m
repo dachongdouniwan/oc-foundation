@@ -28,10 +28,10 @@
     if ([self isKindOfClass:aClass]) {
         return self;
     } else {
-        //        NSAssert(NO,
-        //                 @"Object class not matched, self is %@, should be %@",
-        //                 NSStringFromClass([self class]),
-        //                 NSStringFromClass(aClass));
+        NSAssert(NO,
+                 @"Object class not matched, self is %@, should be %@",
+                 NSStringFromClass([self class]),
+                 NSStringFromClass(aClass));
         return nil;
     }
 }
@@ -132,9 +132,9 @@
 
 @end
 
-#pragma mark - NSDictionary (SafeValue)
+#pragma mark - NSDictionary ( SafeValue )
 
-@implementation NSDictionary (SafeValue)
+@implementation NSDictionary ( SafeValue )
 
 - (NSString *)safeStringForKey:(id)aKey {
     return [[self objectForKey:aKey] safeString];

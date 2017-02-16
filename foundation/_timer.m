@@ -29,6 +29,10 @@
 #   error _Timer is ARC only. Either turn on ARC for the project or use -fobjc-arc flag
 #endif
 
+// ----------------------------------
+// Source code
+// ----------------------------------
+
 @interface _Timer ()
 
 @property (nonatomic, copy) dispatch_block_t block;
@@ -271,17 +275,6 @@
 
 @end
 
-#pragma mark -
-
-/**
- *  还未实现
- */
-
-@implementation _Counter
-
-
-@end
-
 #pragma mark - 
 
 @interface _GCDTimer ()
@@ -328,3 +321,7 @@
 }
 
 @end
+
+// ----------------------------------
+// Test code
+// ----------------------------------

@@ -14,7 +14,7 @@
 //  Welcome!
 //
 
-#import "_precompile.h"
+#import "macros/_def.h"
 #import "_aspects.h"
 #import <libkern/OSAtomic.h>
 #import <objc/runtime.h>
@@ -34,15 +34,21 @@ typedef struct _AspectBlock {
 	struct {
 		unsigned long int reserved;
 		unsigned long int size;
+        
 		// requires AspectBlockFlagsHasCopyDisposeHelpers
 		void (*copy)(void *dst, const void *src);
 		void (*dispose)(const void *);
+        
 		// requires AspectBlockFlagsHasSignature
 		const char *signature;
 		const char *layout;
 	} *descriptor;
 	// imported variables
 } *AspectBlockRef;
+
+// ----------------------------------
+// Source code
+// ----------------------------------
 
 @interface AspectInfo : NSObject <AspectInfo>
 
@@ -119,8 +125,7 @@ static NSString *const AspectsMessagePrefix = @"aspects_";
 
 @implementation NSObject (Aspects)
 
-///////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Public Aspects API
+#pragma mark - Public aspects api
 
 + (id<AspectToken>)aspect_hookSelector:(SEL)selector
                       withOptions:(AspectOptions)options
@@ -129,7 +134,6 @@ static NSString *const AspectsMessagePrefix = @"aspects_";
     return aspect_add((id)self, selector, options, block, error);
 }
 
-/// @return A token which allows to later deregister the aspect.
 - (id<AspectToken>)aspect_hookSelector:(SEL)selector
                       withOptions:(AspectOptions)options
                        usingBlock:(id)block
@@ -137,8 +141,7 @@ static NSString *const AspectsMessagePrefix = @"aspects_";
     return aspect_add(self, selector, options, block, error);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Private Helper
+#pragma mark - Private helper
 
 static id aspect_add(id self, SEL selector, AspectOptions options, id block, NSError **error) {
     NSCParameterAssert(self);
@@ -255,8 +258,7 @@ static BOOL aspect_isCompatibleBlockSignature(NSMethodSignature *blockSignature,
     return YES;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Class + Selector Preparation
+#pragma mark - Class + selector preparation
 
 static BOOL aspect_isMsgForwardIMP(IMP impl) {
     return impl == _objc_msgForward
@@ -373,8 +375,7 @@ static void aspect_cleanupHookedClassAndSelector(NSObject *self, SEL selector) {
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Hook Class
+#pragma mark - Hook class
 
 static Class aspect_hookClass(NSObject *self, NSError **error) {
     NSCParameterAssert(self);
@@ -449,8 +450,7 @@ static void aspect_hookedGetClass(Class class, Class statedClass) {
 	class_replaceMethod(class, @selector(class), newIMP, method_getTypeEncoding(method));
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Swizzle Class In Place
+#pragma mark - Swizzle class in place
 
 static void _aspect_modifySwizzledClasses(void (^block)(NSMutableSet *swizzledClasses)) {
     static NSMutableSet *swizzledClasses;
@@ -488,8 +488,7 @@ static void aspect_undoSwizzleClassInPlace(Class klass) {
     });
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Aspect Invoke Point
+#pragma mark - Aspect invoke point
 
 // This is a macro so we get a cleaner stack trace.
 #define aspect_invoke(aspects, info) \
@@ -551,8 +550,7 @@ static void __ASPECTS_ARE_BEING_CALLED__(__unsafe_unretained NSObject *self, SEL
 }
 #undef aspect_invoke
 
-///////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Aspect Container Management
+#pragma mark - Aspect container management
 
 // Loads or creates the aspect container.
 static AspectsContainer *aspect_getContainerForObject(NSObject *self, SEL selector) {
@@ -583,8 +581,7 @@ static void aspect_destroyContainerForObject(id<NSObject> self, SEL selector) {
     objc_setAssociatedObject(self, aliasSelector, nil, OBJC_ASSOCIATION_RETAIN);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Selector Blacklist Checking
+#pragma mark - Selector blacklist checking
 
 static NSMutableDictionary *aspect_getSwizzledClassesDict() {
     static NSMutableDictionary *swizzledClassesDict;
@@ -723,6 +720,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
     }
     [trackerSet addObject:subclassTracker];
 }
+
 - (void)removeSubclassTracker:(AspectTracker *)subclassTracker hookingSelectorName:(NSString *)selectorName {
     NSMutableSet *trackerSet = self.selectorNamesToSubclassTrackers[selectorName];
     [trackerSet removeObject:subclassTracker];
@@ -730,6 +728,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
         [self.selectorNamesToSubclassTrackers removeObjectForKey:selectorName];
     }
 }
+
 - (NSSet *)subclassTrackersHookingSelectorName:(NSString *)selectorName {
     NSMutableSet *hookingSubclassTrackers = [NSMutableSet new];
     for (AspectTracker *tracker in self.selectorNamesToSubclassTrackers[selectorName]) {
@@ -740,6 +739,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
     }
     return hookingSubclassTrackers;
 }
+
 - (NSString *)trackedClassName {
     return NSStringFromClass(self.trackedClass);
 }
@@ -750,7 +750,6 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 
 @end
 
-///////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - NSInvocation (Aspects)
 
 @implementation NSInvocation (Aspects)
@@ -832,8 +831,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 
 @end
 
-///////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - AspectIdentifier
+#pragma mark - Aspect identifier
 
 @implementation AspectIdentifier
 
@@ -906,8 +904,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 
 @end
 
-///////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - AspectsContainer
+#pragma mark - Aspects container
 
 @implementation AspectsContainer
 
@@ -947,8 +944,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 
 @end
 
-///////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - AspectInfo
+#pragma mark - Aspect info
 
 @implementation AspectInfo
 

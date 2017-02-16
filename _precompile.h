@@ -1,22 +1,24 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/     \_|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
+// Import this file when U really need !
 
-#import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
-#import <objc/runtime.h>
+// ----------------------------------
+// Version
+// ----------------------------------
 
-#import "macros/_def.h"
-#import "system/_log.h"
+#undef  __VERSION__
+#define __VERSION__         ("0.1.0")
+
+#define __MUST_ON__         (1)
+#define __MUST_OFF__        (0)
+
+#define __ON__              (1)
+#define __OFF__             (0)
+#define __AUTO__            (DEBUG)
+
+// ----------------------------------
+// Debug predefine
+// ----------------------------------
+
+#define __DEBUG__       (__ON__)    /// 調試模式
+#define __TESTING__     (__OFF__)   /// 單元測試
+#define __LOGGING__     (__ON__)    /// 日誌模式
+#define __SERVICE__     (__ON__)    /// 後臺服務

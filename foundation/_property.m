@@ -20,6 +20,10 @@
 #import "extension/NSObject+Extension.h"
 #import "extension/NSString+Extension.h"
 
+// ----------------------------------
+// Source code
+// ----------------------------------
+
 #pragma mark -
 
 @implementation NSObject(Property)

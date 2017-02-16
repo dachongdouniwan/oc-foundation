@@ -18,6 +18,10 @@
 #import "_property.h"
 #import "_singleton.h"
 
+// ----------------------------------
+// Macros
+// ----------------------------------
+
 #pragma mark -
 
 /**
@@ -27,53 +31,57 @@
  */
 #ifndef execute_once
 #define execute_once(block) \
-{ \
-static dispatch_once_t predicate = 0; \
-dispatch_once(&predicate, block); \
-}
+        { \
+            static dispatch_once_t predicate = 0; \
+            dispatch_once(&predicate, block); \
+        }
 #endif
 
 #pragma mark -
 
 // main
 
-#undef	dispatch_async_foreground
+#undef  dispatch_async_foreground
 #define dispatch_async_foreground( block ) \
-dispatch_async( dispatch_get_main_queue(), block )
+        dispatch_async( dispatch_get_main_queue(), block )
 
-#undef	dispatch_after_foreground
+#undef  dispatch_after_foreground
 #define dispatch_after_foreground( seconds, block ) \
-dispatch_after( dispatch_time( DISPATCH_TIME_NOW, seconds * 1ull * NSEC_PER_SEC ), dispatch_get_main_queue(), block ); \
+        dispatch_after( dispatch_time( DISPATCH_TIME_NOW, seconds * 1ull * NSEC_PER_SEC ), dispatch_get_main_queue(), block ); \
 
-#undef	dispatch_barrier_async_foreground
+#undef  dispatch_barrier_async_foreground
 #define dispatch_barrier_async_foreground( seconds, block ) \
-dispatch_barrier_async( [_Queue sharedInstance].concurrent, ^{ \
-dispatch_async_foreground( block ); \
-});
+        dispatch_barrier_async( [_Queue sharedInstance].concurrent, ^{ \
+            dispatch_async_foreground( block ); \
+        });
 
 // concurrent
 
-#undef	dispatch_async_background_concurrent
+#undef  dispatch_async_background_concurrent
 #define dispatch_async_background_concurrent( block ) \
-dispatch_async( [_Queue sharedInstance].concurrent, block )
+        dispatch_async( [_Queue sharedInstance].concurrent, block )
 
-#undef	dispatch_after_background_concurrent
+#undef  dispatch_after_background_concurrent
 #define dispatch_after_background_concurrent( seconds, block ) \
-dispatch_after( dispatch_time( DISPATCH_TIME_NOW, seconds * 1ull * NSEC_PER_SEC ), [_Queue sharedInstance].concurrent, block ); \
+        dispatch_after( dispatch_time( DISPATCH_TIME_NOW, seconds * 1ull * NSEC_PER_SEC ), [_Queue sharedInstance].concurrent, block ); \
 
-#undef	dispatch_barrier_async_background_concurrent
+#undef  dispatch_barrier_async_background_concurrent
 #define dispatch_barrier_async_background_concurrent( seconds, block ) \
-dispatch_barrier_async( [_Queue sharedInstance].concurrent, block )
+        dispatch_barrier_async( [_Queue sharedInstance].concurrent, block )
 
 // serial
 
-#undef	dispatch_async_background_serial
+#undef  dispatch_async_background_serial
 #define dispatch_async_background_serial( block ) \
-dispatch_async( [_Queue sharedInstance].serial, block )
+        dispatch_async( [_Queue sharedInstance].serial, block )
 
-#undef	dispatch_after_background_serial
+#undef  dispatch_after_background_serial
 #define dispatch_after_background_serial( seconds, block ) \
-dispatch_after( dispatch_time( DISPATCH_TIME_NOW, seconds * 1ull * NSEC_PER_SEC ), [_Queue sharedInstance].serial, block ); \
+        dispatch_after( dispatch_time( DISPATCH_TIME_NOW, seconds * 1ull * NSEC_PER_SEC ), [_Queue sharedInstance].serial, block ); \
+
+// ----------------------------------
+// Class code
+// ----------------------------------
 
 #pragma mark -
 

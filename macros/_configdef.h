@@ -15,104 +15,64 @@
 //
 
 // ----------------------------------
-// System Version
-// ----------------------------------
-
-// __IPHONE_8_0
-
-// ----------------------------------
-// Version
-// ----------------------------------
-
-#undef  __VERSION__
-#define __VERSION__         ("0.1.0")
-
-#define __MUST_ON__         (1)
-#define __MUST_OFF__        (0)
-
-#define __ON__              (1)
-#define __OFF__             (0)
-#define __AUTO__            (DEBUG)
-
-// ----------------------------------
-// Debug predefine
-// ----------------------------------
-
-#define __DEBUG__       (__ON__)   /// 調試模式
-#define __TESTING__     (__OFF__)   /// 單元測試
-#define __LOGGING__     (__ON__)    /// 日誌模式
-#define __SERVICE__     (__ON__)    /// 後臺服務
-
-// ----------------------------------
 // Common use macros
 // ----------------------------------
 
-#ifndef	IN
+#undef  IN
 #define IN
-#endif
 
-#ifndef	OUT
+#undef  OUT
 #define OUT
-#endif
 
-#ifndef	INOUT
+#undef  INOUT
 #define INOUT
-#endif
 
 /**
  *  also can use #pragma unused ( __x )
  */
-#ifndef	UNUSED
-#define	UNUSED( __x )		{ id __unused_var__ __attribute__((unused)) = (id)(__x); }
-#endif
+#undef  UNUSED
+#define UNUSED( __x )		{ id __unused_var__ __attribute__((unused)) = (id)(__x); }
 
-#ifndef	ALIAS
-#define	ALIAS( __a, __b )	__typeof__(__a) __b = __a;
-#endif
+#undef  ALIAS
+#define ALIAS( __a, __b )	__typeof__(__a) __b = __a;
 
-#ifndef	DEPRECATED
-#define	DEPRECATED			__attribute__((deprecated))
-#endif
+#undef  DEPRECATED
+#define DEPRECATED			__attribute__((deprecated))
 
-#ifndef deprecatedify
+#undef  deprecatedify
 #define deprecatedify( _info_ ) __attribute((deprecated(_info_)))
-#endif
 
 #undef  EXTERN
 #define EXTERN    extern __attribute__((visibility ("default")))
 
-#ifndef	TODO
+#undef  TODO
 #define TODO( X )			_Pragma(macro_cstr(message("TODO: " X)))
-#endif
-
-#ifndef	EXTERN_C
 
 #if defined(__cplusplus)
+#   undef	EXTERN_C
 #   define EXTERN_C			extern "C"
 #else
+#   undef	EXTERN_C
 #   define EXTERN_C			extern
 #endif
 
-#endif
-
-#ifndef	INLINE
-#define	INLINE				__inline__ __attribute__((always_inline))
-#endif
+#undef  INLINE
+#define INLINE				__inline__ __attribute__((always_inline))
 
 // ----------------------------------
 // nullability macro
 // ----------------------------------
 
 #if !__has_feature(nullability)
-#define NS_ASSUME_NONNULL_BEGIN
-#define NS_ASSUME_NONNULL_END
-#define nullable
-#define nonnull
-#define null_unspecified
-#define null_resettable
-#define __nullable
-#define __nonnull
-#define __null_unspecified
+#   define NS_ASSUME_NONNULL_BEGIN
+#   define NS_ASSUME_NONNULL_END
+#   define nullable
+#   define nonnull
+#   define null_unspecified
+#   define null_resettable
+#   define __nullable
+#   define __nonnull
+#   define __null_unspecified
 #endif
 
 // ----------------------------------
@@ -156,7 +116,9 @@
 #define macro_string( A )									macro_string_( A )
 #define macro_string_( A )									@(#A)
 
-
+// ----------------------------------
+// Generics macro
+// ----------------------------------
 
 #if __has_feature(objc_generics)
 

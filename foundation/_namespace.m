@@ -18,14 +18,14 @@
 
 #pragma mark -
 
-__strong _Namespace * suite = nil;
+__strong _Namespace * G = nil;
 
 #pragma mark -
 
 @implementation _Namespace
 
-+ (void)classAutoLoad {
-    suite = [[_Namespace alloc] init];
++ (void)load {
+    G = [[_Namespace alloc] init];
 }
 
 @end

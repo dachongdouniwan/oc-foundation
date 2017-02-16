@@ -34,6 +34,8 @@
 
 // utility: 业务无关的工具方法
 
+// UIViewController中，variable as 代码View，property as xib view
+
 #import "_uidef.h"
 #import "_systemdef.h"
 #import "_constdef.h"
@@ -45,4 +47,8 @@
 #import "_ocdef.h"
 #import "_threaddef.h"
 
-// UIViewController中，variable as 代码View，property as xib view
+#if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+#ifndef __IPHONE_7_0
+#error "Samurai only available in iOS SDK 6.0 and later."
+#endif
+#endif

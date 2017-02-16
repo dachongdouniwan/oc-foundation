@@ -375,11 +375,4 @@ static inline NSString *methodName(Method m) {
     return NSStringFromSelector(method_getName(m));
 }
 
-
-@end
-
-#pragma mark -
-
-@implementation _Runtime
-
 @end

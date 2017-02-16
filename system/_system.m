@@ -15,3 +15,8 @@
 //
 
 #import "_system.h"
+
+@def_namespace( system )
+@def_namespace( system, logger, _Logger )
+@def_namespace( system, debugger, _Debugger )
+@def_namespace( system, info, _SystemInfo )

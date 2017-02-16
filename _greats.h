@@ -17,7 +17,7 @@
 #import <Foundation/Foundation.h>
 
 // 宏定义
-#import "_precompile.h"
+#import "_preheaders.h"
 
 // 基础部分
 #import "foundation/_foundation.h"

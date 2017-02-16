@@ -21,7 +21,6 @@
 + (BOOL)swizzleMethod:(SEL)origSel_ withMethod:(SEL)altSel_ error:(NSError **)error_;
 + (BOOL)swizzleClassMethod:(SEL)origSel_ withClassMethod:(SEL)altSel_ error:(NSError **)error_;
 
-// add by fallenink
 + (BOOL)copyMethod:(SEL)origSel_  toMethod:(SEL)dstSel_ error:(NSError **)error_;
 + (BOOL)copyClassMethod:(SEL)origSel_  toClassMethod:(SEL)dstSel_ error:(NSError **)error_;
 

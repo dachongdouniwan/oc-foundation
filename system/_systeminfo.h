@@ -14,7 +14,7 @@
 //  Welcome!
 //
 
-#import "_precompile.h"
+#import "_configdef.h"
 #import "_singleton.h"
 #import "_property.h"
 
@@ -55,9 +55,9 @@ extern BOOL IS_SCREEN_55_INCH;
 
 #pragma mark -
 
-@interface _System : NSObject
+@interface _SystemInfo : NSObject
 
-@singleton( _System )
+@singleton( _SystemInfo )
 
 @prop_readonly( NSString *,         now );
 

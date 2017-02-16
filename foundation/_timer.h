@@ -133,16 +133,6 @@
 
 #pragma mark - 
 
-/**
- *  计数器？？？？倒数器？？？？
- */
-
-@interface _Counter : NSObject
-
-@end
-
-#pragma mark - 
-
 @interface _GCDTimer : NSObject // WARN: init method is forbidden!!!!!!!!
 
 - (instancetype)initWithHandler:(void (^)())executor; // execute every second, on main thread

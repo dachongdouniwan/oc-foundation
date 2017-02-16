@@ -64,13 +64,13 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
 
 #pragma mark -
 
-@implementation _System {
+@implementation _SystemInfo {
     // uuids
     NSString *_uuidForSession;
     NSString *_uuidForInstallation;
 }
 
-@def_singleton( _System );
+@def_singleton( _SystemInfo );
 
 @def_prop_readonly( NSString *,			osVersion );
 @def_prop_readonly( OperationSystem,	osType );
