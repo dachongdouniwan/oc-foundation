@@ -607,9 +607,9 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
 }
 
 - (NSString *)appSize {
-    unsigned long long docSize   =  [self jk_sizeOfFolder:path_of_document];
-    unsigned long long libSize   =  [self jk_sizeOfFolder:path_of_library];
-    unsigned long long cacheSize =  [self jk_sizeOfFolder:path_of_cache];
+    unsigned long long docSize   =  [self sizeOfFolder:path_of_document];
+    unsigned long long libSize   =  [self sizeOfFolder:path_of_library];
+    unsigned long long cacheSize =  [self sizeOfFolder:path_of_cache];
     
     unsigned long long total = docSize + libSize + cacheSize;
     
@@ -617,8 +617,7 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
     return folderSizeStr;
 }
 
--(unsigned long long)jk_sizeOfFolder:(NSString *)folderPath
-{
+- (unsigned long long)sizeOfFolder:(NSString *)folderPath {
     NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:nil];
     NSEnumerator *contentsEnumurator = [contents objectEnumerator];
     
