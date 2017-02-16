@@ -22,7 +22,7 @@
  */
 
 #import "_timer.h"
-#import "foundation/_foundation.h"
+#import "_foundation.h"
 #import <libkern/OSAtomic.h>
 
 #if !__has_feature(objc_arc)

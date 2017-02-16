@@ -1,9 +1,17 @@
 //
-//  _trigger.h
-//  kata
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/     \_|       \/____/
 //
-//  Created by fallen.ink on 16/02/2017.
-//  Copyright © 2017 fallenink. All rights reserved.
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
 #import <Foundation/Foundation.h>
@@ -18,17 +26,17 @@ typedef void ( *ImpFuncType )( id a, SEL b, void * c );
 
 #pragma mark -
 
-#undef	joint
+#undef  joint
 #define joint( name )						property (nonatomic, readonly) NSString * __name
 
-#undef	def_joint
+#undef  def_joint
 #define def_joint( name	)					dynamic __name
 
-#define	hookBefore( name, ... )				hookBefore_( macro_concat(before_, name), __VA_ARGS__)
-#define	hookBefore_( name, ... )			- (void) macro_join(name, __VA_ARGS__)
+#define hookBefore( name, ... )				hookBefore_( macro_concat(before_, name), __VA_ARGS__)
+#define hookBefore_( name, ... )			- (void) macro_join(name, __VA_ARGS__)
 
-#define	hookAfter( name, ... )				hookAfter_( macro_concat(after_, name), __VA_ARGS__)
-#define	hookAfter_( name, ... )				- (void) macro_join(name, __VA_ARGS__)
+#define hookAfter( name, ... )				hookAfter_( macro_concat(after_, name), __VA_ARGS__)
+#define hookAfter_( name, ... )				- (void) macro_join(name, __VA_ARGS__)
 
 #pragma mark -
 
