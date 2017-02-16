@@ -27,6 +27,7 @@
 #import "_kvo.h"
 #import "_namespace.h"
 #import "_notification.h"
+#import "_performance.h"
 #import "_property.h"
 #import "_protocol.h"
 #import "_runtime.h"

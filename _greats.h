@@ -20,8 +20,12 @@
 #import "_preheaders.h"
 
 // 基础部分
-#import "foundation/_foundation.h"
+#import "_foundation.h"
 
 // 系统部分
-#import "system/_system.h"
+#import "_system.h"
 
+@namespace( system )
+@namespace( system, logger, _Logger )
+@namespace( system, debugger, _Debugger )
+@namespace( system, info, _SystemInfo )

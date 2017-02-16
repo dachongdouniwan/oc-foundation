@@ -21,10 +21,6 @@
 #import "_systeminfo.h"
 #import "_task.h"
 #import "_unitest.h"
+#import "_assert.h"
 #import "_debug.h"
-#import "_namespace.h"
 
-@namespace( system )
-@namespace( system, logger, _Logger )
-@namespace( system, debugger, _Debugger )
-@namespace( system, info, _SystemInfo )
