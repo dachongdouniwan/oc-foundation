@@ -8,6 +8,7 @@
 // 类名：下划线，加驼峰命名
 // 全局外部变量：<modulename>Module_xxxxx, 首字母大写, "xxxxx"部分首字母小写
 // 内部变量：<modulename>Module_xxxxx, 首字母大写, "xxxxx"部分首字母小写
+// 全局外部变量或者静态内部变量、方法，简要方案直接前缀：__
 // Block作为参数：success:(ObjectBlock)successHandler
 // 类型转换宏：xxx_ify 后面跟 对象，xxx_of 后面跟code，或者基础类型
 // SDk所需要的key：SdkKey + product name + client end
