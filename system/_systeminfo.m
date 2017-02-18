@@ -19,7 +19,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "_systeminfo.h"
 #import "_keychain.h"
-#import "foundation/_foundation.h"
+#import "_foundation.h"
 
 #pragma mark -
 
@@ -120,11 +120,9 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
 
 @def_prop_readonly( NSArray *,          languages );
 
-+ (void)classAutoLoad {
-    [_System sharedInstance];
-}
-
 + (void)load {
+    [self sharedInstance];
+    
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
     /**
      *  ios 10.0 新方案：
