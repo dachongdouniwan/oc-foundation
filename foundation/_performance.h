@@ -33,6 +33,14 @@
 
 #pragma mark -
 
+@interface NSObject ( Performance )
+
+- (void)runBlockWithPerformance:(void (^)(void))block withTag:(NSString *)tag;
+
+@end
+
+#pragma mark -
+
 @interface _Performance : NSObject
 
 @singleton( _Performance );

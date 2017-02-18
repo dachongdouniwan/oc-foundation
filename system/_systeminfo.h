@@ -116,6 +116,7 @@ extern BOOL IS_SCREEN_55_INCH;
  *  en_US, zh_CN,
  */
 @prop_readonly( NSArray *,          languages ); // 系统语言
+@prop_readonly( NSString *,         currentLanguage ); // 系统当前使用语言
 
 - (NSString *)urlSchemaWithName:(NSString *)name;
 

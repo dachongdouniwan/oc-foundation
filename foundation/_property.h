@@ -205,7 +205,9 @@
 
 #pragma mark -
 
-@interface NSObject(Property)
+@interface NSObject ( Property )
+
+#pragma mark - Property bind
 
 + (const char *)attributesForProperty:(NSString *)property;
 - (const char *)attributesForProperty:(NSString *)property;
@@ -224,6 +226,7 @@
 - (id)copyAssociatedObject:(id)obj forKey:(const char *)key;
 - (id)retainAssociatedObject:(id)obj forKey:(const char *)key;
 - (id)assignAssociatedObject:(id)obj forKey:(const char *)key;
+- (void)weaklyAssociateObject:(id)obj forKey:(const char *)key;
 - (void)removeAssociatedObjectForKey:(const char *)key;
 - (void)removeAllAssociatedObjects;
 

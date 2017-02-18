@@ -14,14 +14,16 @@
 //  Welcome!
 //
 
-#import "foundation/_foundation.h"
+#import "_precompile.h"
 
 #pragma mark -
 
 @protocol NSDictionaryProtocol <NSObject>
+
 @required
 - (id)objectForKey:(id)key;
 - (BOOL)hasObjectForKey:(id)key;
+
 @optional
 - (id)objectForKeyedSubscript:(id)key;
 @end

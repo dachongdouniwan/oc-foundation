@@ -16,13 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSSet (Extension)
-
-@end
-
-#pragma mark - Computation
-
-@interface NSSet ( Computation )
+@interface NSSet ( Extension )
 
 /**
  *  映射
@@ -38,6 +32,28 @@
  *  匹配
  */
 - (id)match: (BOOL (^)(id obj))block;
+
+/**
+ *  遍历
+ */
+- (void)each:(void (^)(id))block;
+- (void)eachWithIndex:(void (^)(id, int))block;
+
+/**
+ *  化简
+ */
+- (id)reduce:(id(^)(id accumulator, id object))block;
+- (id)reduce:(id)initial withBlock:(id(^)(id accumulator, id object))block;
+
+/**
+ *  排除
+ */
+- (NSArray *)reject:(BOOL (^)(id object))block;
+
+/**
+ *  排序
+ */
+- (NSArray *)sort;
 
 @end
 

@@ -24,6 +24,7 @@
 #import "_container_safe.h"
 #import "_encoding.h"
 #import "_exception.h"
+#import "_instance.h"
 #import "_kvo.h"
 #import "_namespace.h"
 #import "_notification.h"
@@ -50,9 +51,10 @@
 #import "NSMutableArray+Extension.h"
 #import "NSMutableDictionary+Extension.h"
 #import "NSMutableString+Extension.h"
+#import "NSNumber+Extension.h"
 #import "NSObject+Extension.h"
-#import "NSObject+Instance.h"
 #import "NSSet+Extension.h"
 #import "NSString+Extension.h"
+#import "NSTimer+Extension.h"
 
 

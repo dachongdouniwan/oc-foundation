@@ -16,24 +16,6 @@
 
 #import <Foundation/Foundation.h>
 
-#pragma mark -
-
-#undef  base_class
-#define base_class( __class ) \
-+ (Class)baseClass \
-{ \
-return NSClassFromString( @(#__class) ); \
-}
-
-#undef	convert_class
-#define	convert_class( __name, __class ) \
-+ (Class)convertClass_##__name \
-{ \
-return NSClassFromString( @(#__class) ); \
-}
-
-#pragma mark -
-
 @interface NSObject ( Extension )
 
 + (Class)baseClass;

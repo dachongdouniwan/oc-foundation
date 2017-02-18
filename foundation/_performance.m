@@ -17,6 +17,23 @@
 #import <QuartzCore/QuartzCore.h>
 #import "_performance.h"
 
+#pragma mark - 
+
+@implementation NSObject ( Performance )
+
+- (void)runBlockWithPerformance:(void (^)(void)) block withTag:(NSString *) tag {
+    
+    double a = CFAbsoluteTimeGetCurrent();
+    block();
+    double b = CFAbsoluteTimeGetCurrent();
+    
+    unsigned int m = ((b-a) * 1000.0f); // convert from seconds to milliseconds
+    
+    LOG(@"%@: %d ms", tag ? prefixString : @"Time taken", m);
+}
+
+@end
+
 #pragma mark -
 
 @implementation _Performance {

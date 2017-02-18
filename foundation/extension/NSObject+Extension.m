@@ -15,7 +15,8 @@
 //
 
 #import <objc/runtime.h>
-#import "foundation/_foundation.h"
+#import "_property.h"
+#import "_encoding.h"
 #import "NSObject+Extension.h"
 #import "NSDictionary+Extension.h"
 #import "NSMutableDictionary+Extension.h"

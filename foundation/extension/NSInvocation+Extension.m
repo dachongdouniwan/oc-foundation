@@ -1,9 +1,17 @@
 //
-//  NSInvocation+Bb.m
-//  Bb_revised
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/    /__|       \/____/
 //
-//  Created by Travis Henspeter on 1/21/15.
-//  Copyright (c) 2015 birdSound. All rights reserved.
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
 #import "NSInvocation+Extension.h"

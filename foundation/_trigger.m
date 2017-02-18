@@ -14,7 +14,9 @@
 //  Welcome!
 //
 
-#import "_preheaders.h"
+#import <dispatch/dispatch.h>
+
+#import "_precompile.h"
 #import "_trigger.h"
 #import "_pragma_push.h"
 #import "NSMutableArray+Extension.h"
@@ -51,30 +53,24 @@
 
 @implementation NSObject(Trigger)
 
-+ (void)performSelectorWithPrefix:(NSString *)prefixName
-{
++ (void)performSelectorWithPrefix:(NSString *)prefixName {
     unsigned int	methodCount = 0;
     Method *		methodList = class_copyMethodList( self, &methodCount );
     
-    if ( methodList && methodCount )
-    {
-        for ( NSUInteger i = 0; i < methodCount; ++i )
-        {
+    if ( methodList && methodCount ) {
+        for ( NSUInteger i = 0; i < methodCount; ++i ) {
             SEL sel = method_getName( methodList[i] );
             
             const char * name = sel_getName( sel );
             const char * prefix = [prefixName UTF8String];
             
-            if ( 0 == strcmp(prefix, name) )
-            {
+            if ( 0 == strcmp(prefix, name) ) {
                 continue;
             }
             
-            if ( 0 == strncmp( name, prefix, strlen(prefix) ) )
-            {
+            if ( 0 == strncmp( name, prefix, strlen(prefix) ) ) {
                 ImpFuncType imp = (ImpFuncType)method_getImplementation( methodList[i] );
-                if ( imp )
-                {
+                if ( imp ) {
                     imp( self, sel, nil );
                 }
             }
@@ -84,30 +80,24 @@
     free( methodList );
 }
 
-- (void)performSelectorWithPrefix:(NSString *)prefixName
-{
+- (void)performSelectorWithPrefix:(NSString *)prefixName {
     unsigned int	methodCount = 0;
     Method *		methodList = class_copyMethodList( [self class], &methodCount );
     
-    if ( methodList && methodCount )
-    {
-        for ( NSUInteger i = 0; i < methodCount; ++i )
-        {
+    if ( methodList && methodCount ) {
+        for ( NSUInteger i = 0; i < methodCount; ++i ) {
             SEL sel = method_getName( methodList[i] );
             
             const char * name = sel_getName( sel );
             const char * prefix = [prefixName UTF8String];
             
-            if ( 0 == strcmp( prefix, name ) )
-            {
+            if ( 0 == strcmp( prefix, name ) ) {
                 continue;
             }
             
-            if ( 0 == strncmp( name, prefix, strlen(prefix) ) )
-            {
+            if ( 0 == strncmp( name, prefix, strlen(prefix) ) ) {
                 ImpFuncType imp = (ImpFuncType)method_getImplementation( methodList[i] );
-                if ( imp )
-                {
+                if ( imp ) {
                     imp( self, sel, nil );
                 }
             }
@@ -117,39 +107,29 @@
     free( methodList );
 }
 
-- (id)performCallChainWithSelector:(SEL)sel
-{
+- (id)performCallChainWithSelector:(SEL)sel {
     return [self performCallChainWithSelector:sel reversed:NO];
 }
 
-- (id)performCallChainWithSelector:(SEL)sel reversed:(BOOL)flag
-{
+- (id)performCallChainWithSelector:(SEL)sel reversed:(BOOL)flag {
     NSMutableArray * classStack = [NSMutableArray nonRetainingArray];
     
-    for ( Class thisClass = [self class]; nil != thisClass; thisClass = class_getSuperclass( thisClass ) )
-    {
-        if ( flag )
-        {
+    for ( Class thisClass = [self class]; nil != thisClass; thisClass = class_getSuperclass( thisClass ) ) {
+        if ( flag ) {
             [classStack addObject:thisClass];
-        }
-        else
-        {
+        } else {
             [classStack insertObject:thisClass atIndex:0];
         }
     }
     
     ImpFuncType prevImp = NULL;
     
-    for ( Class thisClass in classStack )
-    {
+    for ( Class thisClass in classStack ) {
         Method method = class_getInstanceMethod( thisClass, sel );
-        if ( method )
-        {
+        if ( method ) {
             ImpFuncType imp = (ImpFuncType)method_getImplementation( method );
-            if ( imp )
-            {
-                if ( imp == prevImp )
-                {
+            if ( imp ) {
+                if ( imp == prevImp ) {
                     continue;
                 }
                 
@@ -163,51 +143,39 @@
     return self;
 }
 
-- (id)performCallChainWithPrefix:(NSString *)prefix
-{
+- (id)performCallChainWithPrefix:(NSString *)prefix {
     return [self performCallChainWithPrefix:prefix reversed:YES];
 }
 
-- (id)performCallChainWithPrefix:(NSString *)prefixName reversed:(BOOL)flag
-{
+- (id)performCallChainWithPrefix:(NSString *)prefixName reversed:(BOOL)flag {
     NSMutableArray * classStack = [NSMutableArray nonRetainingArray];
     
-    for ( Class thisClass = [self class]; nil != thisClass; thisClass = class_getSuperclass( thisClass ) )
-    {
-        if ( flag )
-        {
+    for ( Class thisClass = [self class]; nil != thisClass; thisClass = class_getSuperclass( thisClass ) ) {
+        if ( flag ) {
             [classStack addObject:thisClass];
-        }
-        else
-        {
+        } else {
             [classStack insertObject:thisClass atIndex:0];
         }
     }
     
-    for ( Class thisClass in classStack )
-    {
+    for ( Class thisClass in classStack ) {
         unsigned int	methodCount = 0;
         Method *		methodList = class_copyMethodList( thisClass, &methodCount );
         
-        if ( methodList && methodCount )
-        {
-            for ( NSUInteger i = 0; i < methodCount; ++i )
-            {
+        if ( methodList && methodCount ) {
+            for ( NSUInteger i = 0; i < methodCount; ++i ) {
                 SEL sel = method_getName( methodList[i] );
                 
                 const char * name = sel_getName( sel );
                 const char * prefix = [prefixName UTF8String];
                 
-                if ( 0 == strcmp( prefix, name ) )
-                {
+                if ( 0 == strcmp( prefix, name ) ) {
                     continue;
                 }
                 
-                if ( 0 == strncmp( name, prefix, strlen(prefix) ) )
-                {
+                if ( 0 == strncmp( name, prefix, strlen(prefix) ) ) {
                     ImpFuncType imp = (ImpFuncType)method_getImplementation( methodList[i] );
-                    if ( imp )
-                    {
+                    if ( imp ) {
                         imp( self, sel, nil );
                     }
                 }
@@ -220,16 +188,13 @@
     return self;
 }
 
-- (id)performCallChainWithName:(NSString *)name
-{
+- (id)performCallChainWithName:(NSString *)name {
     return [self performCallChainWithName:name reversed:NO];
 }
 
-- (id)performCallChainWithName:(NSString *)name reversed:(BOOL)flag
-{
+- (id)performCallChainWithName:(NSString *)name reversed:(BOOL)flag {
     SEL selector = NSSelectorFromString( name );
-    if ( selector )
-    {
+    if ( selector ) {
         NSString * prefix1 = [NSString stringWithFormat:@"before_%@", name];
         NSString * prefix2 = [NSString stringWithFormat:@"after_%@", name];
         
@@ -238,6 +203,153 @@
         [self performCallChainWithPrefix:prefix2 reversed:flag];
     }
     return self;
+}
+
+#pragma mark - Block
+
+static inline dispatch_time_t __dTimeDelay(NSTimeInterval time) {
+    int64_t delta = (int64_t)(NSEC_PER_SEC * time);
+    return dispatch_time(DISPATCH_TIME_NOW, delta);
+}
+
++ (id)performBlock:(void (^)(void))block afterDelay:(NSTimeInterval)delay {
+    if (!block) return nil;
+    
+    __block BOOL cancelled = NO;
+    
+    void (^wrappingBlock)(BOOL) = ^(BOOL cancel) {
+        if (cancel) {
+            cancelled = YES;
+            return;
+        }
+        if (!cancelled)block();
+    };
+    
+    wrappingBlock = [wrappingBlock copy];
+    
+    dispatch_after(__dTimeDelay(delay), dispatch_get_main_queue(), ^{
+        wrappingBlock(NO);
+    });
+    
+    return wrappingBlock;
+}
+
++ (id)performBlock:(void (^)(id arg))block withObject:(id)anObject afterDelay:(NSTimeInterval)delay {
+    if (!block) return nil;
+    
+    __block BOOL cancelled = NO;
+    
+    void (^wrappingBlock)(BOOL, id) = ^(BOOL cancel, id arg) {
+        if (cancel) {
+            cancelled = YES;
+            return;
+        }
+        if (!cancelled) block(arg);
+    };
+    
+    wrappingBlock = [wrappingBlock copy];
+    
+    dispatch_after(__dTimeDelay(delay), dispatch_get_main_queue(), ^{
+        wrappingBlock(NO, anObject);
+    });
+    
+    return wrappingBlock;
+}
+
+- (id)performBlock:(void (^)(void))block afterDelay:(NSTimeInterval)delay {
+    
+    if (!block) return nil;
+    
+    __block BOOL cancelled = NO;
+    
+    void (^wrappingBlock)(BOOL) = ^(BOOL cancel) {
+        if (cancel) {
+            cancelled = YES;
+            return;
+        }
+        if (!cancelled) block();
+    };
+    
+    wrappingBlock = [wrappingBlock copy];
+    
+    dispatch_after(__dTimeDelay(delay), dispatch_get_main_queue(), ^{
+        wrappingBlock(NO);
+    });
+    
+    return wrappingBlock;
+}
+
+- (id)performBlock:(void (^)(id arg))block withObject:(id)anObject afterDelay:(NSTimeInterval)delay {
+    if (!block) return nil;
+    
+    __block BOOL cancelled = NO;
+    
+    void (^wrappingBlock)(BOOL, id) = ^(BOOL cancel, id arg) {
+        if (cancel) {
+            cancelled = YES;
+            return;
+        }
+        if (!cancelled) block(arg);
+    };
+    
+    wrappingBlock = [wrappingBlock copy];
+    
+    dispatch_after(__dTimeDelay(delay), dispatch_get_main_queue(), ^{
+        wrappingBlock(NO, anObject);
+    });
+    
+    return wrappingBlock;
+}
+
++ (void)cancelBlock:(id)block {
+    if (!block) return;
+    
+    void (^aWrappingBlock)(BOOL) = (void(^)(BOOL))block;
+    
+    aWrappingBlock(YES);
+}
+
++ (void)cancelPreviousPerformBlock:(id)aWrappingBlockHandle {
+    [self cancelBlock:aWrappingBlockHandle];
+}
+
+#pragma mark - Asynchronize block
+
+/**
+ *  @brief  异步执行代码块
+ *
+ *  @param block 代码块
+ */
+- (void)performAsynchronous:(void(^)(void))block {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, block);
+}
+/**
+ *  @brief  GCD主线程执行代码块
+ *
+ *  @param block 代码块
+ *  @param shouldWait  是否同步请求
+ */
+- (void)performOnMainThread:(void(^)(void))block wait:(BOOL)shouldWait {
+    if (shouldWait) {
+        // Synchronous
+        dispatch_sync(dispatch_get_main_queue(), block);
+    } else {
+        // Asynchronous
+        dispatch_async(dispatch_get_main_queue(), block);
+    }
+}
+/**
+ *  @brief  延迟执行代码块
+ *
+ *  @param seconds 延迟时间 秒
+ *  @param block   代码块
+ */
+- (void)performAfter:(NSTimeInterval)seconds block:(void(^)(void))block {
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, seconds * NSEC_PER_SEC);
+    //    dispatch_after(popTime, dispatch_get_current_queue(), block);
+    dispatch_after(popTime, dispatch_get_main_queue(), block);
+    
 }
 
 @end

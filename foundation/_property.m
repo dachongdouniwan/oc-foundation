@@ -26,22 +26,18 @@
 
 #pragma mark -
 
-@implementation NSObject(Property)
+@implementation NSObject ( Property )
 
-+ (const char *)attributesForProperty:(NSString *)property
-{
++ (const char *)attributesForProperty:(NSString *)property {
     Class baseClass = [self baseClass];
     
-    if ( nil == baseClass )
-    {
+    if ( nil == baseClass ) {
         baseClass = [NSObject class];
     }
     
-    for ( Class clazzType = self; clazzType != baseClass; )
-    {
+    for ( Class clazzType = self; clazzType != baseClass; ) {
         objc_property_t prop = class_getProperty( clazzType, [property UTF8String] );
-        if ( prop )
-        {
+        if ( prop ) {
             return property_getAttributes( prop );
         }
         
@@ -53,16 +49,13 @@
     return NULL;
 }
 
-- (const char *)attributesForProperty:(NSString *)property
-{
+- (const char *)attributesForProperty:(NSString *)property {
     return [[self class] attributesForProperty:property];
 }
 
-+ (NSDictionary *)extentionForProperty:(NSString *)property
-{
++ (NSDictionary *)extentionForProperty:(NSString *)property {
     SEL fieldSelector = NSSelectorFromString( [NSString stringWithFormat:@"property_%@", property] );
-    if ( [self respondsToSelector:fieldSelector] )
-    {
+    if ( [self respondsToSelector:fieldSelector] ) {
         __autoreleasing NSString * field = nil;
         
         NSMethodSignature * signature = [self methodSignatureForSelector:fieldSelector];
@@ -75,19 +68,16 @@
         
         //		field = [self performSelector:fieldSelector];
         
-        if ( field && [field length] )
-        {
+        if ( field && [field length] ) {
             NSMutableDictionary * dict = [NSMutableDictionary dictionary];
             
             NSArray * attributes = [field componentsSeparatedByString:@"____"];
-            for ( NSString * attrGroup in attributes )
-            {
+            for ( NSString * attrGroup in attributes ) {
                 NSArray *	groupComponents = [attrGroup componentsSeparatedByString:@"=>"];
                 NSString *	groupName = [[[groupComponents safeObjectAtIndex:0] trim] unwrap];
                 NSString *	groupValue = [[[groupComponents safeObjectAtIndex:1] trim] unwrap];
                 
-                if ( groupName && groupValue )
-                {
+                if ( groupName && groupValue ) {
                     [dict setObject:groupValue forKey:groupName];
                 }
             }
@@ -99,13 +89,11 @@
     return nil;
 }
 
-- (NSDictionary *)extentionForProperty:(NSString *)property
-{
+- (NSDictionary *)extentionForProperty:(NSString *)property {
     return [[self class] extentionForProperty:property];
 }
 
-+ (NSString *)extentionForProperty:(NSString *)property stringValueWithKey:(NSString *)key
-{
++ (NSString *)extentionForProperty:(NSString *)property stringValueWithKey:(NSString *)key {
     NSDictionary * extension = [self extentionForProperty:property];
     if ( nil == extension )
         return nil;
@@ -113,13 +101,11 @@
     return [extension objectForKey:key];
 }
 
-- (NSString *)extentionForProperty:(NSString *)property stringValueWithKey:(NSString *)key
-{
+- (NSString *)extentionForProperty:(NSString *)property stringValueWithKey:(NSString *)key {
     return [[self class] extentionForProperty:property stringValueWithKey:key];
 }
 
-+ (NSArray *)extentionForProperty:(NSString *)property arrayValueWithKey:(NSString *)key
-{
++ (NSArray *)extentionForProperty:(NSString *)property arrayValueWithKey:(NSString *)key {
     NSDictionary * extension = [self extentionForProperty:property];
     if ( nil == extension )
         return nil;
@@ -131,8 +117,7 @@
     return [value componentsSeparatedByString:@"|"];
 }
 
-- (NSArray *)extentionForProperty:(NSString *)property arrayValueWithKey:(NSString *)key
-{
+- (NSArray *)extentionForProperty:(NSString *)property arrayValueWithKey:(NSString *)key {
     return [[self class] extentionForProperty:property arrayValueWithKey:key];
 }
 
@@ -143,16 +128,14 @@
     return currValue != nil;
 }
 
-- (id)getAssociatedObjectForKey:(const char *)key
-{
+- (id)getAssociatedObjectForKey:(const char *)key {
     const char * propName = key; // [[NSString stringWithFormat:@"%@.%s", NSStringFromClass([self class]), key] UTF8String];
     
     id currValue = objc_getAssociatedObject( self, propName );
     return currValue;
 }
 
-- (id)copyAssociatedObject:(id)obj forKey:(const char *)key
-{
+- (id)copyAssociatedObject:(id)obj forKey:(const char *)key {
     const char * propName = key; // [[NSString stringWithFormat:@"%@.%s", NSStringFromClass([self class]), key] UTF8String];
     
     id oldValue = objc_getAssociatedObject( self, propName );
@@ -160,8 +143,7 @@
     return oldValue;
 }
 
-- (id)retainAssociatedObject:(id)obj forKey:(const char *)key;
-{
+- (id)retainAssociatedObject:(id)obj forKey:(const char *)key; {
     const char * propName = key; // [[NSString stringWithFormat:@"%@.%s", NSStringFromClass([self class]), key] UTF8String];
     
     id oldValue = objc_getAssociatedObject( self, propName );
@@ -169,8 +151,7 @@
     return oldValue;
 }
 
-- (id)assignAssociatedObject:(id)obj forKey:(const char *)key
-{
+- (id)assignAssociatedObject:(id)obj forKey:(const char *)key {
     const char * propName = key; // [[NSString stringWithFormat:@"%@.%s", NSStringFromClass([self class]), key] UTF8String];
     
     id oldValue = objc_getAssociatedObject( self, propName );
@@ -178,22 +159,23 @@
     return oldValue;
 }
 
-- (void)removeAssociatedObjectForKey:(const char *)key
-{
+- (void)weaklyAssociateObject:(id)obj forKey:(const char *)key {
+    objc_setAssociatedObject(self, key, obj, OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (void)removeAssociatedObjectForKey:(const char *)key {
     const char * propName = key; // [[NSString stringWithFormat:@"%@.%s", NSStringFromClass([self class]), key] UTF8String];
     
     objc_setAssociatedObject( self, propName, nil, OBJC_ASSOCIATION_ASSIGN );
 }
 
-- (void)removeAllAssociatedObjects
-{
+- (void)removeAllAssociatedObjects {
     objc_removeAssociatedObjects( self );
 }
 
 #pragma mark - Object 2 Json\Dictionary
 
-- (id)getObjectInternal:(id)obj
-{
+- (id)getObjectInternal:(id)obj {
     if([obj isKindOfClass:[NSString class]]
        || [obj isKindOfClass:[NSNumber class]]
        || [obj isKindOfClass:[NSNull class]]) {
@@ -225,8 +207,7 @@
     return [self getObjectData:obj];
 }
 
-- (NSDictionary*)getObjectData:(NSObject *)obj
-{
+- (NSDictionary*)getObjectData:(NSObject *)obj {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     unsigned int propsCount;
     objc_property_t *props = class_copyPropertyList([obj class], &propsCount);
@@ -248,13 +229,11 @@
     return dic;
 }
 
-- (NSDictionary *)toDictionary
-{
+- (NSDictionary *)toDictionary {
     return [self getObjectData:self];
 }
 
-- (NSData *)toJsonDataWithOptions:(NSJSONWritingOptions)options
-{
+- (NSData *)toJsonDataWithOptions:(NSJSONWritingOptions)options {
     return [NSJSONSerialization dataWithJSONObject:[self getObjectData:self] options:options error:nil];
 }
 

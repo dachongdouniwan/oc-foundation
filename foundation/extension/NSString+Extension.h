@@ -15,12 +15,6 @@
 //
 
 #import "_precompile.h"
-#import <Foundation/Foundation.h>
-
-#pragma mark -
-
-@interface NSString (Wrapper)
-@end
 
 #pragma mark -
 
@@ -34,6 +28,10 @@
  *  如：1.00 ==> 1, 0.00 ==> 0, 0.50 ==> 0.5
  */
 - (NSString *)trimFloatPointNumber;
+- (NSString *)strippingHTML;
+- (NSString *)removingScriptsAndStrippingHTML; // 清除js脚本
+- (NSString *)trimmingWhitespace; // 去除空格
+- (NSString *)trimmingWhitespaceAndNewlines; // 去除字符串与空行
 
 - (NSString *)unwrap;
 - (NSString *)normalize;
@@ -48,6 +46,14 @@
 
 - (BOOL)contains:(NSString *)str;
 - (BOOL)contains:(NSString *)str options:(NSStringCompareOptions)option;
+- (BOOL)containsChinese; // 判断URL中是否包含中文
+- (BOOL)containsBlank; // 是否包含空格
+- (NSString *)makeUnicodeToString; // Unicode编码的字符串转成NSString
+- (BOOL)containsCharacterSet:(NSCharacterSet *)set;
+- (BOOL)containsaString:(NSString *)string; // 是否包含字符串
+
+- (int)wordsCount; // 获取字符数量
+
 
 - (BOOL)startsWith:(NSString*)prefix;
 - (BOOL)endsWith:(NSString*)suffix;
@@ -102,6 +108,7 @@
 - (BOOL)isMobileNumber;
 - (BOOL)isContainsEmoji; // 是否包含表情
 
+// 子字符串
 - (NSString *)substringFromIndex:(NSUInteger)from untilString:(NSString *)string;
 - (NSString *)substringFromIndex:(NSUInteger)from untilString:(NSString *)string endOffset:(NSUInteger *)endOffset;
 
@@ -147,48 +154,11 @@
 
 #define NSStringFromBool( _bool_ ) [NSString stringRepresentationForBool:_bool_]
 
-#pragma mark - Pinyin
-
-@interface NSString ( Pinyin )
-
-- (NSString *)chinese2pinyin;
-
-@end
-
 #pragma mark - Encoding
 
 @interface NSString ( Encoding )
 
 - (NSData *)utf8EncodedData;
-- (NSData *)base64DecodedData;
-- (NSString *)base64Encode;
-- (NSString *)base64Decode;
-- (NSString *)sha256Hash;
-- (NSData *)sha256HashRaw;
-
-+ (NSData *)hashHMac:(NSString *)data key:(NSString *)key;
-+ (NSString *)hashHMacToString:(NSString *)data key:(NSString *)key;
-
-- (NSString *)MD5Hash;
-
-@end
-
-#pragma mark - REST
-
-@interface NSString (REST)
-
-// 从URL中解析出参数字典
-- (NSDictionary*)queryDictionaryUsingEncoding:(NSStringEncoding)encoding;
-
-// 从JSON字符串解析出参数字典
-- (NSDictionary *)JSONDictionary;
-
-// URL转义
-- (NSString *)URLEncodedString;
-- (NSString *)URLDecodedString;
-
-// 对参数列表生成URL编码后字符串
-+ (NSString *)makeQueryStringFromArgs:(NSDictionary *)args;
 
 @end
 

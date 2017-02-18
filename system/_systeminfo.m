@@ -789,5 +789,10 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
     return [userDefaults objectForKey:@"AppleLanguages"];
 }
 
+- (NSString *)currentLanguage{
+    NSArray *languages = [NSLocale preferredLanguages];
+    NSString *currentLanguage = [languages firstObject];
+    return [NSString stringWithString:currentLanguage];
+}
 
 @end

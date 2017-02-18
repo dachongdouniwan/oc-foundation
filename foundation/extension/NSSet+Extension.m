@@ -16,13 +16,7 @@
 
 #import "NSSet+Extension.h"
 
-@implementation NSSet (Extension)
-
-@end
-
-#pragma mark - Computation
-
-@implementation NSSet ( Computation )
+@implementation NSSet ( Extension )
 
 - (NSSet *)map: (id (^)(id obj))block {
     NSMutableSet *set = [NSMutableSet setWithCapacity: [self count]];
@@ -44,6 +38,50 @@
         if(block(obj))
             return obj;
     return nil;
+}
+
+- (void)each:(void (^)(id))block {
+    [self enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        block(obj);
+    }];
+}
+
+- (void)eachWithIndex:(void (^)(id, int))block {
+    __block int counter = 0;
+    [self enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        block(obj, counter);
+        counter ++;
+    }];
+}
+
+- (id)reduce:(id(^)(id accumulator, id object))block {
+    return [self reduce:nil withBlock:block];
+}
+
+- (id)reduce:(id)initial withBlock:(id(^)(id accumulator, id object))block {
+    id accumulator = initial;
+    
+    for(id object in self)
+        accumulator = accumulator ? block(accumulator, object) : object;
+    
+    return accumulator;
+}
+
+- (NSArray *)reject:(BOOL (^)(id object))block {
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:self.count];
+    
+    for (id object in self) {
+        if (block(object) == NO) {
+            [array addObject:object];
+        }
+    }
+    
+    return array;
+}
+
+- (NSArray *)sort {
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES];
+    return [self sortedArrayUsingDescriptors:@[sortDescriptor]];
 }
 
 @end

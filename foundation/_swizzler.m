@@ -32,12 +32,6 @@
 	}
 #define SetNSError(ERROR_VAR, FORMAT,...) SetNSErrorFor(__func__, ERROR_VAR, FORMAT, ##__VA_ARGS__)
 
-#if OBJC_API_VERSION >= 2
-#define GetClass(obj)	object_getClass(obj)
-#else
-#define GetClass(obj)	(obj ? obj->isa : Nil)
-#endif
-
 // ----------------------------------
 // Source code
 // ----------------------------------
@@ -46,63 +40,159 @@
 
 #pragma mark - Swizzle method
 
-+ (BOOL)swizzleMethod:(SEL)origSel_ withMethod:(SEL)altSel_ error:(NSError**)error_ {
-	Method origMethod = class_getInstanceMethod(self, origSel_);
++ (BOOL)swizzleMethod:(SEL)originalSelector withMethod:(SEL)newSelector error:(NSError *__autoreleasing *)error {
+	Method origMethod = class_getInstanceMethod(self, originalSelector);
 	if (!origMethod) {
-		SetNSError(error_, @"original method %@ not found for class %@", NSStringFromSelector(origSel_), [self class]);
+		SetNSError(error, @"original method %@ not found for class %@", NSStringFromSelector(originalSelector), [self class]);
 		return NO;
 	}
 	
-	Method altMethod = class_getInstanceMethod(self, altSel_);
+	Method altMethod = class_getInstanceMethod(self, newSelector);
 	if (!altMethod) {
-		SetNSError(error_, @"alternate method %@ not found for class %@", NSStringFromSelector(altSel_), [self class]);
+		SetNSError(error, @"alternate method %@ not found for class %@", NSStringFromSelector(newSelector), [self class]);
 		return NO;
 	}
 	
 	class_addMethod(self,
-					origSel_,
-					class_getMethodImplementation(self, origSel_),
+					originalSelector,
+					class_getMethodImplementation(self, originalSelector),
 					method_getTypeEncoding(origMethod));
 	class_addMethod(self,
-					altSel_,
-					class_getMethodImplementation(self, altSel_),
+					newSelector,
+					class_getMethodImplementation(self, newSelector),
 					method_getTypeEncoding(altMethod));
 	
-	method_exchangeImplementations(class_getInstanceMethod(self, origSel_), class_getInstanceMethod(self, altSel_));
+	method_exchangeImplementations(class_getInstanceMethod(self, originalSelector), class_getInstanceMethod(self, newSelector));
 	return YES;
 }
 
-+ (BOOL)swizzleClassMethod:(SEL)origSel_ withClassMethod:(SEL)altSel_ error:(NSError**)error_ {
-	return [GetClass((id)self) swizzleMethod:origSel_ withMethod:altSel_ error:error_];
++ (BOOL)swizzleClassMethod:(SEL)originalSelector withClassMethod:(SEL)newSelector error:(NSError *__autoreleasing *)error {
+	return [self swizzleMethod:originalSelector withMethod:newSelector error:error];
 }
 
 #pragma mark - Copy method
 
-+ (BOOL)copyMethod:(SEL)origSel_ toMethod:(SEL)dstSel_ error:(NSError *__autoreleasing *)error_ {
-    Method origMethod = class_getInstanceMethod(self, origSel_);
++ (BOOL)copyMethod:(SEL)newSelector toMethod:(SEL)dstSelector error:(NSError *__autoreleasing *)error {
+    Method origMethod = class_getInstanceMethod(self, newSelector);
     if (!origMethod) {
-        SetNSError(error_, @"original method %@ not found for class %@", NSStringFromSelector(origSel_), [self class]);
+        SetNSError(error, @"original method %@ not found for class %@", NSStringFromSelector(newSelector), [self class]);
         return NO;
     }
     
-    Method dstMethod = class_getInstanceMethod(self, dstSel_);
+    Method dstMethod = class_getInstanceMethod(self, dstSelector);
     if (!dstMethod) {
-        SetNSError(error_, @"destination method %@ not found for class %@", NSStringFromSelector(dstSel_), [self class]);
+        SetNSError(error, @"destination method %@ not found for class %@", NSStringFromSelector(dstSelector), [self class]);
         return NO;
     }
 
     class_addMethod(self,
-                    dstSel_,
-                    class_getMethodImplementation(self, dstSel_),
+                    dstSelector,
+                    class_getMethodImplementation(self, dstSelector),
                     method_getTypeEncoding(dstMethod));
     
-    method_setImplementation(class_getInstanceMethod(self, dstSel_), class_getMethodImplementation(self, origSel_));
+    method_setImplementation(class_getInstanceMethod(self, dstSelector), class_getMethodImplementation(self, newSelector));
     
     return YES;
 }
 
-+ (BOOL)copyClassMethod:(SEL)origSel_ toClassMethod:(SEL)dstSel_ error:(NSError *__autoreleasing *)error_ {
-    return [GetClass((id)self) copyMethod:origSel_ toMethod:dstSel_ error:error_];
++ (BOOL)copyClassMethod:(SEL)newSelector toClassMethod:(SEL)dstSelector error:(NSError *__autoreleasing *)error {
+    return [self copyMethod:newSelector toMethod:dstSelector error:error];
+}
+
+#pragma mark - 待处理 @王涛
+
+static BOOL __method_swizzle(Class klass, SEL origSel, SEL altSel) {
+    if (!klass)
+        return NO;
+    
+    Method __block origMethod, __block altMethod;
+    
+    void (^find_methods)() = ^ {
+        unsigned methodCount = 0;
+        Method *methodList = class_copyMethodList(klass, &methodCount);
+        
+        origMethod = altMethod = NULL;
+        
+        if (methodList)
+            for (unsigned i = 0; i < methodCount; ++i) {
+                if (method_getName(methodList[i]) == origSel)
+                    origMethod = methodList[i];
+                
+                if (method_getName(methodList[i]) == altSel)
+                    altMethod = methodList[i];
+            }
+        
+        free(methodList);
+    };
+    
+    find_methods();
+    
+    if (!origMethod) {
+        origMethod = class_getInstanceMethod(klass, origSel);
+        
+        if (!origMethod)
+            return NO;
+        
+        if (!class_addMethod(klass, method_getName(origMethod), method_getImplementation(origMethod), method_getTypeEncoding(origMethod)))
+            return NO;
+    }
+    
+    if (!altMethod) {
+        altMethod = class_getInstanceMethod(klass, altSel);
+        
+        if (!altMethod)
+            return NO;
+        
+        if (!class_addMethod(klass, method_getName(altMethod), method_getImplementation(altMethod), method_getTypeEncoding(altMethod)))
+            return NO;
+    }
+    
+    find_methods();
+    
+    if (!origMethod || !altMethod)
+        return NO;
+    
+    method_exchangeImplementations(origMethod, altMethod);
+    
+    return YES;
+}
+
+static void __method_append(Class toClass, Class fromClass, SEL selector) {
+    if (!toClass || !fromClass || !selector)
+        return;
+    
+    Method method = class_getInstanceMethod(fromClass, selector);
+    
+    if (!method)
+        return;
+    
+    class_addMethod(toClass, method_getName(method), method_getImplementation(method), method_getTypeEncoding(method));
+}
+
+static void __method_replace(Class toClass, Class fromClass, SEL selector) {
+    if (!toClass || !fromClass || ! selector)
+        return;
+    
+    Method method = class_getInstanceMethod(fromClass, selector);
+    
+    if (!method)
+        return;
+    
+    class_replaceMethod(toClass, method_getName(method), method_getImplementation(method), method_getTypeEncoding(method));
+}
+
+// Implimentation
+
++ (void)swizzleMethod:(SEL)originalSelector withMethod:(SEL)newSelector {
+    __method_swizzle(self.class, originalSelector, newSelector);
+}
+
++ (void)appendMethod:(SEL)newSelector fromClass:(Class)klass {
+    __method_append(self.class, klass, newSelector);
+}
+
++ (void)replaceMethod:(SEL)selector fromClass:(Class)klass {
+    __method_replace(self.class, klass, selector);
 }
 
 @end

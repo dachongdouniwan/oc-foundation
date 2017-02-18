@@ -20,6 +20,33 @@
 #import "NSData+Extension.h"
 #import <CommonCrypto/CommonHMAC.h>
 
+//
+//  GTMNSString+HTML.m
+//  Dealing with NSStrings that contain HTML
+//
+//  Copyright 2006-2008 Google Inc.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+//  use this file except in compliance with the License.  You may obtain a copy
+//  of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+//  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+//  License for the specific language governing permissions and limitations under
+//  the License.
+//
+
+//#import "GTMDefines.h"
+#import "NSString+JKHTML.h"
+
+// ----------------------------------
+// Predefine code
+// ----------------------------------
+
+
 // ----------------------------------
 // Source code
 // ----------------------------------
@@ -62,9 +89,56 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
 
 @implementation NSString (Extension)
 
+#pragma mark - Trimming
+
 - (NSString *)trim {
 	return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
+
+/**
+ *  @brief  清除html标签
+ *
+ *  @return 清除后的结果
+ */
+- (NSString *)strippingHTML {
+    return [self stringByReplacingOccurrencesOfString:@"<[^>]+>" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, self.length)];
+}
+
+/**
+ *  @brief  清除js脚本
+ *
+ *  @return 清楚js后的结果
+ */
+- (NSString *)removingScriptsAndStrippingHTML {
+    NSMutableString *mString = [self mutableCopy];
+    NSError *error;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<script[^>]*>[\\w\\W]*</script>" options:NSRegularExpressionCaseInsensitive error:&error];
+    NSArray *matches = [regex matchesInString:mString options:NSMatchingReportProgress range:NSMakeRange(0, [mString length])];
+    for (NSTextCheckingResult *match in [matches reverseObjectEnumerator]) {
+        [mString replaceCharactersInRange:match.range withString:@""];
+    }
+    return [mString strippingHTML];
+}
+
+/**
+ *  @brief  去除空格
+ *
+ *  @return 去除空格后的字符串
+ */
+- (NSString *)trimmingWhitespace {
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+}
+
+/**
+ *  @brief  去除字符串与空行
+ *
+ *  @return 去除字符串与空行的字符串
+ */
+- (NSString *)trimmingWhitespaceAndNewlines {
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
+#pragma mark -
 
 - (NSString *)unwrap {
 	if ( self.length >= 2 ) {
@@ -379,8 +453,7 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
 	}
 }
 
-- (NSArray *)pairSeparatedByString:(NSString *)separator
-{
+- (NSArray *)pairSeparatedByString:(NSString *)separator {
 	if ( nil == separator )
 		return nil;
 	
@@ -401,7 +474,7 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
 #define NotFoundEx -1
 
 /**  Java-like method. Returns the char value at the specified index. */
-- (unichar) charAt:(int)index {
+- (unichar)charAt:(int)index {
     return [self characterAtIndex:index];
 }
 
@@ -411,31 +484,103 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
  * a value less than 0 if this string is lexicographically less than the string argument;
  * and a value greater than 0 if this string is lexicographically greater than the string argument.
  */
-- (int) compareTo:(NSString*) anotherString {
+- (int)compareTo:(NSString*) anotherString {
     return [self compare:anotherString];
 }
 
 /** Java-like method. Compares two strings lexicographically, ignoring case differences. */
-- (int) compareToIgnoreCase:(NSString*) str {
+- (int)compareToIgnoreCase:(NSString*) str {
     return [self compare:str options:NSCaseInsensitiveSearch];
 }
 
 /** Java-like method. Returns true if and only if this string contains the specified sequence of char values. */
-- (BOOL) contains:(NSString*) str {
+- (BOOL)contains:(NSString*) str {
     NSRange range = [self rangeOfString:str];
     return (range.location != NSNotFound);
 }
 
-- (BOOL) contains:(NSString*) str options:(NSStringCompareOptions)option {
+- (BOOL)contains:(NSString*) str options:(NSStringCompareOptions)option {
     NSRange range = [self rangeOfString:str options:option];
     return (range.location != NSNotFound);
 }
 
-- (BOOL) startsWith:(NSString*)prefix {
+- (BOOL)containsChinese {
+    NSUInteger length = [self length];
+    for (NSUInteger i = 0; i < length; i++) {
+        NSRange range = NSMakeRange(i, 1);
+        NSString *subString = [self substringWithRange:range];
+        const char *cString = [subString UTF8String];
+        if (strlen(cString) == 3) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (BOOL)containsBlank {
+    NSRange range = [self rangeOfString:@" "];
+    if (range.location != NSNotFound) {
+        return YES;
+    }
+    return NO;
+}
+
+- (NSString *)makeUnicodeToString {
+    NSString *tempStr1 = [self stringByReplacingOccurrencesOfString:@"\\u"withString:@"\\U"];
+    NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\""withString:@"\\\""];
+    NSString *tempStr3 = [[@"\""stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
+    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
+    //NSString* returnStr = [NSPropertyListSerialization propertyListFromData:tempData mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:NULL];
+    
+    NSString *returnStr = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListMutableContainersAndLeaves format:NULL error:NULL];
+    
+    return [returnStr stringByReplacingOccurrencesOfString:@"\\r\\n"withString:@"\n"];
+}
+
+- (BOOL)containsCharacterSet:(NSCharacterSet *)set {
+    NSRange rang = [self rangeOfCharacterFromSet:set];
+    if (rang.location == NSNotFound) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (BOOL)containsaString:(NSString *)string {
+    NSRange rang = [self rangeOfString:string];
+    if (rang.location == NSNotFound) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (int)wordsCount {
+    NSInteger n = self.length;
+    int i;
+    int l = 0, a = 0, b = 0;
+    unichar c;
+    for (i = 0; i < n; i++) {
+        c = [self characterAtIndex:i];
+        if (isblank(c)) {
+            b++;
+        } else if (isascii(c)) {
+            a++;
+        } else {
+            l++;
+        }
+    }
+    if (a == 0 && l == 0) {
+        return 0;
+    }
+    return l + (int)ceilf((float)(a + b) / 2.0);
+}
+
+- (BOOL)startsWith:(NSString*)prefix {
     return [self hasPrefix:prefix];
 }
 
-- (BOOL) endsWith:(NSString*)suffix {
+- (BOOL)endsWith:(NSString*)suffix {
     return [self hasSuffix:suffix];
 }
 
@@ -465,7 +610,7 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
     return (int)range.location;
 }
 
-- (int) indexOfString:(NSString*)str fromIndex:(int)index {
+- (int)indexOfString:(NSString*)str fromIndex:(int)index {
     NSRange fromRange = NSMakeRange(index, self.length - index);
     NSRange range = [self rangeOfString:str options:NSLiteralSearch range:fromRange];
     if (range.location == NSNotFound) {
@@ -474,7 +619,7 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
     return (int)range.location;
 }
 
-- (int) lastIndexOfChar:(unichar)ch {
+- (int)lastIndexOfChar:(unichar)ch {
     int len = (int)self.length;
     for (int i = len-1; i >=0; --i) {
         if ([self charAt:i] == ch) {
@@ -484,7 +629,7 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
     return NotFoundEx;
 }
 
-- (int) lastIndexOfChar:(unichar)ch fromIndex:(int)index {
+- (int)lastIndexOfChar:(unichar)ch fromIndex:(int)index {
     int len = (int)self.length;
     if (index >= len) {
         index = len - 1;
@@ -497,7 +642,7 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
     return NotFoundEx;
 }
 
-- (int) lastIndexOfString:(NSString*)str {
+- (int)lastIndexOfString:(NSString*)str {
     NSRange range = [self rangeOfString:str options:NSBackwardsSearch];
     if (range.location == NSNotFound) {
         return NotFoundEx;
@@ -522,11 +667,11 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
     return [self substringWithRange:range];
 }
 
-- (NSString *) toLowerCase {
+- (NSString *)toLowerCase {
     return [self lowercaseString];
 }
 
-- (NSString *) toUpperCase {
+- (NSString *)toUpperCase {
     return [self uppercaseString];
 }
 
@@ -732,195 +877,12 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
 
 @end
 
-#pragma mark - Pinyin
-
-@implementation NSString ( Pinyin )
-
-- (NSString *)chinese2pinyin {
-    //将NSString装换成NSMutableString
-    NSMutableString *pinyin = [self mutableCopy];
-    //将汉字转换为拼音(带音标)
-    CFStringTransform((__bridge CFMutableStringRef)pinyin, NULL, kCFStringTransformMandarinLatin, NO);
-    //去掉拼音的音标
-    CFStringTransform((__bridge CFMutableStringRef)pinyin, NULL, kCFStringTransformStripCombiningMarks, NO);
-    //返回最近结果
-    return pinyin;
-}
-
-@end
-
 #pragma mark - Encoding
 
 @implementation NSString (Encoding)
 
 - (NSData *)utf8EncodedData {
     return [self dataUsingEncoding:NSUTF8StringEncoding];
-}
-
-- (NSData *)base64DecodedData {
-    return [[NSData alloc] initWithBase64EncodedString:self options:0];
-}
-
-- (NSString *)base64Encode {
-    NSData *stringData = [self dataUsingEncoding:NSUTF8StringEncoding];
-    return [stringData base64EncodedStringWithOptions:0];
-}
-
-- (NSString *)base64Decode {
-    return [[NSString alloc] initWithData:self.base64DecodedData encoding:NSUTF8StringEncoding];
-}
-
-- (NSString *)sha256Hash {
-    return [[self dataUsingEncoding:NSUTF8StringEncoding] sha256Hash];
-}
-
-- (NSData *)sha256HashRaw {
-    NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
-    
-    unsigned char result[CC_SHA256_DIGEST_LENGTH];
-    CC_SHA256(data.bytes, (unsigned int)data.length, result);
-    
-    data = [[NSData alloc] initWithBytes:result length:CC_SHA256_DIGEST_LENGTH];
-    
-    return data;
-}
-
-+ (NSString *)hashHMacToString:(NSString *)data key:(NSString *)key {
-    return [[self hashHMac:data key:key] base64EncodedStringWithOptions:0];
-}
-
-+ (NSData *)hashHMac:(NSString *)data key:(NSString *)key {
-    const char *cKey  = [key cStringUsingEncoding:NSUTF8StringEncoding];
-    const char *cData = [data cStringUsingEncoding:NSUTF8StringEncoding];
-    unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
-    
-    CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
-    return [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
-}
-
-- (NSString *)MD5Hash {
-    const char *cStr = [self UTF8String];
-    unsigned char result[CC_MD5_DIGEST_LENGTH];
-    CC_MD5( cStr, (CC_LONG)strlen(cStr), result );
-    return [NSString stringWithFormat: @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-            result[0], result[1], result[2], result[3],
-            result[4], result[5], result[6], result[7],
-            result[8], result[9], result[10], result[11],
-            result[12], result[13], result[14], result[15]
-            ];
-}
-
-@end
-
-#pragma mark - REST
-
-@implementation NSString (REST)
-
-- (NSString *)URLEncodedString {
-    __autoreleasing NSString *encodedString;
-    NSString *originalString = (NSString *)self;
-    encodedString = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(
-                                                                                          NULL,
-                                                                                          (__bridge CFStringRef)originalString,
-                                                                                          NULL,
-                                                                                          (CFStringRef)@":!*();@/&?#[]+$,='%’\"",
-                                                                                          kCFStringEncodingUTF8
-                                                                                          );
-    return encodedString;
-}
-
-- (NSString *)URLDecodedString {
-    __autoreleasing NSString *decodedString;
-    NSString *originalString = (NSString *)self;
-    decodedString = (__bridge_transfer NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(
-                                                                                                          NULL,
-                                                                                                          (__bridge CFStringRef)originalString,
-                                                                                                          CFSTR(""),
-                                                                                                          kCFStringEncodingUTF8
-                                                                                                          );
-    return decodedString;
-}
-
-// 从URL中解析出参数字典
-- (NSDictionary *)queryDictionaryUsingEncoding:(NSStringEncoding)encoding {
-    NSCharacterSet *delimiterSet = [NSCharacterSet characterSetWithCharactersInString:@"&;"];
-    NSMutableDictionary *pairs = [NSMutableDictionary dictionary];
-    NSScanner *scanner = [[NSScanner alloc] initWithString:self];
-    while (![scanner isAtEnd]) {
-        NSString *pairString = nil;
-        [scanner scanUpToCharactersFromSet:delimiterSet intoString:&pairString];
-        [scanner scanCharactersFromSet:delimiterSet intoString:NULL];
-        NSArray *kvPair = [pairString componentsSeparatedByString:@"="];
-        if (kvPair.count == 1 || kvPair.count == 2) {
-            NSString *key = [[kvPair objectAtIndex:0]
-                             stringByReplacingPercentEscapesUsingEncoding:encoding];
-            
-            if (kvPair.count == 1) {
-                [pairs setObject:[NSNull null] forKey:key];
-                
-            } else if (kvPair.count == 2) {
-                NSString *value = [[kvPair objectAtIndex:1]
-                                   stringByReplacingPercentEscapesUsingEncoding:encoding];
-                
-                [pairs setObject:value forKey:key];
-            }
-        }
-    }
-    return [NSDictionary dictionaryWithDictionary:pairs];
-}
-
-
-- (NSString *)removeUnescapedCharacter {
-    NSCharacterSet *controlChars = [NSCharacterSet controlCharacterSet];
-    NSRange range = [self rangeOfCharacterFromSet:controlChars]; //获取那些特殊字符
-    
-    //寻找字符串中有没有这些特殊字符
-    if (range.location != NSNotFound) {
-        NSMutableString *mutable = [NSMutableString stringWithString:self];
-        while (range.location != NSNotFound) {
-            [mutable deleteCharactersInRange:range]; //去掉这些特殊字符
-            range = [mutable rangeOfCharacterFromSet:controlChars];
-        }
-        return mutable;
-    }
-    return self;
-}
-
-- (NSDictionary *)JSONDictionary {
-    NSError *error = nil;
-    NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
-    id jsonObject = [NSJSONSerialization JSONObjectWithData:data
-                                                    options:kNilOptions
-                                                      error:&error]; //json数据当中没有 \n \r \t 等制表符
-    
-    
-    if (error) {
-        LOG(@"%@", error);
-        
-        NSString *filteredString = [self removeUnescapedCharacter]; // json 里面的特殊控制字符，需要过滤
-        jsonObject = [NSJSONSerialization JSONObjectWithData:[filteredString dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
-        
-        if (error) {
-            return nil;
-        }
-    }
-    
-    return jsonObject;
-}
-
-// 对参数列表生成URL编码后字符串
-+ (NSString *)makeQueryStringFromArgs:(NSDictionary *)args {
-    NSMutableString *formatString = nil;
-    
-    for (NSString *key in args) {
-        if (formatString == nil) {
-            formatString = [NSMutableString stringWithFormat:@"%@=%@", key, [[args valueForKey:key] URLEncodedString]];
-        } else {
-            [formatString appendFormat:@"&%@=%@", key, [[args valueForKey:key] URLEncodedString]];
-        }
-    }
-    
-    return [NSString stringWithString:formatString];
 }
 
 @end

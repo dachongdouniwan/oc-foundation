@@ -1,18 +1,35 @@
 //
-//  NSObject+JKEasyCopy.m
-//  NSObject-JKEasyCopy
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/    /__|       \/____/
 //
-//  Created by York on 15/12/1.
-//  Copyright © 2015年 YK-Unit. All rights reserved.
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
-#import "NSObject+JKEasyCopy.h"
-#import <objc/runtime.h>
+#import "_precompile.h"
+#import "_instance.h"
 
-@implementation NSObject (JKEasyCopy)
+// ----------------------------------
+// Source code
+// ----------------------------------
 
-- (BOOL)jk_easyShallowCopy:(NSObject *)instance
-{
+@implementation NSObject ( Instance )
+
++ (instancetype)instance {
+    return [self new];
+}
+
+#pragma mark - Shallow, deep copy
+
+- (BOOL)easyShallowCopy:(NSObject *)instance {
     Class currentClass = [self class];
     Class instanceClass = [instance class];
     
@@ -33,7 +50,7 @@
             objc_property_t property = propertyList[i];
             const char *property_name = property_getName(property);
             NSString *propertyName = [NSString stringWithCString:property_name encoding:NSUTF8StringEncoding];
-
+            
             //check if property is dynamic and readwrite
             char *dynamic = property_copyAttributeValue(property, "D");
             char *readonly = property_copyAttributeValue(property, "R");
@@ -51,8 +68,7 @@
     return YES;
 }
 
-- (BOOL)jk_easyDeepCopy:(NSObject *)instance
-{
+- (BOOL)easyDeepCopy:(NSObject *)instance {
     Class currentClass = [self class];
     Class instanceClass = [instance class];
     
@@ -73,21 +89,21 @@
             objc_property_t property = propertyList[i];
             const char *property_name = property_getName(property);
             NSString *propertyName = [NSString stringWithCString:property_name encoding:NSUTF8StringEncoding];
-
+            
             //check if property is dynamic and readwrite
             char *dynamic = property_copyAttributeValue(property, "D");
             char *readonly = property_copyAttributeValue(property, "R");
             if (propertyName && !readonly) {
                 id propertyValue = [instance valueForKey:propertyName];
                 Class propertyValueClass = [propertyValue class];
-                BOOL flag = [NSObject jk_isNSObjectClass:propertyValueClass];
+                BOOL flag = [NSObject isNSObjectClass:propertyValueClass];
                 if (flag) {
                     if ([propertyValue conformsToProtocol:@protocol(NSCopying)]) {
                         NSObject *copyValue = [propertyValue copy];
                         [self setValue:copyValue forKey:propertyName];
                     }else{
                         NSObject *copyValue = [[[propertyValue class]alloc]init];
-                        [copyValue jk_easyDeepCopy:propertyValue];
+                        [copyValue easyDeepCopy:propertyValue];
                         [self setValue:copyValue forKey:propertyName];
                     }
                 }else{
@@ -105,18 +121,19 @@
 }
 
 
-+ (BOOL)jk_isNSObjectClass:(Class)clazz{
-    
++ (BOOL)isNSObjectClass:(Class)clazz{
     BOOL flag = class_conformsToProtocol(clazz, @protocol(NSObject));
+    
     if (flag) {
         return flag;
-    }else{
+    } else {
         Class superClass = class_getSuperclass(clazz);
         if (!superClass) {
             return NO;
-        }else{
-            return  [NSObject jk_isNSObjectClass:superClass];
+        } else {
+            return  [NSObject isNSObjectClass:superClass];
         }
     }
 }
+
 @end

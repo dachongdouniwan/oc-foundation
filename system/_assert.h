@@ -1,9 +1,17 @@
 //
-//  _assert.h
-//  kata
+//     ____              _____    _____    _____
+//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
+//    \ \     / / \ \     / /\/    / /    \ \  _\_
+//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
+//  \____/     \___/   \____/    /__|       \/____/
 //
-//  Created by fallen.ink on 16/02/2017.
-//  Copyright © 2017 fallenink. All rights reserved.
+//	Copyright BinaryArtists development team and other contributors
+//
+//	https://github.com/BinaryArtists/suite.great
+//
+//	Free to use, prefer to discuss!
+//
+//  Welcome!
 //
 
 #import <Foundation/Foundation.h>
