@@ -36,4 +36,6 @@
 #define color_brown     [UIColor brownColor]            // 0.6, 0.4, 0.2 RGB
 #define color_clear     [UIColor clearColor]            // 0.0 white, 0.0 alpha
 
+#define color_theme     [UIColor themeColor]
+
 #endif /* _colordef_h */

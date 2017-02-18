@@ -14,8 +14,6 @@
 //  Welcome!
 //
 
-#import <Foundation/Foundation.h>
-
 #import "_property.h"
 
 ///===================================
