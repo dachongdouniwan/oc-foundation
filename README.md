@@ -4,7 +4,7 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
 * [shaojiankui/JKCategories](https://github.com/shaojiankui/JKCategories)
 
 ----------
-### 分割
+### 系列
 
 1. [suite.great](https://github.com/BinaryArtists/suite.great)
 	基础部件
@@ -36,4 +36,9 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
 	> 大部分文件，均为小写字母命名文件。
 	> 很大可能重名的文件，以下划线开头。
 
+结论：它注定不会被他人使用，😄
+
 ----------
+### 使用建议
+
+*	头文件引用，优先使用局部头文件，如：#import "_foundation.h" #import "_easycoding.h"
