@@ -54,7 +54,6 @@
 
 - (int)wordsCount; // 获取字符数量
 
-
 - (BOOL)startsWith:(NSString*)prefix;
 - (BOOL)endsWith:(NSString*)suffix;
 
@@ -74,6 +73,7 @@
 
 - (NSString *)replaceAll:(NSString *)origin with:(NSString *)replacement;
 - (NSArray *)split:(NSString *)separator;
++ (NSString *)jk_reverseString:(NSString *)strSrc; // 反转字符串
 
 - (BOOL)empty;
 - (BOOL)notEmpty;

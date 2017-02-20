@@ -14,7 +14,7 @@
 //  Welcome!
 //
 
-#import <QuartzCore/QuartzCore.h>
+#import "_precompile.h"
 #import "_performance.h"
 
 #pragma mark - 
@@ -29,7 +29,7 @@
     
     unsigned int m = ((b-a) * 1000.0f); // convert from seconds to milliseconds
     
-    LOG(@"%@: %d ms", tag ? prefixString : @"Time taken", m);
+    LOG(@"%@: %d ms", tag ? @"" : @"Time taken", m);
 }
 
 @end

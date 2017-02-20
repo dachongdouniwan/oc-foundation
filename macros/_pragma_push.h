@@ -27,6 +27,7 @@
 #pragma clang diagnostic ignored "-Wprotocol"
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 #pragma clang diagnostic ignored "-Wdeprecated"
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 //  When it marks any one of the init-family methods in a class's declaration, all other initializers are considered "secondary" (to use Apple's terminology) initializers. That is, they should call through to one another designated or secondary initializer until they reach a designated initializer.
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"

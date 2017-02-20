@@ -18,6 +18,7 @@
 #import "_unitest.h"
 #import "_pragma_push.h"
 #import "_runtime.h"
+#import "_log.h"
 
 // ----------------------------------
 // Source code

@@ -44,7 +44,6 @@
 #import "NSAttributedString+Extension.h"
 #import "NSBundle+Extension.h"
 #import "NSData+Extension.h"
-#import "NSDate+Extension.h"
 #import "NSDictionary+Extension.h"
 #import "NSException+Extension.h"
 #import "NSInvocation+Extension.h"

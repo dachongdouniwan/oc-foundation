@@ -700,6 +700,23 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
     return [self componentsSeparatedByString:separator];
 }
 
+/**
+ *  @brief  反转字符串
+ *
+ *  @param strSrc 被反转字符串
+ *
+ *  @return 反转后字符串
+ */
++ (NSString *)reverseString:(NSString *)strSrc {
+    NSMutableString* reverseString = [[NSMutableString alloc] init];
+    NSInteger charIndex = [strSrc length];
+    while (charIndex > 0) {
+        charIndex --;
+        NSRange subStrRange = NSMakeRange(charIndex, 1);
+        [reverseString appendString:[strSrc substringWithRange:subStrRange]];
+    }
+    return reverseString;
+}
 
 ////////////////////////////
 

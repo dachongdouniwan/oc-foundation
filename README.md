@@ -1,6 +1,6 @@
 Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：gan ba dei>)
 
-* [hackers-painters/samurai-native](https://github.com/hackers-painters/samurai-native), 很有趣，“黑客与画家”，Joe Zhou gives named orgnization “二进制艺术家”, Cheers。
+* [hackers-painters/samurai-native](https://github.com/hackers-painters/samurai-native), 很有趣，“黑客与画家”，Joe Zhou named this orgnization “二进制艺术家”, Cheers。
 * [shaojiankui/JKCategories](https://github.com/shaojiankui/JKCategories)
 
 ----------
@@ -15,7 +15,7 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
 	模块化机制，service（参考BeeFramework），mediator等
 4. [suite.debug](https://github.com/BinaryArtists/suite.debug)
 	调试工具，架构基于module-x中的service
-6. [sutie.ui](https://github.com/BinaryArtists/suite.compo)
+6. [sutie.ui](https://github.com/BinaryArtists/suite.ui)
 	UI组件，主要分两部分：对系统视图层的扩展，和用到的第三方UI组件
 7. [suite.hybrid](https://github.com/BinaryArtists/suite.hybrid)
 	混合框架使用，该框架以weex为蓝本；兼顾对其他开源方案的学习与尝试

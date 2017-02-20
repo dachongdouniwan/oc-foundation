@@ -24,6 +24,7 @@
 @interface NSBundle (Extension)
 
 + (NSBundle *)bundleWithName:(NSString *)bundleName;
+
 + (UIImage *)imageWithName:(NSString *)imageName bundleName:(NSString *)bundleName;
 + (UIImage *)imageWithName:(NSString *)imageName bundleName:(NSString *)bundleName subPath:(NSString *)subPath;
 

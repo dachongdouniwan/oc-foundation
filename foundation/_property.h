@@ -194,10 +194,18 @@
         - (void)setName:(type)obj { [self assignAssociatedObject:@((pod_type)obj) forKey:#name]; } \
         + (NSString *)property_##name { return macro_string( macro_join(__VA_ARGS__) ); }
 
+// Use this add property to category!
+
 #define def_prop_custom( type, name, setName, attr ) \
         dynamic name; \
         - (type)name { return [self getAssociatedObjectForKey:#name]; } \
         - (void)setName:(type)obj { [self attr##AssociatedObject:obj forKey:#name]; }
+
+#define def_prop_custom_block( type, name, setName, attr, getter_code_block, setter_code_block) \
+        dynamic name; \
+        - (type)name { if (getter_code_block) getter_code_block(); return [self getAssociatedObjectForKey:#name]; } \
+        - (void)setName:(type)obj { if (setter_code_block) setter_code_block();[self attr##AssociatedObject:obj forKey:#name]; }
+
 
 // ----------------------------------
 // Class code
