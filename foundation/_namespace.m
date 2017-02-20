@@ -18,14 +18,14 @@
 
 #pragma mark -
 
-__strong _Namespace * G = nil;
+__strong _Namespace * sutie = nil;
 
 #pragma mark -
 
 @implementation _Namespace
 
 + (void)load {
-    G = [[_Namespace alloc] init];
+    suite = [[_Namespace alloc] init];
 }
 
 @end

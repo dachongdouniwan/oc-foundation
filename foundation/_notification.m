@@ -17,7 +17,7 @@
 #import "_pragma_push.h"
 #import "_precompile.h"
 #import "_notification.h"
-#import "foundation/_foundation.h"
+#import "_runtime.h"
 
 #pragma mark -
 

@@ -23,7 +23,7 @@
 #pragma mark -
 
 @class _Namespace;
-extern _Namespace * G;
+extern _Namespace * suite;
 
 #pragma mark -
 
