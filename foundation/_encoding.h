@@ -18,8 +18,7 @@
 
 #pragma mark -
 
-typedef enum
-{
+typedef enum {
     EncodingType_Unknown = 0,
     EncodingType_Null,
     EncodingType_Number,
@@ -30,22 +29,6 @@ typedef enum
     EncodingType_Array,
     EncodingType_Dict
 } EncodingType;
-
-#pragma mark -
-
-@interface NSObject ( Encoding )
-
-/**
- *  對象編碼
- *
- *  @param type 目標編碼類型
- *
- *  @return 編碼後的對象
- */
-
-- (NSObject *)converToType:(EncodingType)type;
-
-@end
 
 #pragma mark -
 

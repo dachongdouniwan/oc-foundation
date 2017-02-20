@@ -16,53 +16,7 @@
 
 #import <objc/runtime.h>
 #import "_encoding.h"
-#import "foundation/_foundation.h"
-
-#pragma mark -
-
-@implementation NSObject ( Encoding )
-
-- (NSObject *)converToType:(EncodingType)type
-{
-    if ( EncodingType_Null == type )
-    {
-        return [NSNull null];
-    }
-    else if ( EncodingType_Number == type )
-    {
-        return [self toNumber];
-    }
-    else if ( EncodingType_String == type )
-    {
-        return [self toString];
-    }
-    else if ( EncodingType_Date == type )
-    {
-        return [self toDate];
-    }
-    else if ( EncodingType_Data == type )
-    {
-        return [self toData];
-    }
-    else if ( EncodingType_Url == type )
-    {
-        return [self toURL];
-    }
-    else if ( EncodingType_Array == type )
-    {
-        return nil;
-    }
-    else if ( EncodingType_Dict == type )
-    {
-        return nil;
-    }
-    else
-    {
-        return nil;
-    }
-}
-
-@end
+#import "_foundation.h"
 
 #pragma mark -
 

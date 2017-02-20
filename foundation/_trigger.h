@@ -86,6 +86,10 @@ typedef void ( *ImpFuncType )( id a, SEL b, void * c );
 - (id)performCallChainWithName:(NSString *)name;
 - (id)performCallChainWithName:(NSString *)name reversed:(BOOL)flag;
 
+- (id)performSelector:(SEL)selector withObjects:(NSArray *)objects;
+- (void)performSelectorOnMainThread:(SEL)selector withObject:(id)arg1 withObject:(id)arg2 waitUntilDone:(BOOL)wait;
+- (void)performSelector:(SEL)aSelector withObjects:(NSArray *)arguments afterDelay:(NSTimeInterval)delay;
+
 #pragma mark - Block
 
 + (id)performBlock:(void (^)(void))block afterDelay:(NSTimeInterval)delay;

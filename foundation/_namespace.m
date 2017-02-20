@@ -18,7 +18,7 @@
 
 #pragma mark -
 
-__strong _Namespace * sutie = nil;
+__strong _Namespace * suite = nil;
 
 #pragma mark -
 

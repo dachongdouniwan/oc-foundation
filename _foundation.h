@@ -37,7 +37,7 @@
 #import "_swizzler.h"
 #import "_thead.h"
 #import "_timer.h"
-#import "_validator.h"
+#import "_trigger.h"
 
 // Extension
 #import "NSArray+Extension.h"

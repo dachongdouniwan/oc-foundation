@@ -41,15 +41,15 @@
 /**
  Exchange methods' implementations.
  
- @param originalMethod Method to exchange.
- @param newMethod Method to exchange.
+ @param originalSelector Method to exchange.
+ @param newSelector Method to exchange.
  */
 + (void)swizzleMethod:(SEL)originalSelector withMethod:(SEL)newSelector;
 
 /**
  Append a new method to an object.
  
- @param newMethod Method to exchange.
+ @param newSelector Method to exchange.
  @param klass Host class.
  */
 + (void)appendMethod:(SEL)newSelector fromClass:(Class)klass;
@@ -57,7 +57,7 @@
 /**
  Replace a method in an object.
  
- @param method Method to exchange.
+ @param selector Method to exchange.
  @param klass Host class.
  */
 + (void)replaceMethod:(SEL)selector fromClass:(Class)klass;
