@@ -1,9 +1,9 @@
 内容来自stackoverflow的回复：http://stackoverflow.com/questions/6910901/canonical-list-of-xcode-environment-variables/6911421#6911421
 
-Variable                                  Example
-PATH                                      "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-LANG                                      en_US.US-ASCII
-IPHONEOS_DEPLOYMENT_TARGET                4.1
+###Variable                                  Example
+#####PATH &emsp;&emsp;&emsp;&emsp; "/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+#####LANG &emsp;&emsp;&emsp;&emsp; en_US.US-ASCII
+#####IPHONEOS_DEPLOYMENT_TARGET                4.1
 ACTION                                    build
 AD_HOC_CODE_SIGNING_ALLOWED               NO
 ALTERNATE_GROUP                           staff
