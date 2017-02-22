@@ -25,9 +25,6 @@
 #define path_for_xml_res( _name_ )    [[NSBundle mainBundle] pathForResource:(_name_) ofType:@"xml"]
 #define path_for_res( _res_, _type_)  [[NSBundle mainBundle] pathForResource:(_res_) ofType:(_type_)]
 
-// 简短 self
-#define _ self
-
 // 特殊数值
 #undef  invalid_int32
 #define invalid_int32 INT32_MAX
