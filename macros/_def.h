@@ -15,6 +15,7 @@
 // 一般性字符串标识符：suite.module.spec
 // 一般性key编码：key.类型名(意义名）
 // 单例的实例的宏定义：xxxInst, 如 networkInst
+// 事件响应函数命名：did\will\when\on + event desc
 
 #import <Foundation/Foundation.h>
 
