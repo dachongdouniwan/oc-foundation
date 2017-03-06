@@ -30,6 +30,9 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
 5. 资源：枚举所有的警告内容、
 6. 其他支持：block使用集、声明式响应式处理、状态机、类型相关的信号处理
 
+引用：
+	[软件架构入门](http://www.ruanyifeng.com/blog/2016/09/software-architecture.html)
+
 ----------
 ### suite.great 中反人类的代码风格！！
 
@@ -40,6 +43,9 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
 
 	> 厌烦各种前缀缩写，于是有了"_"
 	> "_" 加上驼峰在文件名上，很难看，于是就："_ui_core.h"，而类名：_Namespace
+
+引用：
+	[为什么文件名要小写？](http://www.ruanyifeng.com/blog/2017/02/filename-should-be-lowercase.html)
 
 ----------
 ### 使用建议
