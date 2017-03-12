@@ -11,7 +11,21 @@
 // ----------------------------------
 
 #if !__has_feature(objc_arc)
-#   error SUITE is ARC only. Either turn on ARC for the project or use -fobjc-arc flag
+//#   error SUITE is ARC only. Either turn on ARC for the project or use -fobjc-arc flag
+#endif
+
+#ifdef __OBJC_GC__
+#   error SUITE does not support Objective-C Garbage Collection
+#endif
+
+#if TARGET_OS_IPHONE
+#ifndef __IPHONE_8_0
+#   error SUITE is supported only on iOS 8 and above
+#endif
+#endif
+
+#if TARGET_OS_OSX
+#   error SUITE is supported only on Mac OS X
 #endif
 
 // ----------------------------------

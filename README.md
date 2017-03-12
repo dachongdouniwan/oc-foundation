@@ -30,6 +30,9 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
 5. 资源：枚举所有的警告内容、
 6. 其他支持：block使用集、声明式响应式处理、状态机、类型相关的信号处理
 
+引用：
+	[软件架构入门](http://www.ruanyifeng.com/blog/2016/09/software-architecture.html)
+
 ----------
 ### suite.great 中反人类的代码风格！！
 
@@ -40,6 +43,22 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
 
 	> 厌烦各种前缀缩写，于是有了"_"
 	> "_" 加上驼峰在文件名上，很难看，于是就："_ui_core.h"，而类名：_Namespace
+    > 那么，主框架内：
+    >> 类名：_ClassName
+    >> 内部方法名：__methodName
+    >> 外部方法名：methodname
+    >> 全局变量：禁止，用宏替换，单例等
+    >> 属性名：propertyName
+    >> 文件名：_file_name.h
+    >> 宏定义：macro_operation( _name_ )
+
+引用：
+	[为什么文件名要小写？](http://www.ruanyifeng.com/blog/2017/02/filename-should-be-lowercase.html)
+
+语言元素命名规则建议：
+
+    > 协议命名：代理模式下, XXXXDelegate；接口定义下：XXXXProtocol
+    > 还没有添加，需要将_def.h中的清理出来，整理并规范
 
 ----------
 ### 使用建议
