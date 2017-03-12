@@ -22,7 +22,7 @@
 
 #pragma mark -
 
-#undef	 static_property
+#undef  static_property
 #define static_property( _name_ ) \
         property (nonatomic, readonly) NSString * _name_; \
         - (NSString *)_name_; \

@@ -30,10 +30,10 @@
  *  @param block The block to execute once.
  */
 #ifndef execute_once
-#define execute_once(block) \
+#define execute_once( _block_ ) \
         { \
             static dispatch_once_t predicate = 0; \
-            dispatch_once(&predicate, block); \
+            dispatch_once(&predicate, _block_); \
         }
 #endif
 
