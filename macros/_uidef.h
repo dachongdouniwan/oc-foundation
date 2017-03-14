@@ -54,6 +54,7 @@
 // 导航栏、状态栏标签栏相关
 #define status_bar_height        20
 #define navigation_bar_height    44
+#define navigation_status_bar_height    64
 #define tab_bar_height           49
 #define keyboard_height          216
 
