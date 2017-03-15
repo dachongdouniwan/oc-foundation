@@ -50,7 +50,7 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
     >> 全局变量：禁止，用宏替换，单例等
     >> 属性名：propertyName
     >> 文件名：_file_name.h
-    >> 宏定义：macro_operation( _name_ )
+    >> 宏定义：动作类：macro_operation( _name_ )，环境变量类：MACRO_ENV (我更偏向于全小写，想想巧办法)
 
 引用：
 	[为什么文件名要小写？](http://www.ruanyifeng.com/blog/2017/02/filename-should-be-lowercase.html)
