@@ -17,6 +17,13 @@
 #ifndef _colordef_h
 #define _colordef_h
 
+#define color_with_rgb_value( _valud_ ) [UIColor \
+        colorWithRed:((float)((_valud_ & 0xFF0000) >> 16))/255.0 \
+        green:((float)((_valud_ & 0xFF00) >> 8))/255.0 \
+        blue:((float)(_valud_ & 0xFF))/255.0 alpha:1.0]
+
+#define color_with_hex( _hex_ ) color_with_rgb_value( _hex_ )
+
 #define color_with_rgba(r,g,b,a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
 #define color_with_rgb(r,g,b) color_with_rgba(r, g, b, 1.0f)
 
