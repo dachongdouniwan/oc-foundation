@@ -71,6 +71,10 @@
 
 #pragma mark -
 
+void dumpClass(Class cls);
+
+#pragma mark -
+
 @interface NSObject ( Runtime )
 
 /**
