@@ -24,6 +24,8 @@
  xxxxxxx.m:64:18: 'containsString:' is deprecated: TOO NEW!
  如果配置后编译没有生效，把Build Settings里面的Enable Modules (C and Objective-C)项改为NO试试，具体原因我还不知道是为什么。
  
+ project 和 target 中都要设置
+ 
  这个工具无法检查出我们的代码有没有进行过版本兼容处理，它会对所有有问题的代码报错。所以我们要在处理过兼容性的地方，显式的用宏把代码包起来：
  
  MJG_START_IGNORE_TOO_NEW
