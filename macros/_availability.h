@@ -7,6 +7,35 @@
 //
 
 /**
+ http://www.jianshu.com/p/4929953420f2
+ 
+ 检查API可用性的工具
+ 
+ 比较好的方案是用MJGAvailability.h在编译期检查。
+ 把MJGAvailability.h文件加入工程中，在预编译头文件最开头加上下面的代码即可:
+ 
+ #define __IPHONE_OS_VERSION_SOFT_MAX_REQUIRED __IPHONE_7_0
+ #import "MJGAvailability.h"
+ 其中的__IPHONE_7_0定义在Availability.h文件中，可以改成需要的任何系统版本。
+ 配置完成后，调用不可用的API会出现如下形式的警告：
+ 
+ xxxxxxx.m:64:18: 'containsString:' is deprecated: TOO NEW!
+ 如果配置后编译没有生效，把Build Settings里面的Enable Modules (C and Objective-C)项改为NO试试，具体原因我还不知道是为什么。
+ 
+ 这个工具无法检查出我们的代码有没有进行过版本兼容处理，它会对所有有问题的代码报错。所以我们要在处理过兼容性的地方，显式的用宏把代码包起来：
+ 
+ MJG_START_IGNORE_TOO_NEW
+ if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+ [cell setPreservesSuperviewLayoutMargins:NO];
+ }
+ if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+ [cell setLayoutMargins:UIEdgeInsetsZero];
+ }
+ MJG_END_IGNORE_TOO_NEW
+ 另外有一个叫做Faux Pas的代码静态分析工具，可以进行API可用性的检查，但因为它的试用版随机隐藏了检查结果，所以就没再研究了。
+ */
+
+/**
  * Example usage:
  *   If you want to see if you're using methods that are only defined in iOS 4.0 and lower 
  *   then you would use the following. Replace the __IPHONE_4_0 with whatever other macro 
