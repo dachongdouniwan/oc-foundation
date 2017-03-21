@@ -16,20 +16,15 @@
 
 #import <Foundation/Foundation.h>
 
-// 预编译头
-#import "_precompile.h"
+@interface _Stack : NSObject <NSFastEnumeration>
 
-// 基础部分
-#import "_foundation.h"
+@property (nonatomic, assign, readonly) NSUInteger count;
 
-// 系统部分
-#import "_system.h"
+- (id)initWithArray:(NSArray*)array;
 
-// 数据结构
-#import "_stack.h"
-#import "_sorted_array.h"
+- (void)pushObject:(id)object;
+- (void)pushObjects:(NSArray*)objects;
+- (id)popObject;
+- (id)peekObject;
 
-@namespace( system )
-@namespace( system, logger, _Logger )
-@namespace( system, debugger, _Debugger )
-@namespace( system, info, _SystemInfo )
+@end
