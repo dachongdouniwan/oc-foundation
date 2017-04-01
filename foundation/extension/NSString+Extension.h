@@ -20,6 +20,9 @@
 
 @interface NSString ( Extension )
 
+- (NSString *)unwrap;
+- (NSString *)normalize;
+
 - (NSString *)trim;
 - (NSString *)trimBy:(NSString *)str;
 - (NSString *)trimFloatPointNumber; // 去掉浮点数尾部的'0'和'.' 如：1.00 ==> 1, 0.00 ==> 0, 0.50 ==> 0.5

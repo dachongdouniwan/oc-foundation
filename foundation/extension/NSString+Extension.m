@@ -89,6 +89,40 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
 
 @implementation NSString (Extension)
 
+- (NSString *)unwrap {
+    if ( self.length >= 2 ) {
+        if ( [self hasPrefix:@"\""] && [self hasSuffix:@"\""] ) {
+            return [self substringWithRange:NSMakeRange(1, self.length - 2)];
+        }
+        
+        if ( [self hasPrefix:@"'"] && [self hasSuffix:@"'"] ) {
+            return [self substringWithRange:NSMakeRange(1, self.length - 2)];
+        }
+    }
+    
+    return self;
+}
+
+- (NSString *)normalize {
+    NSArray * lines = [self componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    
+    if ( lines && lines.count ) {
+        NSMutableString * mergedString = [NSMutableString string];
+        
+        for ( NSString * line in lines ) {
+            NSString * trimed = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            
+            if ( trimed && trimed.length ) {
+                [mergedString appendString:trimed];
+            }
+        }
+        
+        return mergedString;
+    }
+    
+    return nil;
+}
+
 #pragma mark - Trimming
 
 - (NSString *)trim {
