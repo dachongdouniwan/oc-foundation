@@ -18,23 +18,17 @@
 
 #pragma mark -
 
-@interface NSString (Extension)
+@interface NSString ( Extension )
 
 - (NSString *)trim;
 - (NSString *)trimBy:(NSString *)str;
-/**
- *  @desc   去掉浮点数尾部的0和.
- 
- *  如：1.00 ==> 1, 0.00 ==> 0, 0.50 ==> 0.5
- */
-- (NSString *)trimFloatPointNumber;
-- (NSString *)strippingHTML;
-- (NSString *)removingScriptsAndStrippingHTML; // 清除js脚本
+- (NSString *)trimFloatPointNumber; // 去掉浮点数尾部的'0'和'.' 如：1.00 ==> 1, 0.00 ==> 0, 0.50 ==> 0.5
 - (NSString *)trimmingWhitespace; // 去除空格
 - (NSString *)trimmingWhitespaceAndNewlines; // 去除字符串与空行
 
-- (NSString *)unwrap;
-- (NSString *)normalize;
+- (NSString *)strippingHTML;
+- (NSString *)removingScriptsAndStrippingHTML; // 清除js脚本
+
 - (NSString *)repeat:(NSUInteger)count;
 
 - (BOOL)match:(NSString *)expression;
@@ -46,16 +40,9 @@
 
 - (BOOL)contains:(NSString *)str;
 - (BOOL)contains:(NSString *)str options:(NSStringCompareOptions)option;
-- (BOOL)containsChinese; // 判断URL中是否包含中文
-- (BOOL)containsBlank; // 是否包含空格
-- (NSString *)makeUnicodeToString; // Unicode编码的字符串转成NSString
-- (BOOL)containsCharacterSet:(NSCharacterSet *)set;
-- (BOOL)containsaString:(NSString *)string; // 是否包含字符串
 
-- (int)wordsCount; // 获取字符数量
-
-- (BOOL)startsWith:(NSString*)prefix;
-- (BOOL)endsWith:(NSString*)suffix;
+- (BOOL)startsWith:(NSString *)prefix;
+- (BOOL)endsWith:(NSString *)suffix;
 
 /**  Return the char value at the specified index. */
 - (unichar)charAt:(int)index;
@@ -73,7 +60,7 @@
 
 - (NSString *)replaceAll:(NSString *)origin with:(NSString *)replacement;
 - (NSArray *)split:(NSString *)separator;
-+ (NSString *)jk_reverseString:(NSString *)strSrc; // 反转字符串
++ (NSString *)reverseString:(NSString *)strSrc; // 反转字符串
 
 - (BOOL)empty;
 - (BOOL)notEmpty;
@@ -94,21 +81,8 @@
 - (BOOL)isValueOf:(NSArray *)array;
 - (BOOL)isValueOf:(NSArray *)array caseInsens:(BOOL)caseInsens;
 
-/**
- *  Validator
- */
+- (int)wordsCount; // 获取中文字符数量
 
-- (BOOL)isNumber;
-- (BOOL)isNumberWithUnit:(NSString *)unit;
-- (BOOL)isEmail;
-- (BOOL)isUrl;
-- (BOOL)isIPAddress;
-- (BOOL)isPureInt;    // 判断是否为整形
-- (BOOL)isPureFloat;  // 判断是否为浮点形
-- (BOOL)isMobileNumber;
-- (BOOL)isContainsEmoji; // 是否包含表情
-
-// 子字符串
 - (NSString *)substringFromIndex:(NSUInteger)from untilString:(NSString *)string;
 - (NSString *)substringFromIndex:(NSUInteger)from untilString:(NSString *)string endOffset:(NSUInteger *)endOffset;
 
@@ -120,45 +94,6 @@
 - (NSUInteger)countFromIndex:(NSUInteger)from inCharset:(NSCharacterSet *)charset;
 
 - (NSArray *)pairSeparatedByString:(NSString *)separator;
-
-@end
-
-#pragma mark - Formatter
-
-@interface NSString ( Formatter )
-
-- (NSString *)stringRepresentationForBool:(BOOL)aBool;
-- (NSString *)stringRepresentationForInt:(int)anInt;
-- (NSString *)stringRepresentationForFloat:(float)aFloat;
-- (NSString *)stringRepresentationForDouble:(double)aDouble;
-- (NSString *)stringRepresentationForSelector:(SEL)aSelector;
-- (NSString *)stringRepresentationForChar:(char)aChar;
-- (NSString *)stringRepresentationForShort:(short)aShort;
-- (NSString *)stringRepresentationForCppBool:(bool)aCppBool;
-- (NSString *)stringRepresentationForUChar:(unsigned char)aUChar;
-- (NSString *)stringRepresentationForUShort:(unsigned short)aUShort;
-- (NSString *)stringRepresentationForLong:(long)aLong;
-- (NSString *)stringRepresentationForLongLong:(long long)aLongLong;
-- (NSString *)stringRepresentationForUInt:(unsigned int)aUInt;
-- (NSString *)stringRepresentationForULong:(unsigned long)aULong;
-- (NSString *)stringRepresentationForULongLong:(unsigned long long)aULongLong;
-- (NSString *)stringRepresentationForCharPtr:(long long)aCharPtr;
-- (NSString *)stringRepresentationForObject:(id)anObject;
-- (NSString *)stringRepresentationForClass:(Class)aClass;
-- (NSString *)stringRepresentationForNSInteger:(NSInteger)aNSInteger;
-- (NSString *)stringRepresentationForNSUInteger:(NSUInteger)aNSUInteger;
-- (NSString *)stringRepresentationForCGFloat:(CGFloat)aCGFloat;
-- (NSString *)stringRepresentationForPointer:(void *)aPointer;
-
-@end
-
-#define NSStringFromBool( _bool_ ) [NSString stringRepresentationForBool:_bool_]
-
-#pragma mark - Encoding
-
-@interface NSString ( Encoding )
-
-- (NSData *)utf8EncodedData;
 
 @end
 

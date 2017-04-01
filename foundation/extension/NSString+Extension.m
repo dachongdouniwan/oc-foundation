@@ -140,40 +140,6 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
 
 #pragma mark -
 
-- (NSString *)unwrap {
-	if ( self.length >= 2 ) {
-		if ( [self hasPrefix:@"\""] && [self hasSuffix:@"\""] ) {
-			return [self substringWithRange:NSMakeRange(1, self.length - 2)];
-		}
-
-		if ( [self hasPrefix:@"'"] && [self hasSuffix:@"'"] ) {
-			return [self substringWithRange:NSMakeRange(1, self.length - 2)];
-		}
-	}
-
-	return self;
-}
-
-- (NSString *)normalize {
-	NSArray * lines = [self componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-	
-	if ( lines && lines.count ) {
-		NSMutableString * mergedString = [NSMutableString string];
-		
-		for ( NSString * line in lines ) {
-			NSString * trimed = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-			
-			if ( trimed && trimed.length ) {
-				[mergedString appendString:trimed];
-			}
-		}
-		
-		return mergedString;
-	}
-
-	return nil;
-}
-
 - (NSString *)repeat:(NSUInteger)count {
 	if ( 0 == count )
 		return @"";
@@ -249,120 +215,6 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
 	}
 	
 	return NO;
-}
-
-- (BOOL)isNumber {
-	NSString *		regex = @"-?[0-9.]+";
-	NSPredicate *	pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-	
-	return [pred evaluateWithObject:self];
-}
-
-- (BOOL)isNumberWithUnit:(NSString *)unit {
-	NSString *		regex = [NSString stringWithFormat:@"-?[0-9.]+%@", unit];
-	NSPredicate *	pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-	
-	return [pred evaluateWithObject:self];
-}
-
-- (BOOL)isEmail {
-	NSString *		regex = @"[A-Z0-9a-z._\%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}";
-	NSPredicate *	pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-
-	return [pred evaluateWithObject:[self lowercaseString]];
-}
-
-- (BOOL)isUrl {
-	return ([self hasPrefix:@"http://"] || [self hasPrefix:@"https://"]) ? YES : NO;
-}
-
-- (BOOL)isIPAddress {
-	NSArray *			components = [self componentsSeparatedByString:@"."];
-	NSCharacterSet *	invalidCharacters = [[NSCharacterSet characterSetWithCharactersInString:@"1234567890"] invertedSet];
-
-	if ( [components count] == 4 ) {
-		NSString *part1 = [components objectAtIndex:0];
-		NSString *part2 = [components objectAtIndex:1];
-		NSString *part3 = [components objectAtIndex:2];
-		NSString *part4 = [components objectAtIndex:3];
-		
-		if ( 0 == [part1 length] ||
-			0 == [part2 length] ||
-			0 == [part3 length] ||
-			0 == [part4 length] ) {
-			return NO;
-		}
-		
-		if ( [part1 rangeOfCharacterFromSet:invalidCharacters].location == NSNotFound &&
-			[part2 rangeOfCharacterFromSet:invalidCharacters].location == NSNotFound &&
-			[part3 rangeOfCharacterFromSet:invalidCharacters].location == NSNotFound &&
-			[part4 rangeOfCharacterFromSet:invalidCharacters].location == NSNotFound ) {
-			if ( [part1 intValue] <= 255 &&
-				[part2 intValue] <= 255 &&
-				[part3 intValue] <= 255 &&
-				[part4 intValue] <= 255 ) {
-				return YES;
-			}
-		}
-	}
-	
-	return NO;
-}
-
-- (BOOL)isPureInt {
-    NSScanner* scan = [NSScanner scannerWithString:self];
-    int val;
-    return[scan scanInt:&val] && [scan isAtEnd];
-}
-
-- (BOOL)isPureFloat {
-    NSScanner* scan = [NSScanner scannerWithString:self];
-    float val;
-    return[scan scanFloat:&val] && [scan isAtEnd];
-}
-
-- (BOOL)isMobileNumber {
-    //手机号以13， 15，18,17开头，八个 \d 数字字符
-    NSString *regEx = @"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$";
-    NSPredicate* checkMobilePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regEx];
-    
-    return [checkMobilePredicate evaluateWithObject:self] && (self.length >= 11);
-}
-
-- (BOOL)isContainsEmoji {
-    __block BOOL isEomji = NO;
-    [self enumerateSubstringsInRange:NSMakeRange(0, [self length]) options:NSStringEnumerationByComposedCharacterSequences usingBlock:
-     ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-         const unichar hs = [substring characterAtIndex:0];
-         if (0xd800 <= hs && hs <= 0xdbff) {
-             if (substring.length > 1) {
-                 const unichar ls = [substring characterAtIndex:1];
-                 const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
-                 if (0x1d000 <= uc && uc <= 0x1f77f) {
-                     isEomji = YES;
-                 }
-             }
-         } else if (substring.length > 1) {
-             const unichar ls = [substring characterAtIndex:1];
-             if (ls == 0x20e3) {
-                 isEomji = YES;
-             }
-         } else {
-             if (0x2100 <= hs && hs <= 0x27ff && hs != 0x263b) {
-                 isEomji = YES;
-             } else if (0x2B05 <= hs && hs <= 0x2b07) {
-                 isEomji = YES;
-             } else if (0x2934 <= hs && hs <= 0x2935) {
-                 isEomji = YES;
-             } else if (0x3297 <= hs && hs <= 0x3299) {
-                 isEomji = YES;
-             } else if (hs == 0xa9 || hs == 0xae || hs == 0x303d || hs == 0x3030 || hs == 0x2b55 || hs == 0x2b1c || hs == 0x2b1b || hs == 0x2b50|| hs == 0x231a ) {
-                 isEomji = YES;
-             }
-         }
-     }];
-    
-    return isEomji;
 }
 
 //added end
@@ -502,57 +354,6 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
 - (BOOL)contains:(NSString*) str options:(NSStringCompareOptions)option {
     NSRange range = [self rangeOfString:str options:option];
     return (range.location != NSNotFound);
-}
-
-- (BOOL)containsChinese {
-    NSUInteger length = [self length];
-    for (NSUInteger i = 0; i < length; i++) {
-        NSRange range = NSMakeRange(i, 1);
-        NSString *subString = [self substringWithRange:range];
-        const char *cString = [subString UTF8String];
-        if (strlen(cString) == 3) {
-            return YES;
-        }
-    }
-    return NO;
-}
-
-- (BOOL)containsBlank {
-    NSRange range = [self rangeOfString:@" "];
-    if (range.location != NSNotFound) {
-        return YES;
-    }
-    return NO;
-}
-
-- (NSString *)makeUnicodeToString {
-    NSString *tempStr1 = [self stringByReplacingOccurrencesOfString:@"\\u"withString:@"\\U"];
-    NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\""withString:@"\\\""];
-    NSString *tempStr3 = [[@"\""stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
-    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
-    //NSString* returnStr = [NSPropertyListSerialization propertyListFromData:tempData mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:NULL];
-    
-    NSString *returnStr = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListMutableContainersAndLeaves format:NULL error:NULL];
-    
-    return [returnStr stringByReplacingOccurrencesOfString:@"\\r\\n"withString:@"\n"];
-}
-
-- (BOOL)containsCharacterSet:(NSCharacterSet *)set {
-    NSRange rang = [self rangeOfCharacterFromSet:set];
-    if (rang.location == NSNotFound) {
-        return NO;
-    } else {
-        return YES;
-    }
-}
-
-- (BOOL)containsaString:(NSString *)string {
-    NSRange rang = [self rangeOfString:string];
-    if (rang.location == NSNotFound) {
-        return NO;
-    } else {
-        return YES;
-    }
 }
 
 - (int)wordsCount {
@@ -700,13 +501,6 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
     return [self componentsSeparatedByString:separator];
 }
 
-/**
- *  @brief  反转字符串
- *
- *  @param strSrc 被反转字符串
- *
- *  @return 反转后字符串
- */
 + (NSString *)reverseString:(NSString *)strSrc {
     NSMutableString* reverseString = [[NSMutableString alloc] init];
     NSInteger charIndex = [strSrc length];
@@ -717,8 +511,6 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
     }
     return reverseString;
 }
-
-////////////////////////////
 
 - (NSString *)matchGroupAtIndex:(NSUInteger)idx forRegex:(NSString *)regex {
     NSArray *matches = [self matchesForRegex:regex];
@@ -794,112 +586,6 @@ int rreplace (char *buf, int size, regex_t *re, char *rp) {
     
     regfree(&preg);  // fixme: used to be commented
     return result;
-}
-
-@end
-
-#pragma mark - Formatter
-
-//  inspired by https://github.com/nst/nsarray-functional
-
-@implementation NSString ( Formatter )
-
-- (NSString *)stringRepresentationForBool:(BOOL)aBool {
-    return [NSString stringWithFormat:@"%d", aBool];
-}
-
-- (NSString *)stringRepresentationForInt:(int)anInt {
-    return [NSString stringWithFormat:@"%d", anInt];
-}
-
-- (NSString *)stringRepresentationForFloat:(float)aFloat {
-    return [NSString stringWithFormat:@"%f", aFloat];
-}
-
-- (NSString *)stringRepresentationForDouble:(double)aDouble {
-    return [NSString stringWithFormat:@"%f", aDouble];
-}
-
-- (NSString *)stringRepresentationForSelector:(SEL)aSelector {
-    return NSStringFromSelector(aSelector);
-}
-
-- (NSString *)stringRepresentationForChar:(char)aChar {
-    return [NSString stringWithFormat:@"%c", aChar];
-}
-
-- (NSString *)stringRepresentationForShort:(short)aShort {
-    return [NSString stringWithFormat:@"%hi", aShort];
-}
-
-- (NSString *)stringRepresentationForCppBool:(bool)aCppBool {
-    return [NSString stringWithFormat:@"%d", aCppBool];
-}
-
-- (NSString *)stringRepresentationForUChar:(unsigned char)aUChar {
-    return [NSString stringWithFormat:@"%c", aUChar];
-}
-
-- (NSString *)stringRepresentationForUShort:(unsigned short)aUShort {
-    return [NSString stringWithFormat:@"%hu", aUShort];
-}
-
-- (NSString *)stringRepresentationForLong:(long)aLong {
-    return [NSString stringWithFormat:@"%ld", aLong];
-}
-
-- (NSString *)stringRepresentationForLongLong:(long long)aLongLong {
-    return [NSString stringWithFormat:@"%qi", aLongLong];
-}
-
-- (NSString *)stringRepresentationForUInt:(unsigned int)aUInt {
-    return [NSString stringWithFormat:@"%u", aUInt];
-}
-
-- (NSString *)stringRepresentationForULong:(unsigned long)aULong {
-    return [NSString stringWithFormat:@"%ld", aULong];
-}
-
-- (NSString *)stringRepresentationForULongLong:(unsigned long long)aULongLong {
-    return [NSString stringWithFormat:@"%qu", aULongLong];
-}
-
-- (NSString *)stringRepresentationForCharPtr:(long long)aCharPtr {
-    return [NSString stringWithFormat:@"%s", (char *)aCharPtr];
-}
-
-- (NSString *)stringRepresentationForObject:(id)anObject {
-    return [anObject description];
-}
-
-- (NSString *)stringRepresentationForClass:(Class)aClass {
-    return NSStringFromClass(aClass);
-}
-
-- (NSString *)stringRepresentationForNSInteger:(NSInteger)aNSInteger {
-    return [NSString stringWithFormat:@"%ld", (long)aNSInteger];
-}
-
-- (NSString *)stringRepresentationForNSUInteger:(NSUInteger)aNSUInteger {
-    return [NSString stringWithFormat:@"%lu", (unsigned long)aNSUInteger];
-}
-
-- (NSString *)stringRepresentationForCGFloat:(CGFloat)aCGFloat {
-    return [NSString stringWithFormat:@"%.02f", aCGFloat];
-}
-
-- (NSString *)stringRepresentationForPointer:(void *)aPointer {
-    return [NSString stringWithFormat:@"%p", aPointer];
-}
-
-@end
-
-#pragma mark - Encoding
-
-@implementation NSString (Encoding)
-
-- (NSData *)utf8EncodedData {
-    return [self dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 @end

@@ -27,14 +27,21 @@
  */
 #define is_string_present( _str_ )  !is_string_empty(_str_)
 
-#define string_from_int( _value_ )  [ NSString stringWithFormat:@"%d",(int32_t)_value_]
 
-#define	string_format( _format_, ... )     [NSString stringWithFormat:_format_, __VA_ARGS__]
+#define string_format( _format_, ... )     [NSString stringWithFormat:_format_, __VA_ARGS__]
 
-#define string_from_obj( _value_ )  [ NSString stringWithFormat:@"%@", (NSObject *)_value_]
+#define string_from_charPtr( _charPtr_ )    [NSString stringWithUTF8String:_charPtr_]
+#define string_from_type( _type_ )  string_from_charPtr( @encode(_type_) )
 
-// 构建 NSString
-#define str_of_charPtr( __charPtr ) [NSString stringWithUTF8String:__charPtr]
-#define str_of_type( __type )       str_of_charPtr( @encode(__type) )
+#define string_from_int32( _value_ )  [NSString stringWithFormat:@"%d",(int32_t)_value_]
+#define string_from_int64( _value_ )  [NSString stringWithFormat:@"%qi", (int64_t)_value_]
+#define string_from_obj( _value_ )  [NSString stringWithFormat:@"%@", (NSObject *)_value_]
+#define string_from_bool( _bool_ )  [NSString stringWithFormat:@"%d", _bool_]
+#define string_from_float( _float_ ) [NSString stringWithFormat:@"%f", _float_]
+#define string_from_double( _double_ ) [NSString stringWithFormat:@"%f", _double_]
+#define string_from_selector( _selector_ ) NSStringFromSelector(_selector_)
+#define string_from_char( _char_ )  [NSString stringWithFormat:@"%c", _char_]
+#define string_from_short( _short_ )    [NSString stringWithFormat:@"%hi", _short_]
+#define string_from_class( _class_ )    NSStringFromClass(_class_)
 
 #endif /* _stringdef_h */
