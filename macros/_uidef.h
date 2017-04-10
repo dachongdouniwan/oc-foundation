@@ -101,6 +101,7 @@
 
 #define CellHeight_S                    40.f
 #define CellHeight_M                    51.f
+#define CellHeight_T                    70.f
 
 #define BarHeight                       48.f
 
