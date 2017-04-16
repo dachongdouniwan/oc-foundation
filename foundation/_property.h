@@ -132,15 +132,15 @@
 
 #pragma mark -
 
-#define	prop_readonly( type, name )         property (nonatomic, readonly) type name;
-#define	prop_dynamic( type, name )          property (nonatomic, strong) type name;
-#define	prop_assign( type, name )           property (nonatomic, assign) type name;
-#define	prop_strong( type, name )           property (nonatomic, strong) type name;
-#define	prop_weak( type, name )             property (nonatomic, weak) type name;
-#define	prop_copy( type, name )             property (nonatomic, copy) type name;
-#define	prop_unsafe( type, name )           property (nonatomic, unsafe_unretained) type name;
-
+#define prop_readonly( type, name )         property (nonatomic, readonly) type name;
+#define prop_dynamic( type, name )          property (nonatomic, strong) type name;
+#define prop_assign( type, name )           property (nonatomic, assign) type name;
+#define prop_strong( type, name )           property (nonatomic, strong) type name;
+#define prop_weak( type, name )             property (nonatomic, weak) type name;
+#define prop_copy( type, name )             property (nonatomic, copy) type name;
+#define prop_unsafe( type, name )           property (nonatomic, unsafe_unretained) type name;
 #define prop_retype( type, name )           property type name;
+#define prop_class( type, name )            property (nonatomic, class) type name;
 
 #pragma mark -
 
@@ -206,6 +206,11 @@
         - (type)name { if (getter_code_block) getter_code_block(); return [self getAssociatedObjectForKey:#name]; } \
         - (void)setName:(type)obj { if (setter_code_block) setter_code_block();[self attr##AssociatedObject:obj forKey:#name]; }
 
+#define def_prop_class( type, name, setName ) \
+        dynamic name; \
+        static type _##name; \
+        + (type)name { return _##name; } \
+        + (void)setName:(type)name { _##name = name; }
 
 // ----------------------------------
 // Class code
