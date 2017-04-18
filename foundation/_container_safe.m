@@ -14,6 +14,7 @@
 //  Welcome!
 //
 
+#import "_precompile.h"
 #import "_container_safe.h"
 
 #pragma mark - NSObject (SafeValueWithJSON)
@@ -137,19 +138,43 @@
 @implementation NSDictionary ( SafeValue )
 
 - (NSString *)safeStringForKey:(id)aKey {
-    return [[self objectForKey:aKey] safeString];
+    id obj = [self objectForKey:aKey];
+    
+    if (is_empty(obj)) {
+        return nil;
+    } else {
+        return [obj safeString];
+    }
 }
 
 - (NSNumber *)safeNumberForKey:(id)aKey {
-    return [[self objectForKey:aKey] safeNumber];
+    id obj = [self objectForKey:aKey];
+    
+    if (is_empty(obj)) {
+        return nil;
+    } else {
+        return [obj safeNumber];
+    }
 }
 
 - (NSArray *)safeArrayForKey:(id)aKey {
-    return [[self objectForKey:aKey] safeArray];
+    id obj = [self objectForKey:aKey];
+    
+    if (is_empty(obj)) {
+        return nil;
+    } else {
+        return [obj safeArray];
+    }
 }
 
 - (NSDictionary *)safeDictionaryForKey:(id)aKey {
-    return [[self objectForKey:aKey] safeDictionary];
+    id obj = [self objectForKey:aKey];
+    
+    if (is_empty(obj)) {
+        return nil;
+    } else {
+        return [obj safeDictionary];
+    }
 }
 
 @end
