@@ -58,6 +58,8 @@
 #define tab_bar_height           49
 #define keyboard_height          216
 
+#define separator_height        8
+
 #define status_bar_orientation    [[UIApplication sharedApplication] statusBarOrientation]
 
 #pragma mark - Distance + Font size
