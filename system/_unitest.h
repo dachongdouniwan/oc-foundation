@@ -38,14 +38,14 @@
 
 #pragma mark -
 
+#undef  XCT_GOON
+#define XCT_GOON \
+        CFRunLoopStop(CFRunLoopGetCurrent());
+
 #undef  XCT_BLOCK
 #define XCT_BLOCK \
         CFRunLoopRun();
 
-#undef  XCT_GOON
-#define XCT_GOON \
-        CFRunLoopRef runLoopRef = CFRunLoopGetCurrent();\
-        CFRunLoopStop(runLoopRef);
 
 #pragma mark - SAMURAI test
 
