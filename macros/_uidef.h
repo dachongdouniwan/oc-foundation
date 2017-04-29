@@ -21,26 +21,9 @@
  *  inspired by https://github.com/guanghuili/TODATY/blob/master/iHistory/iHistory/Macro/UIMacro.h
  */
 
-//字体相关
-#define font_ss            font_normal_11
-#define font_s             font_normal_14
-#define font_m             font_normal_15
-#define font_l             font_normal_18
-#define font_xl            font_normal_23
-
-//粗体
-#define bold_font_ss        font_bold_11
-#define bold_font_s         font_bold_14
-#define bold_font_m         font_bold_15
-#define bold_font_l         font_bold_18
-#define bold_font_xl        font_bold_23
-
-//间隔
-#define margin_s            5
-#define margin_m            10
-#define margin_l            15
-
-//屏幕相关
+// ----------------------------------
+// 系统屏幕
+// ----------------------------------
 #define screen_bounds       [[UIScreen mainScreen] bounds]
 #define screen_size         screen_bounds.size
 #define screen_width        [[UIScreen mainScreen] bounds].size.width
@@ -51,7 +34,9 @@
 #define app_frame_height        ([[UIScreen mainScreen] applicationFrame].size.height)
 #define app_frame_width         ([[UIScreen mainScreen] applicationFrame].size.width)
 
-// 导航栏、状态栏标签栏相关
+// ----------------------------------
+// 系统控件基础定义，如：导航栏、状态栏、标签栏
+// ----------------------------------
 #define status_bar_height        20
 #define navigation_bar_height    44
 #define navigation_status_bar_height    64
@@ -62,11 +47,9 @@
 
 #define status_bar_orientation    [[UIApplication sharedApplication] statusBarOrientation]
 
-#pragma mark - Distance + Font size
-
-//=========================
-//  边距基础定义
-//=========================
+// ----------------------------------
+// 间隔与边距基础定义
+// ----------------------------------
 
 #define PIXEL_sss   0.5f
 #define PIXEL_1     1.f
@@ -84,6 +67,10 @@
 #define PIXEL_40    40.f
 #define PIXEL_48    48.f
 #define PIXEL_56    56.f
+
+#define margin_l    PIXEL_16
+#define margin_m    PIXEL_8
+#define margin_s    PIXEL_4
 
 //=========================
 // 底边栏的按钮
@@ -114,9 +101,9 @@
 #define kDefaultSeperatorWidth          0.5f // 0.5f 也是 系统导航栏 下部边线的宽度
 #define kDefaultBorderWidth             0.5f
 
-//=========================
-// 字体大小   预定义（暂不用语义，不易于一致性理解）
-//=========================
+// ----------------------------------
+// 字体基础定义
+// ----------------------------------
 #define POUND_9                         9.f// 24, PS 大小
 #define POUND_13                        13.f// 36???
 #define POUND_14                        14.f// 36
@@ -135,6 +122,19 @@
 #define FONT_15                         [UIFont systemFontOfSize:POUND_15]
 #define FONT_18                         [UIFont systemFontOfSize:POUND_18]
 #define FONT_23                         [UIFont systemFontOfSize:POUND_23]
+
+#define font_ss            font_normal_11
+#define font_s             font_normal_14
+#define font_m             font_normal_15
+#define font_l             font_normal_18
+#define font_xl            font_normal_23
+
+//粗体
+#define bold_font_ss        font_bold_11
+#define bold_font_s         font_bold_14
+#define bold_font_m         font_bold_15
+#define bold_font_l         font_bold_18
+#define bold_font_xl        font_bold_23
 
 // 定义UIImage对象
 #define image_named( _pointer_ ) [UIImage imageNamed:_pointer_]
