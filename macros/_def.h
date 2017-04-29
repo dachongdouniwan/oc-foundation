@@ -16,6 +16,7 @@
 // 一般性key编码：key.类型名(意义名）
 // 单例的实例的宏定义：xxxInst, 如 networkInst
 // 事件响应函数命名：did\will\when\on + event desc
+// ViewController中，所有view设为类变量，outlet例外；所有数据设为property。
 
 #import <Foundation/Foundation.h>
 
