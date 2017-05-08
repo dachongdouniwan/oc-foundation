@@ -59,6 +59,15 @@
 #undef  INLINE
 #define INLINE				__inline__ __attribute__((always_inline))
 
+// More useful of __has_include()
+//#if __has_include(<YYWebImage/YYWebImage.h>)
+//#import <YYWebImage/YYImageCache.h>
+//#import <YYWebImage/YYWebImageManager.h>
+//#else
+//#import "YYImageCache.h"
+//#import "YYWebImageManager.h"
+//#endif
+
 // ----------------------------------
 // nullability macro
 // ----------------------------------
