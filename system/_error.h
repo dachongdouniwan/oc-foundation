@@ -200,7 +200,7 @@ def_error_1( __name, [NSError SamuraiErrorDomain], __value, __desc)
  
  *  如果接口提供的错误码，没有严格的分区：0～1000，1001～5000，5001～10000，则以接口为域
  
- @interface APIOrder_add (NSError)
+ interface APIOrder_add (NSError)
  
  @error( Failed )
  
@@ -208,7 +208,7 @@ def_error_1( __name, [NSError SamuraiErrorDomain], __value, __desc)
  
  *  否则：可以以当前层为域（ViewModel or service）
  
- @interface ServiceOrder (NSError)
+ interface ServiceOrder (NSError)
  
  @error( Failed )
  

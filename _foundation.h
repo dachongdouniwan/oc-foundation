@@ -20,6 +20,7 @@
 #import "metamacros.h"
 #import "extobjc.h"
 
+#import "_annotation.h"
 #import "_aspects.h"
 #import "_container_safe.h"
 #import "_encoding.h"
