@@ -43,6 +43,18 @@
 #define color_brown     [UIColor brownColor]            // 0.6, 0.4, 0.2 RGB
 #define color_clear     [UIColor clearColor]            // 0.0 white, 0.0 alpha
 
-#define color_theme     [UIColor color_theme]
+#define font_gray_1     [UIColor colorWithRGBHex:0xc8c8c8]
+#define font_gray_2     [UIColor colorWithRGBHex:0x5e5e5e]
+#define font_gray_3     [UIColor colorWithRGBHex:0x1e1e1e]
+#define font_gray_4     [UIColor colorWithRGBHex:0x000000]
+
+#define gray_1     [UIColor colorWithRGBHex:0xf7f7f7]
+#define gray_2     [UIColor colorWithRGBHex:0xf0f0f0]
+#define gray_3     [UIColor colorWithRGBHex:0xebebeb]
+#define gray_4     [UIColor colorWithRGBHex:0xcccccc]
+#define gray_5     [UIColor colorWithRGBHex:0x999999]
+#define gray_6     [UIColor colorWithRGBHex:0x666666]
+#define gray_7     [UIColor colorWithRGBHex:0x333333]
+#define gray_8     [UIColor colorWithHexString:@"979797"]
 
 #endif /* _colordef_h */
