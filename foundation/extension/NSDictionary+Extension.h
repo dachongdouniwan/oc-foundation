@@ -18,6 +18,7 @@
 
 #define dict_fornumber( _dict_, _key_selector_ ) [_dict_ numberAtPath:stringify(_key_selector_)]
 #define dict_forstring( _dict_, _key_selector_ ) [_dict_ stringAtPath:stringify(_key_selector_)]
+#define dict_forarray( _dict_, _key_selector_ ) [_dict_ arrayAtPath:stringify(_key_selector_)]
 
 #pragma mark -
 
