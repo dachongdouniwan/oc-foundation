@@ -64,3 +64,10 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
 ### 使用建议
 
 *	头文件引用，优先使用局部头文件，如：#import "_foundation.h" #import "_easycoding.h"
+
+----------
+### 后续建议
+* [PonyCui/PPEtcHosts](https://github.com/PonyCui/PPEtcHosts)，应用内实现域名Host绑定，开发利器。
+* [iOS单元测试：Specta + Expecta + OCMock + OHHTTPStubs + KIF](http://blog.csdn.net/colorapp/article/details/47007431)
+* [JxbDebugTool](https://github.com/JxbSir/JxbDebugTool), 一个iOS调试工具，监控所有HTTP请求，自动捕获Crash分析。
+* [A/B test search](https://github.com/search?l=Objective-C&q=a%2Fb+testing&ref=searchresults&type=Repositories&utf8=✓)
