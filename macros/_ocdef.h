@@ -53,6 +53,8 @@
 #define invalidate_timer( _timer_ ) { [_timer_ invalidate]; _timer_ = nil; }
 #define verified_class( _className_ ) ((_className_ *) NSClassFromString(@"" # _className_))
 
+#define nonullify( _obj_ ) (_obj_?_obj_:[NSNull null])
+
 // 判断任何容器是否为空
 // http://www.wilshipley.com/blog/2005/10/pimp-my-code-interlude-free-code.html
 static inline BOOL is_empty(id thing) {
