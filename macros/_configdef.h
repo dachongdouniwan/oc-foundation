@@ -48,6 +48,10 @@
 #undef  TODO
 #define TODO( X )			_Pragma(macro_cstr(message("TODO: " X)))
 
+// #define compiler_assert(x) switch(0){case 0: case x:;}
+#undef  MUST
+#define MUST( X ) 	switch(0){case 0: case 0:_Pragma(macro_cstr(message("MUST: " X)));}
+
 #if defined(__cplusplus)
 #   undef	EXTERN_C
 #   define EXTERN_C			extern "C"
