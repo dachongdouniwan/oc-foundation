@@ -21,6 +21,11 @@
 #define path_of_library    [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 #define path_of_cache       [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
+// 预设文件存储位置
+#define path_to_database    [path_of_cache stringByAppendingPathComponent:@"dbs"]
+#define path_to_filecache   [path_of_cache stringByAppendingPathComponent:@"files"]
+#define path_to_imagecache  [path_of_cache stringByAppendingPathComponent:@"images"]
+
 #define path_for_png_res( _name_ )    [[NSBundle mainBundle] pathForResource:(_name_) ofType:@"png"]
 #define path_for_xml_res( _name_ )    [[NSBundle mainBundle] pathForResource:(_name_) ofType:@"xml"]
 #define path_for_res( _res_, _type_)  [[NSBundle mainBundle] pathForResource:(_res_) ofType:(_type_)]
