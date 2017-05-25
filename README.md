@@ -15,10 +15,12 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
 	模块化机制，service（参考BeeFramework），mediator等
 4. [suite.debug](https://github.com/BinaryArtists/suite.debug)
 	调试工具，架构基于module-x中的service
-6. [sutie.ui](https://github.com/BinaryArtists/suite.ui)
+6. [sutie.ui](https://github.com/BinaryArtists/suite.see)
 	UI组件，主要分两部分：对系统视图层的扩展，和用到的第三方UI组件
 7. [suite.hybrid](https://github.com/BinaryArtists/suite.hybrid)
 	混合框架使用，该框架以weex为蓝本；兼顾对其他开源方案的学习与尝试
+8. [suite.building](https://github.com/BinaryArtists/suite.building)
+    基于框架之上的代码构件案例与指导，进一步减少构建一个应用时所做的准备工作
 
 ----------
 ### 分块
