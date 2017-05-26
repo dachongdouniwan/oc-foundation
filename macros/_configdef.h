@@ -72,6 +72,10 @@
 //#import "YYWebImageManager.h"
 //#endif
 
+#ifndef BETWEEN // return the clamped value
+#define BETWEEN(_x_, _low_, _high_)  (((_x_) > (_high_)) ? (_high_) : (((_x_) < (_low_)) ? (_low_) : (_x_)))
+#endif
+
 // ----------------------------------
 // nullability macro
 // ----------------------------------
