@@ -136,10 +136,6 @@ def_error_1( __name, [NSError SamuraiErrorDomain], __value, __desc)
 
 - (BOOL)is:(NSError *)error;
 
-// Error userInfo
-
-- (NSError *)with:(NSDictionary *)userinfo;
-
 // Error pool
 
 /**

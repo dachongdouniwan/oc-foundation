@@ -85,12 +85,6 @@
     return undefined_string;
 }
 
-- (NSError *)with:(NSDictionary *)userinfo {
-    TODO("todo：扩展了FAMutableError之后，可用。原地修改userInfo")
-    
-    return self;
-}
-
 #pragma mark - Key
 
 - (NSString *)storedKey {
