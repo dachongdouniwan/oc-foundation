@@ -22,7 +22,7 @@
 
 #if __DEBUG__
 
-#define ASSERT( __expr ) [[SamuraiAsserter sharedInstance] file:__FILE__ line:__LINE__ func:__PRETTY_FUNCTION__ flag:((__expr) ? YES : NO) expr:#__expr];
+#define ASSERT( _expr_ ) [[_Asserter sharedInstance] file:__FILE__ line:__LINE__ func:__PRETTY_FUNCTION__ flag:((_expr_) ? YES : NO) expr:#_expr_];
 
 #else
 
