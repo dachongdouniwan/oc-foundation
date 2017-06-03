@@ -47,4 +47,9 @@
 #define string_from_short( _short_ )            [NSString stringWithFormat:@"%hi", _short_]
 #define string_from_class( _class_ )            NSStringFromClass(_class_)
 
+/**
+ *  文件名
+ */
+#define __FILENAME__    [[string_from_charPtr(__FILE__) lastPathComponent] split:@"."][0]
+
 #endif /* _stringdef_h */
