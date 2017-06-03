@@ -72,8 +72,12 @@
 //#import "YYWebImageManager.h"
 //#endif
 
-#ifndef BETWEEN // return the clamped value
-#define BETWEEN(_x_, _low_, _high_)  (((_x_) > (_high_)) ? (_high_) : (((_x_) < (_low_)) ? (_low_) : (_x_)))
+#ifndef CLAMP // return the clamped value
+#define CLAMP(_x_, _low_, _high_)  (((_x_) > (_high_)) ? (_high_) : (((_x_) < (_low_)) ? (_low_) : (_x_)))
+#endif
+
+#ifndef BETWEEN // return the clamped bool value
+#define BETWEEN(_x_, _low_, _high_)  (((_x_) > (_high_)) ? (NO) : (((_x_) < (_low_)) ? (NO) : (YES)))
 #endif
 
 // ----------------------------------
