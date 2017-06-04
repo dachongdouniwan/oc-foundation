@@ -16,9 +16,33 @@
 
 #import "_precompile.h"
 
-#define dict_fornumber( _dict_, _key_selector_ ) [_dict_ numberAtPath:stringify(_key_selector_)]
-#define dict_forstring( _dict_, _key_selector_ ) [_dict_ stringAtPath:stringify(_key_selector_)]
-#define dict_forarray( _dict_, _key_selector_ ) [_dict_ arrayAtPath:stringify(_key_selector_)]
+/**
+ *  便捷构造器
+ 
+ *  @knowledge 追加形式的拼装，则使用枚举方式：1. 'k1, k2, k3, k4, ...' 2. @{ kvs1, kvs2, kvs3, ... }
+ */
+#define dict_ofkey1( k )                    [[NSMutableDictionary new]safeAppendObject:(k) forKey:(@#k)]
+#define dict_ofkey2( k1, k2 )                   [dict_ofkey1( k1 ) safeAppendObject:(k2) forKey:(@#k2)]
+#define dict_ofkey3( k1, k2, k3 )                   [dict_ofkey2( k1, k2 )  safeAppendObject:(k3) forKey:(@#k3)]
+#define dict_ofkey4( k1, k2, k3, k4 )                   [dict_ofkey3( k1, k2, k3 ) safeAppendObject:(k4) forKey:(@#k4)]
+#define dict_ofkey5( k1, k2, k3, k4, k5 )                   [dict_ofkey4( k1, k2, k3, k4 ) safeAppendObject:(k5) forKey:(@#k5)]
+#define dict_ofkey6( k1, k2, k3, k4, k5, k6 )                   [dict_ofkey5( k1, k2, k3, k4, k5 ) safeAppendObject:(k6) forKey:(@#k6)]
+#define dict_ofkey7( k1, k2, k3, k4, k5, k6, k7 )                   [dict_ofkey6( k1, k2, k3, k4, k5, k6 ) safeAppendObject:(k7) forKey:(@#k7)]
+#define dict_ofkey8( k1, k2, k3, k4, k5, k6, k7, k8 )                   [dict_ofkey7( k1, k2, k3, k4, k5, k6, k7 ) safeAppendObject:(k8) forKey:(@#k8)]
+#define dict_ofkeys( N, ... )               macro_concat(dict_ofkey, N)( __VA_ARGS__ )
+
+/**
+ *  便捷取值器
+ */
+#define dict_fornumber( _dict_, _key_selector_ )    [_dict_ numberAtPath:stringify(_key_selector_)]
+#define dict_forbool( _dict_, _key_selector_ )      [_dict_ boolAtPath:stringify(_key_selector_)]
+#define dict_forint32( _dict_, _key_selector_ )     [[_dict_ numberAtPath:stringify(_key_selector_)] intValue]
+#define dict_forint64( _dict_, _key_selector_ )     [[_dict_ numberAtPath:stringify(_key_selector_)] longLongValue]
+#define dict_fordouble( _dict_, _key_selector_ )    [[_dict_ numberAtPath:stringify(_key_selector_)] doubleValue]
+
+#define dict_forstring( _dict_, _key_selector_ )    [_dict_ stringAtPath:stringify(_key_selector_)]
+
+#define dict_forarray( _dict_, _key_selector_ )     [_dict_ arrayAtPath:stringify(_key_selector_)]
 
 #pragma mark -
 
@@ -83,7 +107,7 @@
  
  */
 
-@interface NSDictionary ( Primitive )
+@interface NSDictionary ( Primitive ) // TODO: 用处不大，需要统一
 
 - (BOOL)hasKey:(NSString *)key;
 

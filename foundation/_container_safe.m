@@ -178,3 +178,21 @@
 }
 
 @end
+
+#pragma mark - NSMutableDictionary
+
+@implementation NSMutableDictionary ( SafeValue )
+
+- (void)safeSetObject:(id)anObject forKey:(id)aKey {
+    if (anObject && aKey) {
+        [self setObject:anObject forKey:aKey];
+    }
+}
+
+- (NSMutableDictionary *)safeAppendObject:(id)anObject forKey:(id)aKey {
+    [self safeSetObject:anObject forKey:aKey];
+    
+    return self;
+}
+
+@end

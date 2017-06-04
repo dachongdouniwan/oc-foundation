@@ -86,3 +86,14 @@
 - (NSDictionary *)safeDictionaryForKey:(id)aKey;
 
 @end
+
+#pragma mark - NSMutableDictionary 
+
+@interface NSMutableDictionary ( SafeValue )
+
+- (void)safeSetObject:(id)anObject forKey:(id)aKey;
+
+- (NSMutableDictionary *)safeAppendObject:(id)anObject forKey:(id)aKey;
+
+@end
+
