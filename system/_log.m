@@ -14,8 +14,52 @@
 //  Welcome!
 //
 
-#import "_precompile.h"
+#import "_preconfigs.h"
 #import "_log.h"
+
+#if __DEBUG__
+#import "fishhook.h"
+#endif	// #if __DEBUG__
+
+#undef	MAX_BACKLOG
+#define MAX_BACKLOG		(64)
+
+#if __LOGGING__
+static const char * __prefix[] =
+{
+#if TARGET_IPHONE_SIMULATOR
+    "<#[E]#>",
+#else
+    "[E]",
+#endif
+    
+    "[W]",
+    "[I]",
+    "[P]",
+    "",
+};
+#endif	// #if __LOGGING__
+
+#if __DEBUG__
+
+static void __NSLogv( NSString * format, va_list args ) {
+    [[_Logger sharedInstance] file:nil line:0 func:nil level:LogLevel_Info format:format args:args];
+}
+
+static void __NSLog( NSString * format, ... ) {
+    if ( nil == format || NO == [format isKindOfClass:[NSString class]] )
+        return;
+    
+    va_list args;
+    
+    va_start( args, format );
+    
+    __NSLogv( format, args );
+    
+    va_end( args );
+}
+
+#endif	// #if __DEBUG__
 
 @implementation _Logger {
     NSUInteger	_capture;
@@ -45,13 +89,13 @@
         self.output = [NSMutableString string];
         self.buffer = [NSMutableArray array];
         
-#if __SAMURAI_DEBUG__
+#if __DEBUG__
         self.filter = LogLevel_All;
 #else
         self.filter = LogLevel_Error;
 #endif
         
-#if __SAMURAI_DEBUG__
+#if __DEBUG__
         struct rebinding r[] = {
             {
                 (char *)"NSLog",
@@ -144,7 +188,7 @@
 
 - (void)file:(NSString *)file line:(NSUInteger)line func:(NSString *)func level:(LogLevel)level format:(NSString *)format, ...
 {
-#if __SAMURAI_LOGGING__
+#if __LOGGING__
     
     if ( nil == format || NO == [format isKindOfClass:[NSString class]] )
         return;
@@ -161,7 +205,7 @@
 
 - (void)file:(NSString *)file line:(NSUInteger)line func:(NSString *)func level:(LogLevel)level format:(NSString *)format args:(va_list)params
 {
-#if __SAMURAI_LOGGING__
+#if __LOGGING__
     
     if ( NO == _enabled || level > _filter )
         return;

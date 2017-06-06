@@ -14,7 +14,8 @@
 //  Welcome!
 //
 
-#import <Foundation/Foundation.h>
+#import "_precompile.h"
+#import "_preconfigs.h"
 #import "_singleton.h"
 #import "_property.h"
 
