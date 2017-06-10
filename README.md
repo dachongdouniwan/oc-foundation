@@ -28,13 +28,9 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
     - CoreFoundation.framework
     - ImageIO.framework
     - AVFoundation.framework
-    - libicucore.tbd
     - CoreImage.framework
-    - libsqlite3.0.tbd
     - SystemConfiguration.framework
     - MobileCoreServices.framework
-    - libz.tbd
-    - libxml2.tbd
     - AssetsLibrary.framework
     - Photos.framework
     - CoreMotion.framework
@@ -46,6 +42,12 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
     - CoreBluetooth.framework
     - MediaPlayer.framework
     - MessageUI.framework
+
+    - libz.tbd
+    - libstdc++.6.0.9.tdb
+    - libxml2.tbd
+    - libsqlite3.0.tbd
+    - libicucore.tbd
 
 ----------
 ### 分块
