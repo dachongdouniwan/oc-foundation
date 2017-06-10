@@ -44,6 +44,8 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
     - EventKit.framework
     - CoreText.framework
     - CoreBluetooth.framework
+    - MediaPlayer.framework
+    - MessageUI.framework
 
 ----------
 ### 分块
