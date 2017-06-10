@@ -18,7 +18,6 @@
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "_systeminfo.h"
-#import "_keychain.h"
 #import "_foundation.h"
 
 #pragma mark -
@@ -59,11 +58,6 @@ BOOL IS_SCREEN_55_INCH = NO;
 
 #pragma mark -
 
-NSString * const UUIDForInstallationKey = @"uuidForInstallation";
-NSString * const UUIDForDeviceKey = @"uuidForDevice";
-
-#pragma mark -
-
 @implementation _SystemInfo {
     // uuids
     NSString *_uuidForSession;
@@ -79,7 +73,6 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
 @def_prop_readonly( NSString *,			bundleIdentifier );
 @def_prop_readonly( NSString *,			urlSchema );
 @def_prop_readonly( NSString *,			deviceModel );
-@def_prop_readonly( NSString *,			deviceUDID );
 
 @def_prop_readonly( BOOL,				isJailBroken );
 @def_prop_readonly( BOOL,				runningOnPhone );
@@ -111,12 +104,6 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
 
 @def_prop_readonly( BOOL,               photoCaptureAccessable );
 @def_prop_readonly( BOOL,               photoLibraryAccessable );
-
-@def_prop_readonly( NSString *,         uuid );
-@def_prop_readonly( NSString *,         uuidForSession );
-@def_prop_readonly( NSString *,         uuidForInstallation );
-@def_prop_readonly( NSString *,         uuidForVendor );
-@def_prop_readonly( NSString *,         uuidForDevice );
 
 @def_prop_readonly( NSArray *,          languages );
 
@@ -254,12 +241,6 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
 #else
     return nil;
 #endif
-}
-
-#pragma mark - UDID
-
-- (NSString *)deviceUDID {
-    return [self uuidForDevice];
 }
 
 #pragma mark - JailBroken
@@ -685,99 +666,6 @@ NSString * const UUIDForDeviceKey = @"uuidForDevice";
             return YES;
         }
     }
-}
-
-#pragma mark - UUID
-
-- (NSString *)uuid {
-    CFUUIDRef uuidRef = CFUUIDCreate(NULL);
-    CFStringRef uuidStringRef = CFUUIDCreateString(NULL, uuidRef);
-    CFRelease(uuidRef);
-    
-    NSString *uuidValue = (__bridge_transfer NSString *)uuidStringRef;
-    uuidValue = [uuidValue lowercaseString];
-    uuidValue = [uuidValue stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    return uuidValue;
-}
-
-- (NSString *)uuidForSession {
-    if( _uuidForSession == nil ){
-        _uuidForSession = [self uuid];
-    }
-    
-    return _uuidForSession;
-}
-
-- (NSString *)uuidForInstallation {
-    if( _uuidForInstallation == nil ){
-        _uuidForInstallation = [[NSUserDefaults standardUserDefaults] stringForKey:UUIDForInstallationKey];
-        
-        if( _uuidForInstallation == nil ){
-            _uuidForInstallation = [self uuid];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:_uuidForInstallation forKey:UUIDForInstallationKey];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-    }
-    
-    return _uuidForInstallation;
-}
-
-- (NSString *)uuidForVendor {
-    return [[[[[UIDevice currentDevice] identifierForVendor] UUIDString] lowercaseString] stringByReplacingOccurrencesOfString:@"-" withString:@""];
-}
-
-- (NSString *)uuidForDevice {
-    //also known as udid/uniqueDeviceIdentifier but this doesn't persists to system reset
-    
-    return [self uuidForDeviceUsingValue:nil];
-}
-
-- (NSString *)uuidForDeviceUsingValue:(NSString *)uuidValue {
-    NSString *serviceName = stringify(_System);
-    //also known as udid/uniqueDeviceIdentifier but this doesn't persists to system reset
-    
-    NSString *uuidForDeviceInMemory = _uuidForDevice;
-    /*
-     //this would overwrite an existing uuid, it could be dangerous
-     if( [self uuidValueIsValid:uuidValue] )
-     {
-     _uuidForDevice = uuidValue;
-     }
-     */
-    if( _uuidForDevice == nil ) {
-        _uuidForDevice = [_Keychain passwordForService:serviceName account:UUIDForDeviceKey];
-        if( _uuidForDevice == nil ) {
-            _uuidForDevice = [[NSUserDefaults standardUserDefaults] stringForKey:UUIDForDeviceKey];
-            
-            if( _uuidForDevice == nil ) {
-                if([self uuidValueIsValid:uuidValue] ) {
-                    _uuidForDevice = uuidValue;
-                } else {
-                    _uuidForDevice = [self uuid];
-                }
-            }
-        }
-    }
-    
-    if([self uuidValueIsValid:uuidValue] && ![_uuidForDevice isEqualToString:uuidValue]) {
-        exceptioning(@"Cannot overwrite uuidForDevice, uuidForDevice has already been created and cannot be overwritten.")
-    }
-    
-    if(![uuidForDeviceInMemory isEqualToString:_uuidForDevice])
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:_uuidForDevice forKey:UUIDForDeviceKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        [_Keychain setPassword:_uuidForDevice forService:serviceName account:UUIDForDeviceKey];
-    }
-    
-    return _uuidForDevice;
-}
-
-- (BOOL)uuidValueIsValid:(NSString *)uuidValue {
-    TODO("validation using Regular Expression")
-    return (uuidValue != nil && (uuidValue.length == 32 || uuidValue.length == 36));
 }
 
 #pragma mark - language

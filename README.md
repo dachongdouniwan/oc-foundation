@@ -22,6 +22,29 @@ Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：
 8. [suite.building](https://github.com/BinaryArtists/suite.building)
     基于框架之上的代码构件案例与指导，进一步减少构建一个应用时所做的准备工作
 
+100. 依赖的系统库
+    - Accelerate.framework
+    - CFNetwork.framework
+    - CoreFoundation.framework
+    - ImageIO.framework
+    - AVFoundation.framework
+    - libicucore.tbd
+    - CoreImage.framework
+    - libsqlite3.0.tbd
+    - SystemConfiguration.framework
+    - MobileCoreServices.framework
+    - libz.tbd
+    - libxml2.tbd
+    - AssetsLibrary.framework
+    - Photos.framework
+    - CoreMotion.framework
+    - AddressBook.framework
+    - MapKit.framework
+    - CoreMedia.framework
+    - EventKit.framework
+    - CoreText.framework
+    - CoreBluetooth.framework
+
 ----------
 ### 分块
 

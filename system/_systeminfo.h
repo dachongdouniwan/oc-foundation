@@ -68,7 +68,6 @@ extern BOOL IS_SCREEN_55_INCH;
 @prop_readonly( NSString *,			bundleIdentifier );
 @prop_readonly( NSString *,			urlSchema );
 @prop_readonly( NSString *,			deviceModel );
-@prop_readonly( NSString *,			deviceUDID ); // Stored in keychain
 
 @prop_readonly( BOOL,				isJailBroken );
 @prop_readonly( BOOL,				runningOnPhone );
@@ -104,13 +103,6 @@ extern BOOL IS_SCREEN_55_INCH;
 // accessory
 @prop_readonly( BOOL,               photoCaptureAccessable ); // 拍照权限是否打开
 @prop_readonly( BOOL,               photoLibraryAccessable ); // 相册权限是否打开
-
-// uuid inspired by FCUUID
-@prop_readonly( NSString *,         uuid ); // changes each time (no persistent)
-@prop_readonly( NSString *,         uuidForSession ); // changes each time the app gets launched (persistent to session)
-@prop_readonly( NSString *,         uuidForInstallation ); // changes each time the app gets installed (persistent to installation)
-@prop_readonly( NSString *,         uuidForVendor ); // changes each time all the apps of the same vendor are uninstalled (this works exactly as identifierForVendor)
-@prop_readonly( NSString *,         uuidForDevice ); // changes only on system reset, this is the best replacement to the good old udid (persistent to device)
 
 /**
  *  en_US, zh_CN,
