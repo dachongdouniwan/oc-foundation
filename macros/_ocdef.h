@@ -70,4 +70,6 @@ static inline BOOL is_empty(id thing) {
     ([thing respondsToSelector:@selector(count)]  && [(NSArray *)thing count] == 0);
 }
 
+#define returnif( _exp_ ) if (_exp_) { return; }
+
 #endif /* _ocdef_h */

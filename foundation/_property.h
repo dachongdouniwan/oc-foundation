@@ -208,9 +208,9 @@
 
 #define def_prop_class( type, name, setName ) \
         dynamic name; \
-        static type _##name; \
-        + (type)name { return _##name; } \
-        + (void)setName:(type)name { _##name = name; }
+        static type __##name; \
+        + (type)name { return __##name; } \
+        + (void)setName:(type)name { __##name = name; }
 
 // ----------------------------------
 // Class code
