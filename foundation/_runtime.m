@@ -49,7 +49,7 @@ void dumpClass(Class cls) {
         const char *name = ivar_getName(ivar);
         ptrdiff_t offset = ivar_getOffset(ivar);
         const char *encoding = ivar_getTypeEncoding(ivar);
-        NSLog(@"  %s [%i] %s", name, offset, encoding);
+        NSLog(@"  %s [%ti] %s", name, offset, encoding);
     }
     free(ivarList);
     
@@ -573,7 +573,7 @@ void dumpClass(Class cls) {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
     
     //name
-    NSString *propertyName = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
+    NSString *propertyName = __propertyName(property);
     [result setObject:propertyName forKey:@"name"];
     
     //attribute
@@ -852,7 +852,7 @@ void dumpClass(Class cls) {
     NSMutableArray *all = [[NSMutableArray alloc] initWithCapacity:count];
     for (NSInteger i = 0; i < count; i++) {
         @autoreleasepool {
-            NSString *ivar = ivarName(ivar_ptr[i]);
+            NSString *ivar = __ivarName(ivar_ptr[i]);
             [all addObject:ivar];
         }
     }
@@ -893,19 +893,19 @@ void dumpClass(Class cls) {
 #pragma mark - Inline method
 
 /*! 以 NSString 类型返回 property名称 */
-static inline NSString *propertyName(objc_property_t property) {
+static inline NSString *__propertyName(objc_property_t property) {
     const char *name = property_getName(property);
     return [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
 }
 
 /*! 以 NSString 类型返回 ivar 名称 */
-static inline NSString *ivarName(Ivar ivar) {
+static inline NSString *__ivarName(Ivar ivar) {
     const char *name = ivar_getName(ivar);
     return [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
 }
 
 /*! 以 NSString 类型返回 method 名称 */
-static inline NSString *methodName(Method m) {
+static inline NSString *__methodName(Method m) {
     return NSStringFromSelector(method_getName(m));
 }
 

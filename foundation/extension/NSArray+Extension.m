@@ -66,19 +66,14 @@
 		return @"";
 	} else if ( 1 == self.count ) {
 		return [[self objectAtIndex:0] description];
-	}
-	else
-	{
+	} else {
 		NSMutableString * result = [NSMutableString string];
 		
-		for ( NSUInteger i = 0; i < self.count; ++i )
-		{
+		for ( NSUInteger i = 0; i < self.count; ++i ) {
 			[result appendString:[[self objectAtIndex:i] description]];
 			
-			if ( delimiter )
-			{
-				if ( i + 1 < self.count )
-				{
+			if ( delimiter ) {
+				if ( i + 1 < self.count ) {
 					[result appendString:delimiter];
 				}
 			}

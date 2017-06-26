@@ -16,12 +16,10 @@
 
 #import "_def.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 #pragma mark -
 
-typedef NSMutableArray * _Nullable 	(^NSArrayElementBlock)(_Nullable id obj );
-typedef NSComparisonResult	(^NSArrayCompareBlock)( id left, id right );
+typedef NSMutableArray * 	(^NSArrayElementBlock)(id obj );
+typedef NSComparisonResult	(^NSArrayCompareBlock)(id left, id right );
 
 #pragma mark -
 
@@ -162,5 +160,3 @@ typedef NSComparisonResult	(^NSArrayCompareBlock)( id left, id right );
 - (void)replaceRectAtIndex:(NSUInteger)index withRect:(CGRect)o;
 
 @end
-
-NS_ASSUME_NONNULL_END

@@ -382,7 +382,7 @@
         returnVal.y = [[enumerator nextObject]doubleValue];
         result = [NSValue valueWithCGPoint:returnVal];
     }else if ([type isEqualToString:[NSInvocation encodeType:@encode(CGAffineTransform)]]){
-        CGAffineTransform returnVal;
+        CGAffineTransform returnVal = CGAffineTransformIdentity; // added by 7
         result = [NSValue valueWithCGAffineTransform:returnVal];
     }else if ([type isEqualToString:[NSInvocation encodeType:@encode(CLLocationCoordinate2D)]]){
         CLLocationCoordinate2D returnVal;
@@ -395,7 +395,7 @@
         returnVal.longitudeDelta = [[enumerator nextObject]doubleValue];
         result = [NSValue valueWithMKCoordinateSpan:returnVal];
     }else if ([type isEqualToString:[NSInvocation encodeType:@encode(CATransform3D)]]){
-        CATransform3D returnVal;
+        CATransform3D returnVal = CATransform3DIdentity; // added by 7
         result = [NSValue valueWithCATransform3D:returnVal];
     }else if ([type isEqualToString:[NSInvocation encodeType:@encode(NSRange)]]){
         NSRange returnVal;

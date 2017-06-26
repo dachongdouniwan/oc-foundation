@@ -24,14 +24,14 @@
 
 #undef  meta_annotation_bind
 #define meta_annotation_bind( _section_name_, _intf_name_, _impl_name_ ) \
-        char * _intf_name_##_ meta_annotation_attr( _section_name_ ) = "{ \""#_intf_name_"\" : \""#_impl_name_"\"}";
+        char * _impl_name_##_ meta_annotation_attr( _section_name_ ) = "{ \""#_intf_name_"\" : \""#_impl_name_"\"}";
 
 #undef  annotation
 #define annotation( _name_ ) meta_annotation( annotation_sectioname, _name_ )
 
 #undef  annotation_bind
 #define annotation_bind( _intf_name_, _impl_name_ ) \
-        meta_annotation_bind(, _intf_name_, _impl_name_ )
+        meta_annotation_bind( annotation_sectioname, _intf_name_, _impl_name_ )
 
 // ----------------------------------
 // Class code
