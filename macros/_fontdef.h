@@ -14,9 +14,9 @@
 //  Welcome!
 //
 
-#ifndef _fontdef_h
-#define _fontdef_h
-
+#define font_normal_7    [UIFont systemFontOfSize:7]
+#define font_normal_8    [UIFont systemFontOfSize:8]
+#define font_normal_9    [UIFont systemFontOfSize:9]
 #define font_normal_10   [UIFont systemFontOfSize:10]
 #define font_normal_11   [UIFont systemFontOfSize:11]
 #define font_normal_12   [UIFont systemFontOfSize:12]
@@ -35,6 +35,9 @@
 #define font_normal_32   [UIFont systemFontOfSize:32]
 #define font_normal_33   [UIFont fontWithName:@"Helvetica" size:33.0]
 
+#define font_bold_7    [UIFont boldSystemFontOfSize:7]
+#define font_bold_8    [UIFont boldSystemFontOfSize:8]
+#define font_bold_9    [UIFont boldSystemFontOfSize:9]
 #define font_bold_10   [UIFont boldSystemFontOfSize:10]
 #define font_bold_11   [UIFont boldSystemFontOfSize:11]
 #define font_bold_12   [UIFont boldSystemFontOfSize:12]
@@ -53,4 +56,3 @@
 #define font_bold_32   [UIFont boldSystemFontOfSize:32]
 #define font_bold_33   [UIFont fontWithName:@"Helvetica-Bold" size:33.0]
 
-#endif /* _fontdef_h */

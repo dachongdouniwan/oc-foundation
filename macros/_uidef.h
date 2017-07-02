@@ -123,6 +123,7 @@
 #define FONT_18                         [UIFont systemFontOfSize:POUND_18]
 #define FONT_23                         [UIFont systemFontOfSize:POUND_23]
 
+#define font_sm            font_normal_9
 #define font_ss            font_normal_11
 #define font_s             font_normal_14
 #define font_m             font_normal_15
