@@ -73,7 +73,7 @@
 
 @end
 
-#pragma mark - 
+#pragma mark - TODO: 这里概念不对
 
 @interface _File : NSObject
 
@@ -88,5 +88,7 @@
 + (BOOL)fileExit:(NSString *)filepath;
 
 + (float)folderSizeAtPath:(NSString *)folderPath;
+
++ (NSArray<NSString *> *)filenamesInDirectory:(NSString *)directory;
 
 @end

@@ -195,23 +195,19 @@ static const NSString *path_service = nil;
     return 0;
 }
 
-+ (int)fileLength: (NSString *) path
-{
++ (int)fileLength: (NSString *) path {
     int length = 0;
     
     NSFileManager * fileMgr = [NSFileManager defaultManager];
     
     BOOL isDir = NO;
     
-    if ([fileMgr fileExistsAtPath:path isDirectory:&isDir])
-    {
-        if (isDir == NO)
-        {
+    if ([fileMgr fileExistsAtPath:path isDirectory:&isDir]) {
+        if (isDir == NO) {
             NSDictionary * attrs = [fileMgr attributesOfItemAtPath:path error:nil];
             NSNumber * fileSize = [attrs objectForKey:NSFileSize];
             
-            if (fileSize != nil)
-            {
+            if (fileSize != nil) {
                 length = [fileSize intValue];
             }
         }
@@ -220,8 +216,7 @@ static const NSString *path_service = nil;
     return length;
 }
 
-+ (BOOL)fileExit:(NSString *)filepath
-{
++ (BOOL)fileExit:(NSString *)filepath {
     if ([[NSFileManager defaultManager] fileExistsAtPath:filepath]) {
         return YES;
     }else{
@@ -229,6 +224,11 @@ static const NSString *path_service = nil;
     }
 }
 
++ (NSArray<NSString *> *)filenamesInDirectory:(NSString *)directory {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *fileList = [[NSArray alloc] initWithArray:[fileManager contentsOfDirectoryAtPath:directory error:nil]];
+    return fileList;
+}
 
 @end
 
