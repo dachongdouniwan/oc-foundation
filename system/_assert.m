@@ -15,6 +15,7 @@
 //
 
 #import "_precompile.h"
+#import "_preconfigs.h"
 #import "_unitest.h"
 #import "_assert.h"
 
