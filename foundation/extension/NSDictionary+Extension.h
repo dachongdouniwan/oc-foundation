@@ -44,6 +44,8 @@
 
 #define dict_forarray( _dict_, _key_selector_ )     [_dict_ arrayAtPath:stringify(_key_selector_)]
 
+#define dict_fordictionary( _dict_, _key_selector_ )     [_dict_ dictAtPath:stringify(_key_selector_)]
+
 #pragma mark -
 
 @protocol NSDictionaryProtocol <NSObject>
