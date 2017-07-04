@@ -23,7 +23,7 @@
 
 @interface _SortedMutableArray : NSArray
 
-- (id)initWithDescriptors:(NSArray*)descriptors;
+- (id)initWithDescriptors:(NSArray *)descriptors;
 - (id)initWithComparator:(NSComparator)comparator;
 - (id)initWithFunction:(NSInteger (*)(id, id, void *))compare context:(void *)context;
 - (id)initWithSelector:(SEL)selector;
