@@ -70,6 +70,15 @@ static inline BOOL is_empty(id thing) {
     ([thing respondsToSelector:@selector(count)]  && [(NSArray *)thing count] == 0);
 }
 
-#define returnif( _exp_ ) if (_exp_) { return; }
+#define return_if( _exp_ ) if (_exp_) { return; }
+
+#undef  url_with_string
+#define url_with_string( _str_ ) [NSURL URLWithString:_str_]
+
+#undef  url_with_filepath
+#define url_with_filepath( _path_ ) [NSURL fileURLWithPath:_path_]
+
+#undef  app_set_indicator
+#define app_set_indicator( _value_ ) [UIApplication sharedApplication].networkActivityIndicatorVisible = _value_;
 
 #endif /* _ocdef_h */
