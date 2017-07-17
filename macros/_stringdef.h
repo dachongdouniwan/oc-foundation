@@ -46,6 +46,9 @@
 #define string_from_char( _char_ )              [NSString stringWithFormat:@"%c", _char_]
 #define string_from_short( _short_ )            [NSString stringWithFormat:@"%hi", _short_]
 #define string_from_class( _class_ )            NSStringFromClass(_class_)
+#define string_from_point( _point_ )            NSStringFromCGPoint(_point_)
+#define string_from_rect( _rect_ )              NSStringFromCGRect(_rect_)
+#define string_from_range( _range_ )            NSStringFromRange(_range_)
 
 /**
  *  文件名
