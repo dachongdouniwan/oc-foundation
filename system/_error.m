@@ -75,6 +75,7 @@
 #pragma mark - UserInfo
 
 - (NSString *)message {
+    
     if (self.userInfo &&
         [self.userInfo.allKeys containsString:[self messagedKey]]) {
         
