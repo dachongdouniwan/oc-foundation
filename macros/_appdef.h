@@ -28,4 +28,6 @@
 
 #define app_bundle_id   [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey] // 对应 info.plist 中 key 为 bundle identifier 的value，当前设置的是：$(PRODUCT_BUNDLE_IDENTIFIER)
 
+#define ISFirst [NSUserDefaults standardUserDefaults]
+
 #endif /* _appdef_h */
