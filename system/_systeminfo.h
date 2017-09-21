@@ -30,7 +30,10 @@ typedef enum {
 
 extern BOOL IOS8; // 准确的iOS8， 非iOS7，非iOS9
 extern BOOL IOS9;
+extern BOOL iOS10;
+extern BOOL iOS11;
 
+extern BOOL iOS11_or_later;
 extern BOOL IOS10_OR_LATER;
 extern BOOL IOS9_OR_LATER;
 extern BOOL IOS8_OR_LATER;
@@ -40,6 +43,7 @@ extern BOOL IOS5_OR_LATER;
 extern BOOL IOS4_OR_LATER;
 extern BOOL IOS3_OR_LATER;
 
+extern BOOL iOS11_or_earlier;
 extern BOOL IOS9_OR_EARLIER;
 extern BOOL IOS8_OR_EARLIER;
 extern BOOL IOS7_OR_EARLIER;
@@ -50,8 +54,9 @@ extern BOOL IOS3_OR_EARLIER;
 
 extern BOOL IS_SCREEN_4_INCH;
 extern BOOL IS_SCREEN_35_INCH;
-extern BOOL IS_SCREEN_47_INCH;
+extern BOOL IS_SCREEN_47_INCH; // , design area: 750x1334 @2x
 extern BOOL IS_SCREEN_55_INCH;
+extern BOOL is_screen_58_inch; // 458 ppi, Safe design area: 750x1468 @2x
 
 #pragma mark -
 

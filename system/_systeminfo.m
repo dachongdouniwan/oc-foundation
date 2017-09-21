@@ -33,7 +33,10 @@
 
 BOOL IOS8 = NO;
 BOOL IOS9 = NO;
+BOOL iOS10 = NO;
+BOOL iOS11 = NO;
 
+BOOL iOS11_or_later = NO;
 BOOL IOS10_OR_LATER = NO;
 BOOL IOS9_OR_LATER = NO;
 BOOL IOS8_OR_LATER = NO;
@@ -43,6 +46,7 @@ BOOL IOS5_OR_LATER = NO;
 BOOL IOS4_OR_LATER = NO;
 BOOL IOS3_OR_LATER = NO;
 
+BOOL iOS11_or_earlier = NO;
 BOOL IOS9_OR_EARLIER = NO;
 BOOL IOS8_OR_EARLIER = NO;
 BOOL IOS7_OR_EARLIER = NO;
@@ -55,6 +59,7 @@ BOOL IS_SCREEN_35_INCH = NO;
 BOOL IS_SCREEN_4_INCH = NO;
 BOOL IS_SCREEN_47_INCH = NO;
 BOOL IS_SCREEN_55_INCH = NO;
+BOOL is_screen_58_inch = NO;
 
 #pragma mark -
 
@@ -119,8 +124,10 @@ BOOL IS_SCREEN_55_INCH = NO;
     // 判断当前系统版本
     IOS8 = [[UIDevice currentDevice].systemVersion floatValue] >= 8.0 && [[UIDevice currentDevice].systemVersion floatValue] < 9.0;
     IOS9 = [[UIDevice currentDevice].systemVersion floatValue] >= 9.0 && [[UIDevice currentDevice].systemVersion floatValue] < 10.0;
+    iOS10 = [[UIDevice currentDevice].systemVersion floatValue] >= 10.0 && [[UIDevice currentDevice].systemVersion floatValue] < 11.0;
+    iOS11 = [[UIDevice currentDevice].systemVersion floatValue] >= 11.0 && [[UIDevice currentDevice].systemVersion floatValue] < 12.0;
 
-
+    iOS11_or_later = ([[[UIDevice currentDevice] systemVersion] floatValue] >= 11.0);
     IOS10_OR_LATER = ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0);
     IOS9_OR_LATER =  ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0);
     IOS8_OR_LATER =  ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0);
@@ -130,6 +137,7 @@ BOOL IS_SCREEN_55_INCH = NO;
     IOS4_OR_LATER =  ([[[UIDevice currentDevice] systemVersion] floatValue] >= 4.0);
     IOS3_OR_LATER =  ([[[UIDevice currentDevice] systemVersion] floatValue] >= 3.0);
     
+    iOS11_or_earlier = !iOS11_or_later;
     IOS9_OR_EARLIER = !IOS10_OR_LATER;
     IOS8_OR_EARLIER = !IOS9_OR_LATER;
     IOS7_OR_EARLIER = !IOS8_OR_LATER;
@@ -142,6 +150,7 @@ BOOL IS_SCREEN_55_INCH = NO;
     IS_SCREEN_35_INCH = ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO);
     IS_SCREEN_47_INCH = ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO);
     IS_SCREEN_55_INCH = ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO);
+    is_screen_58_inch = ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO);
 #else
     // all NO
 #endif

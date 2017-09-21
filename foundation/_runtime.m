@@ -142,11 +142,16 @@ void dumpClass(Class cls) {
     
     for ( NSString * className in [self loadedClassNames] ) {
         Class classType = NSClassFromString( className );
-        if ( classType == self )
+        if ( classType == self ) {
             continue;
+        }
         
-        if ( NO == [classType isSubclassOfClass:self] )
+        // bugfix: but not know why
+//        if ( NO == [classType isSubclassOfClass:self] )
+//            continue;
+        if (class_getSuperclass(classType) != self) {
             continue;
+        }
         
         [results addObject:[classType description]];
     }
