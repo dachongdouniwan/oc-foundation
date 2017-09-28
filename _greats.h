@@ -29,6 +29,8 @@
 #import "_stack.h"
 #import "_sorted_array.h"
 
+#import "_domain_model.h"
+
 @namespace( system )
 @namespace( system, logger, _Logger )
 @namespace( system, debugger, _Debugger )
