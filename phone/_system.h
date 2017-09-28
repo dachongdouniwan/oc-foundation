@@ -60,9 +60,9 @@ extern BOOL is_screen_58_inch; // 458 ppi, Safe design area: 750x1468 @2x
 
 #pragma mark -
 
-@interface _SystemInfo : NSObject
+@interface _System : NSObject
 
-@singleton( _SystemInfo )
+@singleton( _System )
 
 @prop_readonly( NSString *,         now );
 
@@ -115,6 +115,13 @@ extern BOOL is_screen_58_inch; // 458 ppi, Safe design area: 750x1468 @2x
 @prop_readonly( NSArray *,          languages ); // 系统语言
 @prop_readonly( NSString *,         currentLanguage ); // 系统当前使用语言
 
+// uuid inspired by FCUUID
+@prop_readonly( NSString *,         uuid ); // changes each time (no persistent)
+@prop_readonly( NSString *,         uuidForSession ); // changes each time the app gets launched (persistent to session)
+@prop_readonly( NSString *,         uuidForInstallation ); // changes each time the app gets installed (persistent to installation)
+@prop_readonly( NSString *,         uuidForVendor ); // changes each time all the apps of the same vendor are uninstalled (this works exactly as identifierForVendor)
+@prop_readonly( NSString *,         uuidForDevice ); // changes only on system reset, this is the best replacement to the good old udid (persistent to device)
+
 - (NSString *)urlSchemaWithName:(NSString *)name;
 
 - (BOOL)isOsVersionOrEarlier:(NSString *)ver;
@@ -124,5 +131,25 @@ extern BOOL is_screen_58_inch; // 458 ppi, Safe design area: 750x1468 @2x
 - (BOOL)isScreenSizeSmallerThan:(CGSize)size;
 - (BOOL)isScreenSizeBiggerThan:(CGSize)size;
 - (BOOL)isScreenSizeEqualTo:(CGSize)size;
+
+// 临时写在这里
+@prop_readonly( NSString *,            deviceUDID ); // Stored in keychain
+
+/**
+ *  Setting page
+ */
+- (void)openSettings;
+
+/**
+ *  WIFI
+ */
+- (void)openWIFI;
+
+/**
+ *  打电话
+ *
+ *  @param telnum 电话号码
+ */
+- (BOOL)call:(NSString *)phone;
 
 @end

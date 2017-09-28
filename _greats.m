@@ -16,7 +16,7 @@
 
 #import "_greats.h"
 
-@def_namespace( system )
-@def_namespace( system, logger, _Logger )
-@def_namespace( system, debugger, _Debugger )
-@def_namespace( system, info, _SystemInfo )
+@def_namespace( greats )
+@def_namespace( greats, logger, _Logger )
+@def_namespace( greats, debugger, _Debugger )
+@def_namespace( greats, system, _System )

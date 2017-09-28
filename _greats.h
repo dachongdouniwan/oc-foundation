@@ -23,7 +23,7 @@
 #import "_foundation.h"
 
 // 系统部分
-#import "_system.h"
+#import "_phone.h"
 
 // 数据结构
 #import "_stack.h"
@@ -31,7 +31,7 @@
 
 #import "_domain_model.h"
 
-@namespace( system )
-@namespace( system, logger, _Logger )
-@namespace( system, debugger, _Debugger )
-@namespace( system, info, _SystemInfo )
+@namespace( greats )
+@namespace( greats, logger, _Logger )
+@namespace( greats, debugger, _Debugger )
+@namespace( greats, system, _System )

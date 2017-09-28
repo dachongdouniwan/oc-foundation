@@ -17,8 +17,14 @@
 #import <mach/mach.h>
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-#import "_systeminfo.h"
+#import "_system.h"
 #import "_foundation.h"
+#import "_keychain.h"
+
+#pragma mark -
+
+NSString * const UUIDForInstallationKey = @"uuidForInstallation";
+NSString * const UUIDForDeviceKey = @"uuidForDevice";
 
 #pragma mark -
 
@@ -63,13 +69,13 @@ BOOL is_screen_58_inch = NO;
 
 #pragma mark -
 
-@implementation _SystemInfo {
+@implementation _System {
     // uuids
     NSString *_uuidForSession;
     NSString *_uuidForInstallation;
 }
 
-@def_singleton( _SystemInfo );
+@def_singleton( _System );
 
 @def_prop_readonly( NSString *,			osVersion );
 @def_prop_readonly( OperationSystem,	osType );
@@ -111,6 +117,12 @@ BOOL is_screen_58_inch = NO;
 @def_prop_readonly( BOOL,               photoLibraryAccessable );
 
 @def_prop_readonly( NSArray *,          languages );
+
+@def_prop_readonly( NSString *,         uuid );
+@def_prop_readonly( NSString *,         uuidForSession );
+@def_prop_readonly( NSString *,         uuidForInstallation );
+@def_prop_readonly( NSString *,         uuidForVendor );
+@def_prop_readonly( NSString *,         uuidForDevice );
 
 + (void)load {
     [self sharedInstance];
@@ -688,6 +700,183 @@ BOOL is_screen_58_inch = NO;
     NSArray *languages = [NSLocale preferredLanguages];
     NSString *currentLanguage = [languages firstObject];
     return [NSString stringWithString:currentLanguage];
+}
+
+#pragma mark -
+
+- (NSString *)uuid {
+    CFUUIDRef uuidRef = CFUUIDCreate(NULL);
+    CFStringRef uuidStringRef = CFUUIDCreateString(NULL, uuidRef);
+    CFRelease(uuidRef);
+    
+    NSString *uuidValue = (__bridge_transfer NSString *)uuidStringRef;
+    uuidValue = [uuidValue lowercaseString];
+    uuidValue = [uuidValue stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    return uuidValue;
+}
+
+- (NSString *)uuidForSession {
+    if( _uuidForSession == nil ){
+        _uuidForSession = [self uuid];
+    }
+    
+    return _uuidForSession;
+}
+
+- (NSString *)uuidForInstallation {
+    if( _uuidForInstallation == nil ){
+        _uuidForInstallation = [[NSUserDefaults standardUserDefaults] stringForKey:UUIDForInstallationKey];
+        
+        if( _uuidForInstallation == nil ){
+            _uuidForInstallation = [self uuid];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:_uuidForInstallation forKey:UUIDForInstallationKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
+    
+    return _uuidForInstallation;
+}
+
+- (NSString *)uuidForVendor {
+    return [[[[[UIDevice currentDevice] identifierForVendor] UUIDString] lowercaseString] stringByReplacingOccurrencesOfString:@"-" withString:@""];
+}
+
+- (NSString *)uuidForDevice {
+    //also known as udid/uniqueDeviceIdentifier but this doesn't persists to system reset
+    
+    return [self uuidForDeviceUsingValue:nil];
+}
+
+- (NSString *)uuidForDeviceUsingValue:(NSString *)uuidValue {
+    NSString *serviceName = stringify(_System);
+    //also known as udid/uniqueDeviceIdentifier but this doesn't persists to system reset
+    
+    NSString *uuidForDeviceInMemory = _uuidForDevice;
+    /*
+     //this would overwrite an existing uuid, it could be dangerous
+     if( [self uuidValueIsValid:uuidValue] )
+     {
+     _uuidForDevice = uuidValue;
+     }
+     */
+    if( _uuidForDevice == nil ) {
+        _uuidForDevice = [_Keychain passwordForService:serviceName account:UUIDForDeviceKey];
+        if( _uuidForDevice == nil ) {
+            _uuidForDevice = [[NSUserDefaults standardUserDefaults] stringForKey:UUIDForDeviceKey];
+            
+            if( _uuidForDevice == nil ) {
+                if([self uuidValueIsValid:uuidValue] ) {
+                    _uuidForDevice = uuidValue;
+                } else {
+                    _uuidForDevice = [self uuid];
+                }
+            }
+        }
+    }
+    
+    if([self uuidValueIsValid:uuidValue] && ![_uuidForDevice isEqualToString:uuidValue]) {
+        exceptioning(@"Cannot overwrite uuidForDevice, uuidForDevice has already been created and cannot be overwritten.")
+    }
+    
+    if(![uuidForDeviceInMemory isEqualToString:_uuidForDevice])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:_uuidForDevice forKey:UUIDForDeviceKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [_Keychain setPassword:_uuidForDevice forService:serviceName account:UUIDForDeviceKey];
+    }
+    
+    return _uuidForDevice;
+}
+
+- (BOOL)uuidValueIsValid:(NSString *)uuidValue {
+    return (uuidValue != nil && (uuidValue.length == 32 || uuidValue.length == 36));
+}
+
+- (NSString *)deviceUDID {
+    return [self uuidForDevice];
+}
+
+/**
+ About — prefs:root=General&path=About
+ Accessibility — prefs:root=General&path=ACCESSIBILITY
+ Airplane Mode On — prefs:root=AIRPLANE_MODE
+ Auto-Lock — prefs:root=General&path=AUTOLOCK
+ Brightness — prefs:root=Brightness
+ Bluetooth — prefs:root=General&path=Bluetooth
+ Date & Time — prefs:root=General&path=DATE_AND_TIME
+ FaceTime — prefs:root=FACETIME
+ General — prefs:root=General
+ Keyboard — prefs:root=General&path=Keyboard
+ iCloud — prefs:root=CASTLE
+ iCloud Storage & Backup — prefs:root=CASTLE&path=STORAGE_AND_BACKUP
+ International — prefs:root=General&path=INTERNATIONAL
+ Location Services — prefs:root=LOCATION_SERVICES
+ Music — prefs:root=MUSIC
+ Music Equalizer — prefs:root=MUSIC&path=EQ
+ Music Volume Limit — prefs:root=MUSIC&path=VolumeLimit
+ Network — prefs:root=General&path=Network
+ Nike + iPod — prefs:root=NIKE_PLUS_IPOD
+ Notes — prefs:root=NOTES
+ Notification — prefs:root=NOTIFICATIONS_ID
+ Phone — prefs:root=Phone
+ Photos — prefs:root=Photos
+ Profile — prefs:root=General&path=ManagedConfigurationList
+ Reset — prefs:root=General&path=Reset
+ Safari — prefs:root=Safari
+ Siri — prefs:root=General&path=Assistant
+ Sounds — prefs:root=Sounds
+ Software Update — prefs:root=General&path=SOFTWARE_UPDATE_LINK
+ Store — prefs:root=STORE
+ Twitter — prefs:root=TWITTER
+ Usage — prefs:root=General&path=USAGE
+ VPN — prefs:root=General&path=Network/VPN
+ Wallpaper — prefs:root=Wallpaper
+ Wi-Fi — prefs:root=WIFI
+ */
+
+- (void)openSettings {
+    if (IOS8_OR_LATER) {
+        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    } else {
+        NSURL *url = [NSURL URLWithString:@"prefs:root=NOTIFICATIONS_ID"];
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
+}
+
+- (void)openWIFI {
+    if (IOS8_OR_LATER) {
+        //        NSURL *url = [NSURL URLWithString:UIApplicationOpen];
+        //        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        //            [[UIApplication sharedApplication] openURL:url];
+        //        }
+    } else {
+        NSURL *url = [NSURL URLWithString:@"prefs:root=WIFI"];
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
+}
+
+- (BOOL)call:(NSString *)phone {
+    NSString *phoneNumberString = [phone stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (phoneNumberString != nil) {
+        NSString *urlStr = [[NSString alloc] initWithFormat:@"telprompt://%@", phoneNumberString];
+        BOOL isSuccess = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+        if (!isSuccess) {
+            LOG(@"拨打电话失败:%@", urlStr);
+            
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 @end
