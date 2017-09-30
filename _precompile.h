@@ -1,11 +1,3 @@
-//
-//  _preheaders.h
-//  kata
-//
-//  Created by fallen.ink on 16/02/2017.
-//  Copyright © 2017 fallenink. All rights reserved.
-//
-
 // ----------------------------------
 // Caution
 // ----------------------------------

@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "_foundation.h"
+#import "_i_utility_formatter.h"
 
 @protocol _IUtility <NSObject>
+
+@prop_strong(id<_IUtilityFormatter>, format)
+
 
 @end
