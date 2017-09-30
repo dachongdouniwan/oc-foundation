@@ -25,7 +25,9 @@
 
 /** 当参数为 1 个，建立一个以_parent为名字的命名空间，不需要支持sharedInstance */
 #define namespace_1( _parent, ... ) \
-        interface _Namespace_##_parent : _Namespace \
+        class _Namespace_##_parent; \
+        extern _Namespace_##_parent *_parent; \
+        @interface _Namespace_##_parent : _Namespace \
         @end \
         @interface _Namespace (_Namespace_##_parent) \
         @prop_readonly( _Namespace_##_parent *, _parent ); \
@@ -52,15 +54,15 @@
 #define def_namespace_1( _parent, ... ) \
         implementation _Namespace_##_parent \
         @end \
+        __strong _Namespace_##_parent * _parent = nil; \
         @implementation _Namespace (_Namespace_##_parent) \
         @def_prop_dynamic( _Namespace_##_parent *, _parent ); \
         - (_Namespace_##_parent *)_parent { \
-            static __strong id __instance = nil; \
-            if ( nil == __instance ) \
+            if ( nil == _parent ) \
             { \
-                __instance = [[_Namespace_##_parent alloc] init]; \
+                _parent = [[_Namespace_##_parent alloc] init]; \
             } \
-            return __instance; \
+            return _parent; \
         } \
         @end
 
@@ -119,4 +121,4 @@
 // 2. 从任意命名空间出发，能够树状访问所有内部单例或对象
 // ----------------------------------
 
-extern _Namespace *greats;
+extern _Namespace * greats;

@@ -32,7 +32,7 @@
 #ifndef execute_once
 #define execute_once( _block_ ) \
         { \
-            static dispatch_once_t predicate = 0; \
+            static dispatch_once_t predicate; \
             dispatch_once(&predicate, _block_); \
         }
 #endif
