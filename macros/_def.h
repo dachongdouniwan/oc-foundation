@@ -17,6 +17,7 @@
 // 单例的实例的宏定义：xxxInst, 如 networkInst
 // 事件响应函数命名：did\will\when\on + event desc
 // ViewController中，所有view设为类变量，outlet例外；所有数据设为property。
+// 类别文件名，除了foundation中是NSObject+Extension.h，其他一律是NSObject+'feature'.h的命名方式
 
 #import <Foundation/Foundation.h>
 
@@ -55,3 +56,21 @@
 #error "Samurai only available in iOS SDK 6.0 and later."
 #endif
 #endif
+
+// 区域注释
+
+// ----------------------------------
+// MARK: Interface, Source, Macro, Extern, Const
+// ----------------------------------
+
+// 段落注释
+
+/**
+ * @brief
+ * @return
+ * @param
+ */
+
+// 语句注释
+
+/** xxxxx. */

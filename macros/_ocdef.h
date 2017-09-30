@@ -81,4 +81,10 @@ static inline BOOL is_empty(id thing) {
 #undef  app_set_indicator
 #define app_set_indicator( _value_ ) [UIApplication sharedApplication].networkActivityIndicatorVisible = _value_;
 
+#undef  invoke_nullable_block_noarg
+#define invoke_nullable_block_noarg( _block_ ) { if (_block_) _block_(); }
+
+#undef  invoke_nullable_block
+#define invoke_nullable_block( _block_, ... ) { if (_block_) _block_(__VA_ARGS__); }
+
 #endif /* _ocdef_h */

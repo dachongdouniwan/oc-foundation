@@ -16,16 +16,20 @@
 
 #import "_namespace.h"
 
-#pragma mark -
+// ----------------------------------
+// MARK: Extern
+// ----------------------------------
 
-__strong _Namespace * suite = nil;
+__strong _Namespace * greats = nil;
 
-#pragma mark -
+// ----------------------------------
+// MARK: Source - _Namespace
+// ----------------------------------
 
 @implementation _Namespace
 
 + (void)load {
-    suite = [[_Namespace alloc] init];
+    greats = [[_Namespace alloc] init];
 }
 
 @end

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "_foundation.h"
 #import "_i_utility_formatter.h"
+#import "_i_utility_date.h"
+#import "_i_utility_image.h"
 
 @protocol _IUtility <NSObject>
 

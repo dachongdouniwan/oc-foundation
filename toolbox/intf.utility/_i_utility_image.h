@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol _i_utility_image <NSObject>
+@protocol _IUtilityImage <NSObject>
 
 @end
