@@ -1,15 +1,7 @@
-//
-//  _annotation.h
-//  kata
-//
-//  Created by fallen.ink on 12/03/2017.
-//  Copyright © 2017 fallenink. All rights reserved.
-//
-
 #import "_precompile.h"
 
 // ----------------------------------
-// Macro code
+// MARK: Macro
 // ----------------------------------
 
 #undef  annotation_sectioname
@@ -34,7 +26,7 @@
         meta_annotation_bind( annotation_sectioname, _intf_name_, _impl_name_ )
 
 // ----------------------------------
-// Class code
+// MARK: Interface
 // ----------------------------------
 
 @interface _Annotation : NSObject
