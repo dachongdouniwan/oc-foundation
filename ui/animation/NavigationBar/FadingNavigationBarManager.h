@@ -6,9 +6,9 @@
 //  Copyright © 2017 alliance. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-#import "_ui_precompile.h"
+#import "_precompile.h"
+#import "_foundation.h"
+#import "_system.h"
 
 @interface FadingNavigationBarManager : NSObject
 

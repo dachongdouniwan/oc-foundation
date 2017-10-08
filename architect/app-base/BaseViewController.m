@@ -1,17 +1,8 @@
-//
-//  BaseViewController.m
-// fallen.ink
-//
-//  Created by 李杰 on 4/27/15.
-//
-//
 
-#import "BaseViewController.h"
-#import "UIViewController+Extension.h"
 #import "_greats.h"
-#import "_ui_core.h"
-#import "_app_appearance.h"
-#import "_easyrouter.h"
+#import "BaseViewController.h"
+#import "BaseViewController+Private.h"
+#import "UIViewController+Extension.h"
 
 // ----------------------------------
 // class implementation
@@ -42,6 +33,7 @@ static NSString *backButtonImageName = @"buckbutton";
 
 @def_prop_class( UIColor *, preferredNavigationBarColor, setPreferredNavigationBarColor )
 @def_prop_class( UIStatusBarStyle, userPreferredStatusBarStyle, setUserPreferredStatusBarStyle )
+@def_prop_class( UIColor *, preferredViewBackgroundColor, setPreferredViewBackgroundColor )
 
 #pragma mark - Initialize
 
@@ -107,18 +99,6 @@ static NSString *backButtonImageName = @"buckbutton";
     return self;
 }
 
-#pragma mark - Router init
-
-- (instancetype)initWithRouterParams:(NSDictionary *)params {
-    if (self = [super init]) {
-        [self initDefault];
-        
-        self.params = params;
-    }
-    
-    return self;
-}
-
 #pragma mark - Life cycle
 
 - (void)viewDidLoad {
@@ -136,7 +116,7 @@ static NSString *backButtonImageName = @"buckbutton";
         [self clearNavLeftItem];
     }
     
-    self.view.backgroundColor = color_background_view;
+    self.view.backgroundColor = self.class.preferredViewBackgroundColor;
     
 #if 0 // 切换tab的时候动画
     [self injectSwipeToTabGesture];

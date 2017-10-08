@@ -6,10 +6,9 @@
 //  Copyright © 2016年 YuanBo. All rights reserved.
 //
 
-#import "QQBaseTitleDisplayVC.h"
+#import "UITitleDisplayViewController.h"
 #import "Masonry.h"
 #import "NSString+Size.h"
-#import "_ui_core.h"
 
 static CGFloat kTitleViewHeight = 50;
 

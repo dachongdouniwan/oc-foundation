@@ -67,11 +67,3 @@
 #pragma mark -
 
 @end
-
-#pragma mark -
-
-@interface UIViewController ( Handler )
-
-@property (nonatomic, strong, readonly) ErrorBlock failureHandler;
-
-@end

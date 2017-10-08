@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-typedef NS_ENUM(NSInteger, QQTitleDisplayAnimationType) {
+typedef enum : NSUInteger {
     QQTitleDisplayAnimationTypeDefault = 0,
     QQTitleDisplayAnimationTypeDelayed,
-};
+} QQTitleDisplayAnimationType;
 
 
 @class QQBaseTitleDisplayVC;

@@ -1,12 +1,5 @@
-//
-//  3DTouchController.m
-//  hairdresser
-//
-//  Created by fallen.ink on 7/14/16.
-//
-//
 
-#import "3DTouchController.h"
+#import "UI3DTouchController.h"
 
 @interface _DTouchController ()
 

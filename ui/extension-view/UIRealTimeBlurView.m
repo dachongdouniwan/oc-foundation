@@ -25,7 +25,7 @@
 //  Copyright (c) 2014 Alex Usbergo. All rights reserved.
 //
 
-#import "UIERealTimeBlurView.h"
+#import "UIRealTimeBlurView.h"
 #import "UIImage+Blur.h"
 #import <objc/runtime.h>
 

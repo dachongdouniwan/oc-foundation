@@ -6,8 +6,8 @@
 //  Copyright © 2017 alliance. All rights reserved.
 //
 
+#import "_frame.h"
 #import "ScrollHeaderWrapperView.h"
-#import "_ui_core.h"
 
 @interface ScrollHeaderWrapperView ()
 

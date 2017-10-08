@@ -10,7 +10,6 @@
 #import "BaseNavigationController.h"
 #import "_foundation.h"
 #import "_system.h"
-#import "_easycoding.h"
 
 @implementation UIViewController ( Extension )
 
@@ -84,24 +83,4 @@
 
 @end
 
-#pragma mark -
-
-@implementation UIViewController ( Handler )
-
-- (ErrorBlock)failureHandler {
-    @weakify(self)
-    
-    return ^(NSError *error) {
-        
-        @strongify(self)
-        
-        [self showAlertView:@"数据加载失败" message:error.message cancelButtonName:@"确定" cancelHandler:^{
-            @strongify(self)
-            
-            [self.navigationController popViewControllerAnimated:YES];
-        }];
-    };
-}
-
-@end
 

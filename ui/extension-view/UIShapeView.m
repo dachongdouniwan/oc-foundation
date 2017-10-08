@@ -6,7 +6,7 @@
 //
 //
 
-#import "ShapeView.h"
+#import "UIShapeView.h"
 
 @implementation ShapeView
 

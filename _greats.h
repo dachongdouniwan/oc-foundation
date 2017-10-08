@@ -1,4 +1,3 @@
-#import <Foundation/Foundation.h>
 
 // 预编译头
 #import "_precompile.h"
@@ -14,6 +13,12 @@
 #import "_sorted_array.h"
 
 #import "_domain_model.h"
+
+// UI部分
+#import "_ui.h"
+
+// 架构部分
+#import "_architect.h"
 
 // 所有功能，两个体系
 // app.xxxx, 专注于离散式, 但其实现在building里面

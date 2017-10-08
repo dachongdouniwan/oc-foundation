@@ -1,26 +1,26 @@
 //
-//  UICollectionView+Sure_Placeholder.m
-//  AppPlaceholder
+//  UITableView+PlaceHolder.m
+//  student
 //
-//  Created by 刘硕 on 2016/11/30.
-//  Copyright © 2016年 刘硕. All rights reserved.
+//  Created by fallen.ink on 08/10/2017.
+//  Copyright © 2017 alliance. All rights reserved.
 //
 
-#import "UICollectionView+Sure_Placeholder.h"
-#import "NSObject+Swizzling.h"
-#import "SurePlaceholderView.h"
-@implementation UICollectionView (Sure_Placeholder)
+#import "_foundation.h"
+#import "UITableView+PlaceHolder.h"
+#import "UISurePlaceholderView.h"
+
+@implementation UITableView (PlaceHolder)
 
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [self methodSwizzlingWithOriginalSelector:@selector(reloadData)
-                               bySwizzledSelector:@selector(sure_reloadData)];
+        [self swizzleMethod:@selector(reloadData) withMethod:@selector(sure_reloadData)];
     });
 }
 
 - (void)sure_reloadData {
-    if (!self.firstReload) {//非首次刷新检测是否为空 解决数据加载未完成显示占位图情况
+    if (!self.firstReload) {
         [self checkEmpty];
     }
     self.firstReload = NO;
@@ -28,21 +28,20 @@
 }
 
 - (void)checkEmpty {
-    BOOL isEmpty = YES;
+    BOOL isEmpty = YES;//flag标示
     
-    id <UICollectionViewDataSource> dataSource = self.dataSource;
-    NSInteger sections = 1;
-    if ([dataSource respondsToSelector:@selector(numberOfSectionsInCollectionView:)]) {
-        sections = [dataSource numberOfSectionsInCollectionView:self] - 1;
+    id <UITableViewDataSource> dataSource = self.dataSource;
+    NSInteger sections = 1;//默认一组
+    if ([dataSource respondsToSelector:@selector(numberOfSectionsInTableView:)]) {
+        sections = [dataSource numberOfSectionsInTableView:self] - 1;//获取当前TableView组数
     }
     
     for (NSInteger i = 0; i <= sections; i++) {
-        NSInteger rows = [dataSource collectionView:self numberOfItemsInSection:i];
+        NSInteger rows = [dataSource tableView:self numberOfRowsInSection:i];//获取当前TableView各组行数
         if (rows) {
-            isEmpty = NO;
+            isEmpty = NO;//若行数存在，不为空
         }
     }
-    
     if (isEmpty) {//若为空，加载占位图
         //默认占位图
         if (!self.placeholderView) {
@@ -57,7 +56,7 @@
 
 - (void)makeDefaultPlaceholderView {
     self.bounds = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    SurePlaceholderView *placeholderView = [[SurePlaceholderView alloc]initWithFrame:self.bounds];
+    UISurePlaceholderView *placeholderView = [[UISurePlaceholderView alloc]initWithFrame:self.bounds];
     __weak typeof(self) weakSelf = self;
     [placeholderView setReloadClickBlock:^{
         if (weakSelf.reloadBlock) {

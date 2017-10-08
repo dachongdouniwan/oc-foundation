@@ -1,18 +1,20 @@
 //
-//  SurePlaceholderView.m
-//  AppPlaceholder
+//  UISurePlaceholderView.m
+//  student
 //
-//  Created by 刘硕 on 2016/11/30.
-//  Copyright © 2016年 刘硕. All rights reserved.
+//  Created by fallen.ink on 08/10/2017.
+//  Copyright © 2017 alliance. All rights reserved.
 //
 
-#import "SurePlaceholderView.h"
+#import "UISurePlaceholderView.h"
 
-@interface SurePlaceholderView ()
+@interface UISurePlaceholderView ()
+
 @property (nonatomic, strong) UIButton *reloadButton;
+
 @end
 
-@implementation SurePlaceholderView
+@implementation UISurePlaceholderView
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -48,5 +50,6 @@
         self.reloadClickBlock();
     }
 }
+
 
 @end

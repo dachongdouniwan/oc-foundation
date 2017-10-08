@@ -113,6 +113,7 @@
 // 以下是配置
 @prop_class( UIColor *, preferredNavigationBarColor )
 @prop_class( UIStatusBarStyle, userPreferredStatusBarStyle )
+@prop_class( UIColor *, preferredViewBackgroundColor )
 
 #pragma mark - Override methods
 
