@@ -57,6 +57,10 @@
         __strong _Namespace_##_parent * _parent = nil; \
         @implementation _Namespace (_Namespace_##_parent) \
         @def_prop_dynamic( _Namespace_##_parent *, _parent ); \
+        + (void)load \
+        { \
+            [[_Namespace new] _parent]; \
+        }\
         - (_Namespace_##_parent *)_parent { \
             if ( nil == _parent ) \
             { \
