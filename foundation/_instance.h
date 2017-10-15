@@ -24,7 +24,7 @@
 
 #undef  prop_instance
 #define prop_instance( __type, __name ) \
-        property (nonatomic, strong) __type * __name;
+        property (nonatomic, strong) __type __name;
 
 #undef  def_prop_instance
 #define def_prop_instance( __type, __name ) \
