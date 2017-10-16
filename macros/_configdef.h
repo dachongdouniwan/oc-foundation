@@ -18,14 +18,23 @@
 // Common use macros
 // ----------------------------------
 
-#undef  IN
-#define IN
+#undef  __IN__
+#define __IN__
 
-#undef  OUT
-#define OUT
+#undef  __OUT__
+#define __OUT__
 
-#undef  INOUT
-#define INOUT
+#undef  __INOUT__
+#define __INOUT__
+
+// http://blog.csdn.net/Lu_Ca/article/details/48027103
+#if TARGET_IPHONE_SIMULATOR
+#   define __SIMULATOR__     1
+#   define __IPHONE__        0
+#elif TARGET_OS_IPHONE
+#   define __SIMULATOR__     0
+#   define __IPHONE__        1
+#endif
 
 /**
  *  also can use #pragma unused ( __x )
