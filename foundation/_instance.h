@@ -18,13 +18,14 @@
 
 // ----------------------------------
 // Macros
+// @brief __type 不能为指针类型
 // ----------------------------------
 
 #pragma mark -
 
 #undef  prop_instance
 #define prop_instance( __type, __name ) \
-        property (nonatomic, strong) __type __name;
+        property (nonatomic, strong) __type * __name;
 
 #undef  def_prop_instance
 #define def_prop_instance( __type, __name ) \

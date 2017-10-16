@@ -17,7 +17,7 @@
 #endif
 
 #if TARGET_OS_OSX
-#   error SUITE is supported only on Mac OS X
+#   error SUITE is supported only on Iphone OS
 #endif
 
 // ----------------------------------

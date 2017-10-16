@@ -192,7 +192,7 @@ extern BOOL is_screen_58_inch; // 458 ppi, Safe design area: 750x1468 @2x
 /**
  *  打电话
  *
- *  @param telnum 电话号码
+ *  @param phone 电话号码
  */
 - (BOOL)call:(NSString *)phone;
 
