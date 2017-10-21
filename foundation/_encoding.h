@@ -16,6 +16,17 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ Get the type from a Type-Encoding string.
+ 
+ @discussion See also:
+ https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+ https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html
+ 
+ @param typeEncoding  A Type-Encoding string.
+ @return The encoding type.
+ */
+
 #pragma mark -
 
 typedef enum {
@@ -33,7 +44,7 @@ typedef enum {
 #pragma mark -
 
 /**
- *  「武士」·「編碼器」
+ *  「武士」·「类型編碼器」
  */
 
 @interface _Encoding : NSObject

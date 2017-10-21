@@ -144,11 +144,31 @@ BOOL is_screen_58_inch = NO;
     IOS4_OR_EARLIER = !IOS5_OR_LATER;
     IOS3_OR_EARLIER = !IOS4_OR_LATER;
     
+    /**
+     以下数据，来源于 模拟器调试打印
+     机型                分辨率          ???             PPI         尺寸          启动图大小
+     X              1125x2001       375x812 @3x                     5.8         1125x2436
+         - Safe Area
+             > 竖屏：UIEdgeInsets(44.0, 0.0, 34.0, 0.0) 上左下右
+             > 横屏：UIEdgeInsets(0.0, 44.0, 21.0, 44.0) 上左下右
+     SE             640x1136                                        4
+     5S             640x1136                                        4
+     8P             1242x2208
+     7P             1242x2208                                       5.5
+     6P             1242x2208
+     6SP            1242x2208
+     8              750x1334                                        4.7
+     7              750x1334
+     6S             750x1334
+     6              750x1334        375x667 @2x
+     4              640x960
+     4S             640x960
+     */
     IS_SCREEN_4_INCH = ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO);
     IS_SCREEN_35_INCH = ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO);
     IS_SCREEN_47_INCH = ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO);
     IS_SCREEN_55_INCH = ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO);
-    is_screen_58_inch = ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO);
+    is_screen_58_inch = ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436)/** 如果不适配启动图，那么有效显示区域在中间，上下有黑边，同时这里获取到的height为2001.所以先适配启动图 */, [[UIScreen mainScreen] currentMode].size) : NO);
 #else
     // all NO
 #endif
@@ -915,6 +935,17 @@ BOOL is_screen_58_inch = NO;
     if ([hardware isEqualToString:@"iPhone8,1"])    return IPHONE_6S;
     if ([hardware isEqualToString:@"iPhone8,2"])    return IPHONE_6S_PLUS;
     
+    if ([hardware isEqualToString:@"iPhone9,1"])   return HardwareiPhone7;
+    if ([hardware isEqualToString:@"iPhone9,2"])   return HardwareiPhone7p;
+    
+    if ([hardware isEqualToString:@"iPhone10,1"])   return HardwareiPhone8;
+    if ([hardware isEqualToString:@"iPhone10,4"])   return HardwareiPhone8;
+    if ([hardware isEqualToString:@"iPhone10,2"])   return HardwareiPhone8p;
+    if ([hardware isEqualToString:@"iPhone10,5"])   return HardwareiPhone8p;
+    
+    if ([hardware isEqualToString:@"iPhone10,3"])   return HardwareiPhoneX;
+    if ([hardware isEqualToString:@"iPhone10,6"])   return HardwareiPhoneX;
+    
     if ([hardware isEqualToString:@"iPod1,1"])      return IPOD_TOUCH_1G;
     if ([hardware isEqualToString:@"iPod2,1"])      return IPOD_TOUCH_2G;
     if ([hardware isEqualToString:@"iPod3,1"])      return IPOD_TOUCH_3G;
@@ -1045,6 +1076,16 @@ BOOL is_screen_58_inch = NO;
     if ([hardware isEqualToString:@"iPhone7,2"])    return @"iPhone 6";
     if ([hardware isEqualToString:@"iPhone8,1"])    return @"iPhone 6s";
     if ([hardware isEqualToString:@"iPhone8,2"])    return @"iPhone 6s Plus";
+    if ([hardware isEqualToString:@"iPhone9,1"])    return @"iPhone 7";
+    if ([hardware isEqualToString:@"iPhone9,2"])    return @"iPhone 7 Plus";
+    
+    if ([hardware isEqualToString:@"iPhone10,1"])   return @"iPhone 8";
+    if ([hardware isEqualToString:@"iPhone10,4"])   return @"iPhone 8";
+    if ([hardware isEqualToString:@"iPhone10,2"])   return @"iPhone 8 Plus";
+    if ([hardware isEqualToString:@"iPhone10,5"])   return @"iPhone 8 Plus";
+    
+    if ([hardware isEqualToString:@"iPhone10,3"])   return @"iPhone X";
+    if ([hardware isEqualToString:@"iPhone10,6"])   return @"iPhone X";
     
     if ([hardware isEqualToString:@"iPod1,1"])      return @"iPod Touch (1 Gen)";
     if ([hardware isEqualToString:@"iPod2,1"])      return @"iPod Touch (2 Gen)";
@@ -1110,6 +1151,14 @@ BOOL is_screen_58_inch = NO;
         case IPHONE_6:                          return 7.2f;
         case IPHONE_6S:                         return 8.1f;
         case IPHONE_6S_PLUS:                    return 8.2f;
+            
+        case HardwareiPhone7:                   return 9.1f;
+        case HardwareiPhone7p:                  return 9.2f;
+        
+        case HardwareiPhone8:                   return 10.1f;
+        case HardwareiPhone8p:                  return 10.2f;
+        
+        case HardwareiPhoneX:                   return 10.3f;
             
         case IPOD_TOUCH_1G:                     return 1.1f;
         case IPOD_TOUCH_2G:                     return 2.1f;

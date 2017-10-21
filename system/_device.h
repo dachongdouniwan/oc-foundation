@@ -4,6 +4,8 @@
 
 #pragma mark -
 
+// 更新时间：2017/10/18
+// [史上最全的iOS各种设备信息获取总结(iPhone8/iPhone X 已更新)](http://www.jianshu.com/p/b23016bb97af)
 typedef NS_ENUM(NSUInteger, Hardware) {
     NOT_AVAILABLE,
     
@@ -27,6 +29,13 @@ typedef NS_ENUM(NSUInteger, Hardware) {
     IPHONE_6S,
     IPHONE_6S_PLUS,
     
+    HardwareiPhone7,
+    HardwareiPhone7p,
+    
+    HardwareiPhone8,
+    HardwareiPhone8p,
+    
+    HardwareiPhoneX,
     
     IPOD_TOUCH_1G,
     IPOD_TOUCH_2G,

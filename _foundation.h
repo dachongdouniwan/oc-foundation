@@ -40,6 +40,10 @@
 #import "_timer.h"
 #import "_trigger.h"
 
+#import "_pair.h"
+#import "_stack.h"
+#import "_sorted_array.h"
+
 // Extension
 #import "NSArray+Extension.h"
 #import "NSAttributedString+Extension.h"
