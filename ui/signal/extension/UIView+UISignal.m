@@ -1,6 +1,6 @@
 #import <objc/runtime.h>
 
-#import "_UISignal.h"
+#import "_ui_signal.h"
 #import "UIView+UISignal.h"
 
 #pragma mark - Usage

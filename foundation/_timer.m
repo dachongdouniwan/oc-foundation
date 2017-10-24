@@ -43,7 +43,7 @@
     NSParameterAssert(seconds);
     NSParameterAssert(block);
     
-    TODO("未测试")
+//    TODO("未测试")
     
     _Timer *timer = [[self alloc] init];
     timer.block = block;

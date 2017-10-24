@@ -1,5 +1,5 @@
 #import <objc/runtime.h>
-#import "_UISignal.h"
+#import "_ui_signal.h"
 #import "UIViewController+UISignal.h"
 #import "UIView+UISignal.h"
 

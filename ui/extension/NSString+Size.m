@@ -220,7 +220,7 @@
 }
 
 - (int)textLineNumWithFont:(UIFont *)font constrainedToSize:(CGSize)size {
-    CGFloat realHeight = [self textSizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByWordWrapping].height;
+    CGFloat realHeight = [self sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByWordWrapping].height;
     CGFloat oneLineHeight = [self textSizeForOneLineWithFont:font].height;
     return (int)ceilf(realHeight/oneLineHeight);
 }

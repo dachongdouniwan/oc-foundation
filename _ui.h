@@ -8,7 +8,7 @@
 #import "_router.h"
 
 // signal
-#import "_UISignal.h"
+#import "_ui_signal.h"
 
 // animation
 #import "MovingNavigationBarManager.h" // 导航栏移动动画、特效处理

@@ -8,17 +8,15 @@
 // 系统部分
 #import "_system.h"
 
+// 特技
+#import "_supports.h"
+
 // 数据结构
 #import "_stack.h"
 #import "_sorted_array.h"
 
-#import "_domain_model.h"
-
 // UI部分
 #import "_ui.h"
-
-// 架构部分
-#import "_architect.h"
 
 // 所有功能，两个体系
 // app.xxxx, 专注于离散式, 但其实现在building里面
