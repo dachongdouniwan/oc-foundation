@@ -1,16 +1,28 @@
 
-// layout
+// ----------------------------------
+// UI Layout
+// ----------------------------------
+
 #import "_geometry.h"
 #import "_frame.h"
 #import "Masonry.h"
 
-// route
+// ----------------------------------
+// Router
+// ----------------------------------
+
 #import "_router.h"
 
-// signal
+// ----------------------------------
+// UI Signal
+// ----------------------------------
+
 #import "_ui_signal.h"
 
-// animation
+// ----------------------------------
+// UI Animation
+// ----------------------------------
+
 #import "MovingNavigationBarManager.h" // 导航栏移动动画、特效处理
 #import "FadingNavigationBarManager.h" // 导航栏渐变动画、特效处理
 #import "BlurViewController.h" // 模糊背景弹出

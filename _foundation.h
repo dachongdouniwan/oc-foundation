@@ -1,21 +1,13 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
+// ----------------------------------
+// System headers
+// ----------------------------------
 
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+
+// ----------------------------------
+// Framework headers
+// ----------------------------------
 
 #import "metamacros.h"
 #import "extobjc.h"
@@ -44,7 +36,10 @@
 #import "_stack.h"
 #import "_sorted_array.h"
 
-// Extension
+// ----------------------------------
+// Extensions
+// ----------------------------------
+
 #import "NSArray+Extension.h"
 #import "NSAttributedString+Extension.h"
 #import "NSBundle+Extension.h"

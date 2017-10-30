@@ -15,8 +15,8 @@
 #define history_W(view) (view.frame.size.width)
 #define history_H(view) (view.frame.size.height)
 
-static char kTextFieldIdentifyKey;
-static char kTextFieldHistoryviewIdentifyKey;
+__unused static char kTextFieldIdentifyKey;
+__unused static char kTextFieldHistoryviewIdentifyKey;
 
 #define ANIMATION_DURATION 0.3f
 #define ITEM_HEIGHT 40
