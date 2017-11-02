@@ -31,6 +31,7 @@
 #import "_thead.h"
 #import "_timer.h"
 #import "_trigger.h"
+#import "_class.h"
 
 #import "_pair.h"
 #import "_stack.h"

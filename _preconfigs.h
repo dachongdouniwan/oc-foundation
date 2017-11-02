@@ -1,11 +1,11 @@
 // Import this file when U really need !
 
 // ----------------------------------
-// Version
+// 预定义宏
 // ----------------------------------
 
 #undef  __VERSION__
-#define __VERSION__         ("0.1.0")
+#define __VERSION__         ("0.0.2")
 
 #define __MUST_ON__         (1)
 #define __MUST_OFF__        (0)
@@ -15,7 +15,7 @@
 #define __AUTO__            (DEBUG)
 
 // ----------------------------------
-// Debug predefine
+// 预定义 开发宏
 // ----------------------------------
 
 #define __DEBUG__       (__ON__)    /// 調試模式
