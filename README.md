@@ -1,5 +1,4 @@
 # oc-foundation
-==========
 
 Reference：(Thanks & がんばって<罗马音：ganbatte 中文近似读音：gan ba dei>)
 

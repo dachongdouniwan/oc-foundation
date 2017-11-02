@@ -84,10 +84,10 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "foundation/*.{h,m}", "foundation/**/*.{h,m}", "macro/*.h", "support/BlocksKit/**/*.{h,m}", "support/BlocksKit/*.h"
+  s.source_files  = "foundation/**/*.{h,m}", "macro/*.h", "support/**/*.{h,m}", "system/**/*.{h,m}", "ui/**/*.{h,m}"
   # s.exclude_files = "resource"
 
-  s.public_header_files = "*.h"
+  s.public_header_files = "./*.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -111,7 +111,7 @@ Pod::Spec.new do |s|
   #
 
   # s.framework  = "SomeFramework"
-  s.frameworks = "SomeFramework", "AnotherFramework"
+  s.frameworks = "Foundation", "UIKit"
 
   # s.library   = "iconv"
   # s.libraries = "iconv", "xml2"
@@ -126,6 +126,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  # s.dependency "JSONKit", "~> 1.4"
+  # s.dependency 'AFNetworking', '~> 2.3'   # 依赖关系，该项目所依赖的其他库，如果有多个需要填写多个s.dependency
 
 end
