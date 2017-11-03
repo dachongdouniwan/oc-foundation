@@ -1,25 +1,10 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import "_handler.h"
 #import "_property.h"
 #import "_pragma_push.h"
 
 // ----------------------------------
-// Source code
+// MARK: Source code
 // ----------------------------------
 
 #pragma mark -
@@ -30,12 +15,10 @@ typedef void (^ __handlerBlockType )( id object );
 
 @implementation NSObject ( BlockHandler )
 
-- (_Handler *)blockHandlerOrCreate
-{
+- (_Handler *)blockHandlerOrCreate {
     _Handler * handler = [self getAssociatedObjectForKey:"blockHandler"];
     
-    if ( nil == handler )
-    {
+    if ( nil == handler ) {
         handler = [[_Handler alloc] init];
         
         [self retainAssociatedObject:handler forKey:"blockHandler"];
@@ -44,37 +27,30 @@ typedef void (^ __handlerBlockType )( id object );
     return handler;
 }
 
-- (_Handler *)blockHandler
-{
+- (_Handler *)blockHandler {
     return [self getAssociatedObjectForKey:"blockHandler"];
 }
 
-- (void)addBlock:(id)block forName:(NSString *)name
-{
+- (void)addBlock:(id)block forName:(NSString *)name {
     _Handler * handler = [self blockHandlerOrCreate];
     
-    if ( handler )
-    {
+    if ( handler ) {
         [handler addHandler:block forName:name];
     }
 }
 
-- (void)removeBlockForName:(NSString *)name
-{
+- (void)removeBlockForName:(NSString *)name {
     _Handler * handler = [self blockHandler];
     
-    if ( handler )
-    {
+    if ( handler ) {
         [handler removeHandlerForName:name];
     }
 }
 
-- (void)removeAllBlocks
-{
+- (void)removeAllBlocks {
     _Handler * handler = [self blockHandler];
     
-    if ( handler )
-    {
+    if ( handler ) {
         [handler removeAllHandlers];
     }
     
@@ -83,36 +59,32 @@ typedef void (^ __handlerBlockType )( id object );
 
 @end
 
-#pragma mark -
+// ----------------------------------
+// MARK: -
+// ----------------------------------
 
-@implementation _Handler
-{
+@implementation _Handler {
     NSMutableDictionary * _blocks;
 }
 
-- (id)init
-{
+- (id)init {
     self = [super init];
-    if ( self )
-    {
+    if ( self ) {
         _blocks = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [_blocks removeAllObjects];
     _blocks = nil;
 }
 
-- (BOOL)trigger:(NSString *)name
-{
+- (BOOL)trigger:(NSString *)name {
     return [self trigger:name withObject:nil];
 }
 
-- (BOOL)trigger:(NSString *)name withObject:(id)object
-{
+- (BOOL)trigger:(NSString *)name withObject:(id)object {
     if ( nil == name )
         return NO;
     
@@ -124,45 +96,37 @@ typedef void (^ __handlerBlockType )( id object );
     return YES;
 }
 
-- (void)addHandler:(id)handler forName:(NSString *)name
-{
+- (void)addHandler:(id)handler forName:(NSString *)name {
     if ( nil == name )
         return;
     
-    if ( nil == handler )
-    {
+    if ( nil == handler ) {
         [_blocks removeObjectForKey:name];
-    }
-    else
-    {
+    } else {
         [_blocks setObject:handler forKey:name];
     }
 }
 
-- (void)removeHandlerForName:(NSString *)name
-{
+- (void)removeHandlerForName:(NSString *)name {
     if ( nil == name )
         return;
     
     [_blocks removeObjectForKey:name];
 }
 
-- (void)removeAllHandlers
-{
+- (void)removeAllHandlers {
     [_blocks removeAllObjects];
 }
 
 @end
 
 // ----------------------------------
-// Unit test
+// MARK: Unit test
 // ----------------------------------
-
-#pragma mark -
 
 #if __TESTING__
 
-TEST_CASE( Core, Handler )
+TEST_CASE( Foundation, Handler )
 
 DESCRIBE( before )
 {

@@ -3,19 +3,9 @@
 #import "_encoding.h"
 #import "_foundation.h"
 
-#pragma mark -
-
-/**
- Get the type from a Type-Encoding string.
- 
- @discussion See also:
- https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
- https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html
- 
- @param typeEncoding  A Type-Encoding string.
- @return The encoding type.
- */
-EncodingType __EncodingGetType(const char *typeEncoding);
+// ----------------------------------
+// MARK: C functions
+// ----------------------------------
 
 EncodingType __EncodingGetType(const char *typeEncoding) {
     char *type = (char *)typeEncoding;
@@ -95,7 +85,9 @@ EncodingType __EncodingGetType(const char *typeEncoding) {
     }
 }
 
-#pragma mark -
+// ----------------------------------
+// MARK: Source code
+// ----------------------------------
 
 @implementation _Encoding
 
@@ -107,7 +99,9 @@ EncodingType __EncodingGetType(const char *typeEncoding) {
     return NO;
 }
 
-#pragma mark - Public method
+// ----------------------------------
+// MARK: Public
+// ----------------------------------
 
 + (EncodingType)typeOfIvar:(Ivar)ivar {
     const char *typeEncoding = ivar_getTypeEncoding(ivar);
@@ -133,10 +127,9 @@ EncodingType __EncodingGetType(const char *typeEncoding) {
     return [NSString stringWithUTF8String:attribute.value];
 }
 
-#pragma mark -
-
-
-#pragma mark -
+// ----------------------------------
+// MARK: -
+// ----------------------------------
 
 + (EncodingType)typeOfAttribute:(const char *)attr {
     if ( NULL == attr ) {
@@ -387,6 +380,21 @@ EncodingType __EncodingGetType(const char *typeEncoding) {
         return YES;
     } else {
         return NO;
+    }
+}
+
++ (BOOL)isObjectClass:(Class)class {
+    BOOL flag = class_conformsToProtocol(class, @protocol(NSObject));
+    
+    if (flag) {
+        return flag;
+    } else {
+        Class superClass = class_getSuperclass(class);
+        if (!superClass) {
+            return NO;
+        } else {
+            return  [self isObjectClass:superClass];
+        }
     }
 }
 

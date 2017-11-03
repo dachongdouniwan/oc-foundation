@@ -1,18 +1,3 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import <objc/runtime.h>
 #import "_container_safe.h"
@@ -21,7 +6,7 @@
 #import "extension/NSString+Extension.h"
 
 // ----------------------------------
-// Source code
+// MARK: Source code
 // ----------------------------------
 
 #pragma mark -
@@ -239,8 +224,3 @@
 
 @end
 
-#pragma mark -
-
-@implementation _Property
-
-@end

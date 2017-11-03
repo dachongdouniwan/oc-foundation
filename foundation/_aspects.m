@@ -1,18 +1,3 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import <libkern/OSAtomic.h>
 #import <objc/runtime.h>
@@ -20,6 +5,11 @@
 
 #import "_def.h"
 #import "_aspects.h"
+#import "_property.h"
+
+// ----------------------------------
+// MARK: Type define
+// ----------------------------------
 
 // Block internals.
 typedef NS_OPTIONS(int, AspectBlockFlags) {
@@ -48,7 +38,7 @@ typedef struct _AspectBlock {
 } *AspectBlockRef;
 
 // ----------------------------------
-// Source code
+// MARK: Source code
 // ----------------------------------
 
 @interface AspectInfo : NSObject <AspectInfo>
@@ -126,23 +116,17 @@ static NSString *const AspectsMessagePrefix = @"aspects_";
 
 @implementation NSObject (Aspects)
 
-#pragma mark - Public aspects api
+#pragma mark - Public
 
-+ (id<AspectToken>)aspect_hookSelector:(SEL)selector
-                      withOptions:(AspectOptions)options
-                       usingBlock:(id)block
-                            error:(NSError **)error {
++ (id<AspectToken>)hookSelector:(SEL)selector withOptions:(AspectOptions)options usingBlock:(id)block error:(NSError **)error {
     return aspect_add((id)self, selector, options, block, error);
 }
 
-- (id<AspectToken>)aspect_hookSelector:(SEL)selector
-                      withOptions:(AspectOptions)options
-                       usingBlock:(id)block
-                            error:(NSError **)error {
+- (id<AspectToken>)hookSelector:(SEL)selector withOptions:(AspectOptions)options usingBlock:(id)block error:(NSError **)error {
     return aspect_add(self, selector, options, block, error);
 }
 
-#pragma mark - Private helper
+#pragma mark - Private
 
 static id aspect_add(id self, SEL selector, AspectOptions options, id block, NSError **error) {
     NSCParameterAssert(self);
@@ -970,3 +954,76 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
 }
 
 @end
+
+#pragma mark -
+
+#pragma mark - Observer
+
+static NSMutableSet *swizzledClasses() {
+    static dispatch_once_t onceToken;
+    static NSMutableSet *swizzledClasses = nil;
+    dispatch_once(&onceToken, ^{
+        swizzledClasses = [[NSMutableSet alloc] init];
+    });
+    
+    return swizzledClasses;
+}
+
+static void swizzleDeallocIfNeeded(Class classToSwizzle) {
+    @synchronized (swizzledClasses()) {
+        NSString *className = NSStringFromClass(classToSwizzle);
+        if ([swizzledClasses() containsObject:className]) return;
+        
+        SEL deallocSelector = sel_registerName("dealloc");
+        
+        __block void (*originalDealloc)(__unsafe_unretained id, SEL) = NULL;
+        
+        id newDealloc = ^(__unsafe_unretained id self) {
+            void (^ onWillDeallocHandler)() = [self getAssociatedObjectForKey:"onWillDeallocHandler"];
+            
+            if (onWillDeallocHandler) {
+                onWillDeallocHandler();
+            }
+            
+            if (originalDealloc == NULL) {
+                struct objc_super superInfo = {
+                    .receiver = self,
+                    .super_class = class_getSuperclass(classToSwizzle)
+                };
+                
+                void (*msgSend)(struct objc_super *, SEL) = (__typeof__(msgSend))objc_msgSendSuper;
+                msgSend(&superInfo, deallocSelector);
+            } else {
+                originalDealloc(self, deallocSelector);
+            }
+        };
+        
+        IMP newDeallocIMP = imp_implementationWithBlock(newDealloc);
+        
+        if (!class_addMethod(classToSwizzle, deallocSelector, newDeallocIMP, "v@:")) {
+            // The class already contains a method implementation.
+            Method deallocMethod = class_getInstanceMethod(classToSwizzle, deallocSelector);
+            
+            // We need to store original implementation before setting new implementation
+            // in case method is called at the time of setting.
+            originalDealloc = (__typeof__(originalDealloc))method_getImplementation(deallocMethod);
+            
+            // We need to store original implementation again, in case it just changed.
+            originalDealloc = (__typeof__(originalDealloc))method_setImplementation(deallocMethod, newDeallocIMP);
+        }
+        
+        [swizzledClasses() addObject:className];
+    }
+}
+
+@implementation NSObject ( AspectLifeCycle )
+
+- (void)onWillDealloc:(void (^)())handler {
+    [self retainAssociatedObject:handler forKey:"onWillDeallocHandler"];
+    
+    swizzleDeallocIfNeeded(self.class);
+}
+
+@end
+
+

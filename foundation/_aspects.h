@@ -1,33 +1,26 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import <Foundation/Foundation.h>
 
+// ----------------------------------
+// MARK: Extern variables
+// ----------------------------------
+
 extern NSString *const AspectErrorDomain;
 
+// ----------------------------------
+// MARK: Type define
+// ----------------------------------
+
 typedef NS_ENUM(NSUInteger, AspectErrorCode) {
-    AspectErrorSelectorBlacklisted,                   /// Selectors like release, retain, autorelease are blacklisted.
-    AspectErrorDoesNotRespondToSelector,              /// Selector could not be found.
-    AspectErrorSelectorDeallocPosition,               /// When hooking dealloc, only AspectPositionBefore is allowed.
-    AspectErrorSelectorAlreadyHookedInClassHierarchy, /// Statically hooking the same method in subclasses is not allowed.
-    AspectErrorFailedToAllocateClassPair,             /// The runtime failed creating a class pair.
-    AspectErrorMissingBlockSignature,                 /// The block misses compile time signature info and can't be called.
-    AspectErrorIncompatibleBlockSignature,            /// The block signature does not match the method or is too large.
+    AspectErrorSelectorBlacklisted,                   // Selectors like release, retain, autorelease are blacklist.
+    AspectErrorDoesNotRespondToSelector,              // Selector could not be found.
+    AspectErrorSelectorDeallocPosition,               // When hooking dealloc, only AspectPositionBefore is allowed.
+    AspectErrorSelectorAlreadyHookedInClassHierarchy, // Statically hooking the same method in subclasses is not allowed.
+    AspectErrorFailedToAllocateClassPair,             // The runtime failed creating a class pair.
+    AspectErrorMissingBlockSignature,                 // The block misses compile time signature info and can't be called.
+    AspectErrorIncompatibleBlockSignature,            // The block signature does not match the method or is too large.
     
-    AspectErrorRemoveObjectAlreadyDeallocated = 100   /// (for removing) The object hooked is already deallocated.
+    AspectErrorRemoveObjectAlreadyDeallocated = 100   // (for removing) The object hooked is already deallocated.
 };
 
 typedef NS_OPTIONS(NSUInteger, AspectOptions) {
@@ -37,6 +30,10 @@ typedef NS_OPTIONS(NSUInteger, AspectOptions) {
     
     AspectOptionAutomaticRemoval = 1 << 3 // Will remove the hook after the first execution.
 };
+
+// ----------------------------------
+// MARK: Interface
+// ----------------------------------
 
 /**
  *  Opaque Aspect Token that allows to deregister the hook.
@@ -81,18 +78,20 @@ typedef NS_OPTIONS(NSUInteger, AspectOptions) {
  *  @note Hooking static methods is not supported.
  *  @return A token which allows to later deregister the aspect.
  */
-+ (id<AspectToken>)aspect_hookSelector:(SEL)selector
-                           withOptions:(AspectOptions)options
-                            usingBlock:(id)block
-                                 error:(NSError **)error;
++ (id<AspectToken>)hookSelector:(SEL)selector withOptions:(AspectOptions)options usingBlock:(id)block error:(NSError **)error;
 
 /**
  *  Adds a block of code before/instead/after the current `selector` for a specific instance.
  */
-- (id<AspectToken>)aspect_hookSelector:(SEL)selector
-                           withOptions:(AspectOptions)options
-                            usingBlock:(id)block
-                                 error:(NSError **)error;
+- (id<AspectToken>)hookSelector:(SEL)selector withOptions:(AspectOptions)options usingBlock:(id)block error:(NSError **)error;
+
+@end
+
+#pragma mark -
+
+@interface NSObject ( AspectLifeCycle )
+
+- (void)onWillDealloc:(void (^)())handler;
 
 @end
 

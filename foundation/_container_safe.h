@@ -1,22 +1,13 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import <Foundation/Foundation.h>
 
-#pragma mark - NSObject ( SafeValueWithJSON )
+// ----------------------------------
+// Methods like safeXXXX, return nil when XXX isn't the target type.
+// ----------------------------------
+
+// ----------------------------------
+// MARK: NSObject SafeValueWithJSON
+// ----------------------------------
 
 @interface NSObject ( SafeValueWithJSON )
 
@@ -36,7 +27,9 @@
 
 @end
 
-#pragma mark - NSArray
+// ----------------------------------
+// MARK: NSArray SafeValue
+// ----------------------------------
 
 @interface NSArray ( SafeValue )
 
@@ -58,32 +51,16 @@
 
 @end
 
-#pragma mark - NSDictionary ( SafeValue )
+// ----------------------------------
+// MARK: NSDictionary SafeValue
+// ----------------------------------
 
 @interface NSDictionary ( SafeValue )
-/**
- @brief   取一个安全的NSString对象
- @return  akey对应的实例不是NSString则返回nil
- */
-- (NSString *)safeStringForKey:(id)aKey;
 
-/**
- @brief   取一个安全的NSNumber对象
- @return  akey对应的实例不是NSNumber则返回nil
- */
-- (NSNumber *)safeNumberForKey:(id)aKey;
-
-/**
- @brief   取一个安全的NSArray对象
- @return  akey对应的实例不是NSArray则返回nil
- */
-- (NSArray *)safeArrayForKey:(id)aKey;
-
-/**
- @brief   取一个安全的NSDictionary对象
- @return  akey对应的实例不是NSDictionary则返回nil
- */
-- (NSDictionary *)safeDictionaryForKey:(id)aKey;
+- (NSString *)safeStringForKey:(id)key;
+- (NSNumber *)safeNumberForKey:(id)key;
+- (NSArray *)safeArrayForKey:(id)key;
+- (NSDictionary *)safeDictionaryForKey:(id)key;
 
 @end
 
@@ -91,9 +68,9 @@
 
 @interface NSMutableDictionary ( SafeValue )
 
-- (void)safeSetObject:(id)anObject forKey:(id)aKey;
+- (void)safeSetObject:(id)object forKey:(id)key;
 
-- (NSMutableDictionary *)safeAppendObject:(id)anObject forKey:(id)aKey;
+- (NSMutableDictionary *)safeAppendObject:(id)object forKey:(id)key;
 
 @end
 

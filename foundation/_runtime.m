@@ -1,22 +1,8 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import <objc/runtime.h>
 
 #import "_runtime.h"
+#import "_pragma_push.h"
 
 #pragma mark -
 
@@ -915,3 +901,5 @@ static inline NSString *__methodName(Method m) {
 }
 
 @end
+
+#import "_pragma_pop.h"

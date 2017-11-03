@@ -504,7 +504,7 @@ static char shyNavBarManagerKey;
 + (void)load {
     static dispatch_once_t onceToken;
     
-    TODO("这里想办法避免 在load 中处理吧")
+//    TODO("这里想办法避免 在load 中处理吧")
     
     dispatch_once(&onceToken, ^{
         [self swizzleMethod:@selector(viewWillAppear:) withMethod:@selector(tly_swizzledViewWillAppear:)];

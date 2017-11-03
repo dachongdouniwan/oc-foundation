@@ -1,24 +1,10 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import "_precompile.h"
 #import "_instance.h"
+#import "_encoding.h"
 
 // ----------------------------------
-// Source code
+// MARK: Source code
 // ----------------------------------
 
 @implementation NSObject ( Instance )
@@ -96,7 +82,7 @@
             if (propertyName && !readonly) {
                 id propertyValue = [instance valueForKey:propertyName];
                 Class propertyValueClass = [propertyValue class];
-                BOOL flag = [NSObject isNSObjectClass:propertyValueClass];
+                BOOL flag = [_Encoding isObjectClass:propertyValueClass];
                 if (flag) {
                     if ([propertyValue conformsToProtocol:@protocol(NSCopying)]) {
                         NSObject *copyValue = [propertyValue copy];
@@ -118,22 +104,6 @@
     }
     
     return YES;
-}
-
-
-+ (BOOL)isNSObjectClass:(Class)clazz{
-    BOOL flag = class_conformsToProtocol(clazz, @protocol(NSObject));
-    
-    if (flag) {
-        return flag;
-    } else {
-        Class superClass = class_getSuperclass(clazz);
-        if (!superClass) {
-            return NO;
-        } else {
-            return  [NSObject isNSObjectClass:superClass];
-        }
-    }
 }
 
 @end

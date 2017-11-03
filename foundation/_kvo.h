@@ -20,8 +20,6 @@
 #pragma mark - 
 
 /**
- *  有关于kvo会发生的异常，略。
- 
  *  inspired by https://github.com/AlexIzh/objc_ext/blob/master/objc_kvo_ext/objc_kvo_ext.h
  
  *  Usage
@@ -40,40 +38,31 @@
  */
 
 #define add_observer_o(__OBJ__,__X__) \
-NSMutableDictionary * __observer_values_##__X__ = objc_getAssociatedObject(__OBJ__, "__tmp__observers_dictionary__"); \
-if (!__observer_values_##__X__) { \
-__observer_values_##__X__ = [NSMutableDictionary dictionary]; \
-objc_setAssociatedObject(__OBJ__, "__tmp__observers_dictionary__", __observer_values_##__X__, OBJC_ASSOCIATION_RETAIN_NONATOMIC); \
-} \
-BOOL __tmp_value_##__X__ = [[__observer_values_##__X__ valueForKey:[NSString stringWithFormat:@"%s", #__X__]] boolValue];\
-if (!__tmp_value_##__X__) {\
-[__observer_values_##__X__ setValue:@(YES) forKey:[NSString stringWithFormat:@"%s", #__X__]]; \
-} \
-if (!__tmp_value_##__X__)
+        NSMutableDictionary * __observer_values_##__X__ = objc_getAssociatedObject(__OBJ__, "__tmp__observers_dictionary__"); \
+        if (!__observer_values_##__X__) { \
+            __observer_values_##__X__ = [NSMutableDictionary dictionary]; \
+            objc_setAssociatedObject(__OBJ__, "__tmp__observers_dictionary__", __observer_values_##__X__, OBJC_ASSOCIATION_RETAIN_NONATOMIC); \
+        } \
+        BOOL __tmp_value_##__X__ = [[__observer_values_##__X__ valueForKey:[NSString stringWithFormat:@"%s", #__X__]] boolValue];\
+        if (!__tmp_value_##__X__) {\
+            [__observer_values_##__X__ setValue:@(YES) forKey:[NSString stringWithFormat:@"%s", #__X__]]; \
+        } \
+        if (!__tmp_value_##__X__)
 
 #define remove_observer_o(__OBJ__, __X__) \
-NSMutableDictionary * __observer_values_##__X__ = objc_getAssociatedObject(__OBJ__, "__tmp__observers_dictionary__"); \
-if (!__observer_values_##__X__) { \
-__observer_values_##__X__ = [NSMutableDictionary dictionary]; \
-objc_setAssociatedObject(__OBJ__, "__tmp__observers_dictionary__", __observer_values_##__X__, OBJC_ASSOCIATION_RETAIN_NONATOMIC); \
-} \
-BOOL __tmp_value_##__X__ = [[__observer_values_##__X__ valueForKey:[NSString stringWithFormat:@"%s", #__X__]] boolValue];\
-if (__tmp_value_##__X__) {\
-[__observer_values_##__X__ setValue:@(NO) forKey:[NSString stringWithFormat:@"%s", #__X__]]; \
-} \
-if (__tmp_value_##__X__)
+        NSMutableDictionary * __observer_values_##__X__ = objc_getAssociatedObject(__OBJ__, "__tmp__observers_dictionary__"); \
+        if (!__observer_values_##__X__) { \
+                __observer_values_##__X__ = [NSMutableDictionary dictionary]; \
+            objc_setAssociatedObject(__OBJ__, "__tmp__observers_dictionary__", __observer_values_##__X__, OBJC_ASSOCIATION_RETAIN_NONATOMIC); \
+        } \
+        BOOL __tmp_value_##__X__ = [[__observer_values_##__X__ valueForKey:[NSString stringWithFormat:@"%s", #__X__]] boolValue];\
+        if (__tmp_value_##__X__) {\
+            [__observer_values_##__X__ setValue:@(NO) forKey:[NSString stringWithFormat:@"%s", #__X__]]; \
+        } \
+        if (__tmp_value_##__X__)
 
 #define add_observer(__X__) add_observer_o(self,__X__)
 #define remove_observer(__X__) remove_observer_o(self, __X__)
-
-#pragma mark - Observer
-
-@interface NSObject ( Observer )
-
-- (void)onWillDealloc:(void (^)())handler;
-
-@end
-
 
 #pragma mark -
 
@@ -110,3 +99,8 @@ if (__tmp_value_##__X__)
 - (void)observeNotification:(NSString *)name block:(void (^)(NSNotification *notification))block;
 
 @end
+
+#pragma mark -
+
+
+

@@ -1,25 +1,10 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import "_precompile.h"
 #import "_property.h"
 #import "_singleton.h"
 
 // ----------------------------------
-// Macros
+// MARK: Macros
 // ----------------------------------
 
 #pragma mark -
@@ -80,7 +65,7 @@
         dispatch_after( dispatch_time( DISPATCH_TIME_NOW, seconds * 1ull * NSEC_PER_SEC ), [_Queue sharedInstance].serial, block ); \
 
 // ----------------------------------
-// Class code
+// MARK: Class code
 // ----------------------------------
 
 #pragma mark -

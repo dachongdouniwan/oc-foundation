@@ -1,23 +1,8 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import <Foundation/Foundation.h>
 
 // ----------------------------------
-// Macros
+// MARK: Macros
 // ----------------------------------
 
 #pragma mark -
@@ -53,7 +38,7 @@ typedef void ( *ImpFuncType )( id a, SEL b, void * c );
 #define	callChainR( target, name )			[target performCallChainWithName:@(#name) reversed:YES]
 
 // ----------------------------------
-// Class code
+// MARK: Class code
 // ----------------------------------
 
 #pragma mark -

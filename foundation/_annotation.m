@@ -1,10 +1,3 @@
-//
-//  _annotation.m
-//  kata
-//
-//  Created by fallen.ink on 12/03/2017.
-//  Copyright © 2017 fallenink. All rights reserved.
-//
 
 #import "_annotation.h"
 #import "_thead.h"
@@ -16,7 +9,7 @@
 #import <objc/message.h>
 
 // ----------------------------------
-// C code
+// MARK: C code
 // ----------------------------------
 
 static NSArray<NSString *>* __variablesAt(char *section) {
@@ -55,7 +48,7 @@ static NSArray<NSString *>* __variablesAt(char *section) {
 }
 
 // ----------------------------------
-// Source code
+// MARK: Source code
 // ----------------------------------
 
 @implementation _Annotation

@@ -26,6 +26,32 @@
     // do nothing.
 }
 
+#pragma mark -
+
++ (CGSize)cellSize {
+    return CGSizeZero;
+}
+
+- (CGSize)cellSize {
+    return self.class.cellSize;
+}
+
++ (CGSize)cellSizeWithModel:(id)model {
+    return self.cellSize;
+}
+
++ (CGFloat)cellHeight {
+    return 0.f;
+}
+
+- (CGFloat)cellHeight {
+    return self.class.cellHeight;
+}
+
++ (CGFloat)cellHeightWithModel:(id)model {
+    return self.cellHeight;
+}
+
 #pragma mark - On UITableView
 
 + (void)registerOnNib:(UICollectionView *)collectionView{

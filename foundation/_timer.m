@@ -1,18 +1,3 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 /**
  *  inspired by https://github.com/mindsnacks/MSWeakTimer, https://github.com/rnapier/RNTimer
@@ -131,7 +116,7 @@
         self.userInfo = userInfo;
         self.repeats = repeats;
         
-        TODO("未测试")
+//        TODO("未测试")
         
         NSString *privateQueueName = [NSString stringWithFormat:@"com.fallenink._weaktimer.%p", self];
         self.privateSerialQueue = dispatch_queue_create([privateQueueName cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);

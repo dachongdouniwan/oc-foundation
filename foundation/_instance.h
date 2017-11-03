@@ -1,23 +1,9 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import <Foundation/Foundation.h>
 
 // ----------------------------------
-// Macros
+// MARK: Macros
+
 // @brief __type 不能为指针类型
 // ----------------------------------
 
@@ -38,7 +24,7 @@
         }
 
 // ----------------------------------
-// Class code
+// MARK: Class code
 // ----------------------------------
 
 #pragma mark - 
@@ -53,7 +39,7 @@
  *
  *  @param instance 目标对象
  *
- *  @return BOOL—YES:复制成功, NO:复制失败
+ *  @return YES:复制成功, NO:复制失败
  */
 - (BOOL)easyShallowCopy:(NSObject *)instance;
 
@@ -62,7 +48,7 @@
  *
  *  @param instance 目标对象
  *
- *  @return BOOL—YES:复制成功, NO:复制失败
+ *  @return YES:复制成功, NO:复制失败
  */
 - (BOOL)easyDeepCopy:(NSObject *)instance;
 

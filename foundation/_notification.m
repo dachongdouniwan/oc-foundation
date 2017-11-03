@@ -1,29 +1,14 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import "_pragma_push.h"
 #import "_precompile.h"
 #import "_notification.h"
 #import "_runtime.h"
 
-#pragma mark -
+// ----------------------------------
+// MARK: -
+// ----------------------------------
 
 @implementation NSNotification ( Extension )
-
-#pragma mark -
 
 - (BOOL)is:(NSString *)name {
     return [self.name isEqualToString:name];
@@ -39,7 +24,9 @@
 
 @end
 
-#pragma mark -
+// ----------------------------------
+// MARK: -
+// ----------------------------------
 
 @implementation NSObject ( NotificationResponder )
 
@@ -51,41 +38,40 @@
                                                     name:notificationName
                                                   object:nil];
     
-    // 没必要带来这样的学习成本
-//    NSArray * array = [notificationName componentsSeparatedByString:@"."];
-//    if ( array && array.count > 1 ) {
-//        //		NSString * prefix = (NSString *)[array objectAtIndex:0];
-//        NSString * clazz = (NSString *)[array objectAtIndex:1];
-//        NSString * name = (NSString *)[array objectAtIndex:2];
-//        
-//        {
-//            NSString * selectorName;
-//            SEL selector;
-//            
-//            selectorName = [NSString stringWithFormat:@"handleNotification_%@_%@:", clazz, name];
-//            selector = NSSelectorFromString(selectorName);
-//            
-//            if ( [self respondsToSelector:selector] ) {
-//                [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                         selector:selector
-//                                                             name:notificationName
-//                                                           object:nil];
-//                return;
-//            }
-//            
-//            selectorName = [NSString stringWithFormat:@"handleNotification_%@:", clazz];
-//            selector = NSSelectorFromString(selectorName);
-//            
-//            if ( [self respondsToSelector:selector] )
-//            {
-//                [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                         selector:selector
-//                                                             name:notificationName
-//                                                           object:nil];
-//                return;
-//            }
-//        }
-//    }
+    NSArray * array = [notificationName componentsSeparatedByString:@"."];
+    if ( array && array.count > 1 ) {
+        //        NSString * prefix = (NSString *)[array objectAtIndex:0];
+        NSString * clazz = (NSString *)[array objectAtIndex:1];
+        NSString * name = (NSString *)[array objectAtIndex:2];
+        
+        {
+            NSString * selectorName;
+            SEL selector;
+            
+            selectorName = [NSString stringWithFormat:@"handleNotification_%@_%@:", clazz, name];
+            selector = NSSelectorFromString(selectorName);
+            
+            if ( [self respondsToSelector:selector] ) {
+                [[NSNotificationCenter defaultCenter] addObserver:self
+                                                         selector:selector
+                                                             name:notificationName
+                                                           object:nil];
+                return;
+            }
+            
+            selectorName = [NSString stringWithFormat:@"handleNotification_%@:", clazz];
+            selector = NSSelectorFromString(selectorName);
+            
+            if ( [self respondsToSelector:selector] )
+            {
+                [[NSNotificationCenter defaultCenter] addObserver:self
+                                                         selector:selector
+                                                             name:notificationName
+                                                           object:nil];
+                return;
+            }
+        }
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleNotification:)

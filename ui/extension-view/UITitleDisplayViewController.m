@@ -185,7 +185,7 @@ static CGFloat kTitleViewHeight = 50;
         newTagV.translatesAutoresizingMaskIntoConstraints = NO;
         newTagV.text = @"NEW";
         float newTagVHeight = newTagV.font.lineHeight + 2;
-        float newTagVWidth = [newTagV.text textSizeWithFont:newTagV.font constrainedToSize:CGSizeMake(MAXFLOAT, [newTagV.font lineHeight]) lineBreakMode:NSLineBreakByWordWrapping].width + 4;
+        float newTagVWidth = [newTagV.text sizeWithFont:newTagV.font constrainedToSize:CGSizeMake(MAXFLOAT, [newTagV.font lineHeight]) lineBreakMode:NSLineBreakByWordWrapping].width + 4;
         newTagV.layer.cornerRadius = newTagVHeight * 0.5;
         newTagV.layer.masksToBounds = YES;
         [btn addSubview:newTagV];
@@ -387,7 +387,7 @@ static CGFloat kTitleViewHeight = 50;
         }else{ /* >0 */
             reddotLabel.hidden = NO;
             reddotLabel.text = [NSString stringWithFormat:@"%ld",count];
-            float lineWidth = [reddotLabel.text textSizeWithFont:reddotLabel.font constrainedToSize:CGSizeMake(MAXFLOAT, [reddotLabel.font lineHeight]) lineBreakMode:NSLineBreakByWordWrapping].width;
+            float lineWidth = [reddotLabel.text sizeWithFont:reddotLabel.font constrainedToSize:CGSizeMake(MAXFLOAT, [reddotLabel.font lineHeight]) lineBreakMode:NSLineBreakByWordWrapping].width;
             
             CGSize redSize = CGSizeMake(lineWidth, [reddotLabel.font lineHeight]);
             [reddotLabel mas_updateConstraints:^(MASConstraintMaker *make) {

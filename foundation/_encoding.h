@@ -2,14 +2,14 @@
 #import <Foundation/Foundation.h>
 
 /**
- Get the type from a Type-Encoding string.
- 
- @discussion See also:
- https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
- https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html
- 
- @param typeEncoding  A Type-Encoding string.
- @return The encoding type.
+ *  Get the type from a Type-Encoding string.
+ *
+ *  @discussion See also:
+ *  https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+ *  https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html
+ *
+ *  @param typeEncoding  A Type-Encoding string.
+ *  @return The encoding type.
  */
 
 #pragma mark -
@@ -113,6 +113,8 @@ typedef enum {
 + (BOOL)isAtomClassName:(const char *)clazz;
 + (BOOL)isAtomClass:(Class)clazz;
 + (BOOL)isAtomObject:(id)obj;
+
++ (BOOL)isObjectClass:(Class)class;
 
 @end
 

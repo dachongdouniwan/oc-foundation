@@ -115,7 +115,7 @@
 }
 
 - (int)lineCountWithLimitWidth:(CGFloat)width {
-    int lineNum = [self.text textLineNumWithFont:self.font constrainedToSize:CGSizeMake(width, MAXFLOAT)];
+    int lineNum = [self.text linesWithFont:self.font constrainedToWidth:width];
     return lineNum;
 }
 

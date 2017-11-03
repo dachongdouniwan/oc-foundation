@@ -280,7 +280,7 @@ static CGFloat kNavigationBarDefaultHeight    = 0.f;
     UIColor *navigationBarTintColor = [[[UINavigationBar appearance] tintColor] copy];
     NSString *leftTitle = name;
     UIFont *titleLabelFont = font;
-    CGSize titleSize = [leftTitle textSizeWithFont:titleLabelFont constrainedToSize:CGSizeMake(100, 1000) lineBreakMode:NSLineBreakByWordWrapping];  //一行宽度最大为 100 高度1000
+    CGSize titleSize = [leftTitle sizeWithFont:titleLabelFont constrainedToSize:CGSizeMake(100, 1000) lineBreakMode:NSLineBreakByWordWrapping];  //一行宽度最大为 100 高度1000
     UIButton *t = [UIButton buttonWithType:UIButtonTypeCustom];
     t.titleLabel.font = titleLabelFont;
     [t setFrame:CGRectMake(0, 0, titleSize.width, self.navigationController.navigationBar.frame.size.height)];
@@ -350,7 +350,7 @@ static CGFloat kNavigationBarDefaultHeight    = 0.f;
     // 右边按钮
     NSString *rightTitle = name;
     UIFont *titleLabelFont = font;
-    CGSize titleSize = [rightTitle textSizeWithFont:titleLabelFont constrainedToSize:CGSizeMake(100, 1000) lineBreakMode:NSLineBreakByWordWrapping];  //一行宽度最大为 100 高度1000
+    CGSize titleSize = [rightTitle sizeWithFont:titleLabelFont constrainedToSize:CGSizeMake(100, 1000) lineBreakMode:NSLineBreakByWordWrapping];  //一行宽度最大为 100 高度1000
     UIButton *t = [UIButton buttonWithType:UIButtonTypeCustom];
     t.titleLabel.font = titleLabelFont;
     [t setFrame:CGRectMake(0, 0, titleSize.width, self.navigationController.navigationBar.frame.size.height)];

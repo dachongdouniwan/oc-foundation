@@ -1,38 +1,25 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import "_precompile.h"
 #import "_container_safe.h"
 
-#pragma mark - NSObject (SafeValueWithJSON)
+// ----------------------------------
+// MARK: NSObject SafeValueWithJSON
+// ----------------------------------
 
-@implementation NSObject (SafeValueWithJSON)
+@implementation NSObject ( SafeValueWithJSON )
 
 - (id)safeValueFromJSON {
     return self == [NSNull null] ? nil : self;
 }
 
-- (id)safeObjectWithClass:(Class)aClass {
-    if ([self isKindOfClass:aClass]) {
+- (id)safeObjectWithClass:(Class)class {
+    if ([self isKindOfClass:class]) {
         return self;
     } else {
         NSAssert(NO,
                  @"Object class not matched, self is %@, should be %@",
                  NSStringFromClass([self class]),
-                 NSStringFromClass(aClass));
+                 NSStringFromClass(class));
         return nil;
     }
 }
@@ -59,9 +46,11 @@
 
 @end
 
-#pragma mark - NSArray
+// ----------------------------------
+// MARK: NSArray
+// ----------------------------------
 
-@implementation NSArray (SafeValue)
+@implementation NSArray ( SafeValue )
 
 - (NSString *)safeStringAtIndex:(NSUInteger)index {
     return [[self objectAtIndexIfIndexInBounds:index] safeString];
@@ -133,12 +122,14 @@
 
 @end
 
-#pragma mark - NSDictionary ( SafeValue )
+// ----------------------------------
+// MARK: NSDictionary SafeValue
+// ----------------------------------
 
 @implementation NSDictionary ( SafeValue )
 
-- (NSString *)safeStringForKey:(id)aKey {
-    id obj = [self objectForKey:aKey];
+- (NSString *)safeStringForKey:(id)key {
+    id obj = [self objectForKey:key];
     
     if (is_empty(obj)) {
         return nil;
@@ -147,8 +138,8 @@
     }
 }
 
-- (NSNumber *)safeNumberForKey:(id)aKey {
-    id obj = [self objectForKey:aKey];
+- (NSNumber *)safeNumberForKey:(id)key {
+    id obj = [self objectForKey:key];
     
     if (is_empty(obj)) {
         return nil;
@@ -157,8 +148,8 @@
     }
 }
 
-- (NSArray *)safeArrayForKey:(id)aKey {
-    id obj = [self objectForKey:aKey];
+- (NSArray *)safeArrayForKey:(id)key {
+    id obj = [self objectForKey:key];
     
     if (is_empty(obj)) {
         return nil;
@@ -167,8 +158,8 @@
     }
 }
 
-- (NSDictionary *)safeDictionaryForKey:(id)aKey {
-    id obj = [self objectForKey:aKey];
+- (NSDictionary *)safeDictionaryForKey:(id)key {
+    id obj = [self objectForKey:key];
     
     if (is_empty(obj)) {
         return nil;
@@ -179,7 +170,9 @@
 
 @end
 
-#pragma mark - NSMutableDictionary
+// ----------------------------------
+// MARK: NSMutableDictionary
+// ----------------------------------
 
 @implementation NSMutableDictionary ( SafeValue )
 
