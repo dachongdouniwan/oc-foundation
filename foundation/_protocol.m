@@ -149,5 +149,6 @@ __attribute__((constructor)) static void _pk_extension_inject_entry(void) {
     
     free(allClasses);
     free(allExtendedProtocols);
-    extendedProtcolCount = 0, extendedProtcolCapacity = 0;
+    extendedProtcolCount = 0;
+    extendedProtcolCapacity = 0;
 }
