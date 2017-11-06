@@ -1,18 +1,3 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
@@ -35,28 +20,28 @@
  3. 复杂逻辑用多层block嵌套实现，导致调试困难
  */
 
-typedef void(^ Block)(void);
-typedef void(^ BlockBlock)(Block block);
-typedef void(^ BOOLBlock)(BOOL b);
-typedef void(^ ObjectBlock)(id obj);
-typedef void(^ ArrayBlock)(NSArray *array);
-typedef void(^ MutableArrayBlock)(NSMutableArray *array);
-typedef void(^ DictionaryBlock)(NSDictionary *dic);
-typedef void(^ ErrorBlock)(NSError *error);
-typedef void(^ IndexBlock)(NSInteger index);
-typedef void(^ ListItemBlock) (NSInteger index, id param);
-typedef void(^ FloatBlock)(CGFloat afloat);
-typedef void(^ StringBlock)(NSString *str);
-typedef void(^ ImageBlock)(UIImage *image);
-typedef void(^ ProgressBlock)(NSProgress *progress);
-typedef void(^ PercentBlock)(double percent); // 0~100
+typedef void(^ Block)( void );
+typedef void(^ BlockBlock)( _Nullable Block block );
+typedef void(^ BOOLBlock)( BOOL b );
+typedef void(^ ObjectBlock)( _Nullable id obj );
+typedef void(^ ArrayBlock)( NSArray * _Nullable array );
+typedef void(^ MutableArrayBlock)( NSMutableArray * _Nullable array );
+typedef void(^ DictionaryBlock)( NSDictionary *_Nullable dic );
+typedef void(^ ErrorBlock)( NSError * _Nullable error );
+typedef void(^ IndexBlock)( NSInteger index );
+typedef void(^ ListItemBlock)( NSInteger index, id _Nullable param );
+typedef void(^ FloatBlock)( CGFloat afloat );
+typedef void(^ StringBlock)( NSString * _Nullable str );
+typedef void(^ ImageBlock)( UIImage * _Nullable image );
+typedef void(^ ProgressBlock)( NSProgress * _Nullable progress );
+typedef void(^ PercentBlock)( double percent); // 0~100
 
-typedef void(^ Event)(id event, NSInteger type, id object);
+typedef void(^ Event)( id _Nullable event, NSInteger type, id _Nullable object );
 
-typedef void(^ CancelBlock)(id viewController);
-typedef void(^ FinishedBlock)(id viewController, id object);
+typedef void(^ CancelBlock)( id _Nullable viewController );
+typedef void(^ FinishedBlock)( id _Nullable viewController, id _Nullable object );
 
-typedef void(^ SendRequestAndResendRequestBlock)(id sendBlock, id resendBlock);
+typedef void(^ SendRequestAndResendRequestBlock)( id _Nullable sendBlock, id _Nullable resendBlock);
 
 /*
  * 结构定义
