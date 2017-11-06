@@ -87,4 +87,7 @@ static inline BOOL is_empty(id thing) {
 #undef  invoke_nullable_block
 #define invoke_nullable_block( _block_, ... ) { if (_block_) _block_(__VA_ARGS__); }
 
+#undef  selectorify
+#define selectorify( _code_ ) NSSelectorFromString( @#_code_ )
+
 #endif /* _ocdef_h */

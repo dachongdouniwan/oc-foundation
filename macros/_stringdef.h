@@ -1,21 +1,20 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
 
 #ifndef _stringdef_h
 #define _stringdef_h
+
+// inspired by https://github.com/ObornJung/OBFoundationLib/blob/master/OBFoundationLib/Macro/OBEncodeMacro.h
+#define stringify(string)                @#string
+
+/**
+ *  字符串拼接
+ *
+ *  @param _str_
+ *  @param _cat_
+ *
+ *  @return 拼接结果
+ */
+#define string_concat( _str_, _cat_ )    (_str_ _cat_)
+#define string_concat_3( _str1_, _str2_, _str3_ ) (_str1_ _str2_ _str3_)
 
 /**
  *  字符串是否为空
