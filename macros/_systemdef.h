@@ -1,20 +1,3 @@
-//
-//     ____              _____    _____    _____
-//    / ___\   /\ /\     \_   \   \_  _\  /\  __\
-//    \ \     / / \ \     / /\/    / /    \ \  _\_
-//  /\_\ \    \ \_/ /  /\/ /_     / /      \ \____\
-//  \____/     \___/   \____/    /__|       \/____/
-//
-//	Copyright BinaryArtists development team and other contributors
-//
-//	https://github.com/BinaryArtists/suite.great
-//
-//	Free to use, prefer to discuss!
-//
-//  Welcome!
-//
-// The macro is inspired from:
-//     http://stackoverflow.com/questions/3339722/check-iphone-ios-version
 
 /*
  *  System Versioning Preprocessor Macros
@@ -30,6 +13,12 @@
 #define system_version_less_than( _version_ )                 ([[[UIDevice currentDevice] systemVersion] compare:_version_ options:NSNumericSearch] == NSOrderedAscending)
 
 #define system_version_less_than_or_equal_to( _version_ )     ([[[UIDevice currentDevice] systemVersion] compare:_version_ options:NSNumericSearch] != NSOrderedDescending)
+
+// 系统版本 常量宏 定义
+
+#define system_version_iOS8_or_later system_version_greater_than_or_equal_to(@"8.0")
+#define system_version_iOS9_or_later system_version_greater_than_or_equal_to(@"9.0")
+#define system_version_iOS10_or_later system_version_greater_than_or_equal_to(@"10.0")
 
 /*
    Usage sample:
