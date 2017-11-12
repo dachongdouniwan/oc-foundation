@@ -15,25 +15,25 @@
 #define classnameof_Class( _Class_ )    NSStringFromClass( _Class_ )
 
 /**
- 从 代码串 转换为 Class
- 
- - returns: Class
+ *  @brief 从 代码串 转换为 Class
+ *
+ *  - returns: Class
  */
 #undef  classof // classofname
 #define classof( x )		NSClassFromString(@ #x)
 
 /**
- 从 字符串 转换为 Class
- 
- - returns: Class
+ *  @brief 从 字符串 转换为 Class
+ *
+ *  - returns: Class
  */
 #undef  classify
 #define classify( _classname_of_str_ ) NSClassFromString( _classname_of_str_ )
 
 /**
- 从 代码串 生成 实例
- 
- - returns: 实例
+ *  @brief 从 代码串 生成 实例
+ *
+ *  - returns: 实例
  */
 #undef  instanceof
 #define instanceof( x )	[[NSClassFromString(@ #x) alloc] init]
@@ -63,7 +63,7 @@ void dumpClass(Class cls);
 @interface NSObject ( Runtime )
 
 /**
- *  Get all classes those are loaded
+ *  @brief Get all classes those are loaded
  *
  *  @return should be free after use.
  */
@@ -93,59 +93,75 @@ void dumpClass(Class cls);
 - (BOOL)hasPropertyForKey:(NSString *)key;
 
 /**
- Check whether the receiver implements or inherits a specified method up to and exluding a particular class in hierarchy.
- 
- @param selector A selector that identifies a method.
- @param stopClass A final super class to stop quering (excluding it).
- @return YES if one of super classes in hierarchy responds a specified selector.
+ *  @brief Check whether the receiver implements or inherits a specified method up to and exluding a particular class in hierarchy.
+ *
+ *  @param selector A selector that identifies a method.
+ *  @param stopClass A final super class to stop quering (excluding it).
+ *  @return YES if one of super classes in hierarchy responds a specified selector.
  */
 - (BOOL)respondsToSelector:(SEL)selector untilClass:(Class)stopClass;
 
 /**
- Check whether a superclass implements or inherits a specified method.
- 
- @param selector A selector that identifies a method.
- @return YES if one of super classes in hierarchy responds a specified selector.
+ *  @brief Check whether a superclass implements or inherits a specified method.
+ *
+ *  @param selector A selector that identifies a method.
+ *  @return YES if one of super classes in hierarchy responds a specified selector.
  */
 - (BOOL)superRespondsToSelector:(SEL)selector;
 
 /**
- Check whether a superclass implements or inherits a specified method.
- 
- @param selector A selector that identifies a method.
- @param stopClass A final super class to stop quering (excluding it).
- @return YES if one of super classes in hierarchy responds a specified selector.
+ *  @brief Check whether a superclass implements or inherits a specified method.
+ *
+ *  @param selector A selector that identifies a method.
+ *  @param stopClass A final super class to stop quering (excluding it).
+ *  @return YES if one of super classes in hierarchy responds a specified selector.
  */
 - (BOOL)superRespondsToSelector:(SEL)selector untilClass:(Class)stopClass;
 
 /**
- Check whether the receiver's instances implement or inherit a specified method up to and exluding a particular class in hierarchy.
- 
- @param selector A selector that identifies a method.
- @param stopClass A final super class to stop quering (excluding it).
- @return YES if one of super classes in hierarchy responds a specified selector.
+ *  @brief Check whether the receiver's instances implement or inherit a specified method up to and exluding a particular class in hierarchy.
+ *
+ *  @param selector A selector that identifies a method.
+ *  @param stopClass A final super class to stop quering (excluding it).
+ *  @return YES if one of super classes in hierarchy responds a specified selector.
+ *
  */
 + (BOOL)instancesRespondToSelector:(SEL)selector untilClass:(Class)stopClass;
 
+/**
+ *  @brief perform a selector take care of selector not existing.
+ */
++ (id)touchSelector:(SEL)selector;
+- (id)touchSelector:(SEL)selector;
+
 // inspired by CBExtension
-/*! 该对象所遵循的协议 */
+
+/**
+ *  @brief 该对象所遵循的协议
+ */
 - (NSArray *)conformedProtocols;
 - (NSDictionary *)protocols;
 + (NSDictionary *)protocols;
 + (NSArray *)classesWithProtocolName:(NSString *)protocolName;
 
-/*! 返回对象的所有 ivar */
+/**
+ *  @brief 返回对象的所有 ivar
+ */
 - (NSArray *)allIvars;
 - (BOOL)hasIvarForKey:(NSString *)key;
 
-/*! 以 NSString 描述的类名 */
+/**
+ *  @brief 以 NSString 描述的类名
+ */
 - (NSString *)className;
 + (NSString *)className;
 
 - (NSString *)superClassName;
 + (NSString *)superClassName;
 
-/*! 所有父类 */
+/**
+ *  @brief 所有父类
+ */
 - (NSArray *)parents;
 
 @end

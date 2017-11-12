@@ -44,7 +44,7 @@
 #define is_method_overrided( _subclass_ , _class_ , _selector_ ) [_subclass_ instanceMethodForSelector:_selector_] != [_class_ instanceMethodForSelector:_selector_]
 
 // 判断某个方法是否实现
-#define is_method_implemented( _object_, _method_ ) ([_object_ respondsToSelector:@selector(_method_)] && [_object_ performSelector:@selector(_method_)])
+#define is_method_implemented( _object_, _method_ ) ([_object_ respondsToSelector:@selector(_method_)])
 
 // 判断某个协议是否被实现
 #define is_protocol_implemented( _instance_, _protocol_ ) [_instance_ conformsToProtocol:@protocol(_protocol_)]

@@ -364,6 +364,28 @@ void dumpClass(Class cls) {
     return block(self.class, selector, stopClass);
 }
 
++ (id)touchSelector:(SEL)selector {
+    id obj = nil;
+    if([self respondsToSelector:selector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        obj = [self performSelector:selector];
+#pragma clang diagnostic pop
+    }
+    return obj;
+}
+
+- (id)touchSelector:(SEL)selector {
+    id obj = nil;
+    if([self respondsToSelector:selector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        obj = [self performSelector:selector];
+#pragma clang diagnostic pop
+    }
+    return obj;
+}
+
 #pragma mark - 
 
 - (NSArray *)propertyKeys {
