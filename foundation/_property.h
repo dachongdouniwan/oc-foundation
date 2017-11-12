@@ -186,6 +186,12 @@
         - (type)name { return [self getAssociatedObjectForKey:#name]; } \
         - (void)setName:(type)obj { [self attr##AssociatedObject:obj forKey:#name]; }
 
+#define def_prop_cate_assign( type, name, setName ) \
+        def_prop_custom( type, name, setName, assign )
+
+#define def_prop_cate_strong( type, name, setName ) \
+        def_prop_custom( type, name, setName, retain )
+
 #define def_prop_custom_block( type, name, setName, attr, getter_code_block, setter_code_block) \
         dynamic name; \
         - (type)name { if (getter_code_block) getter_code_block(); return [self getAssociatedObjectForKey:#name]; } \

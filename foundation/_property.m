@@ -107,21 +107,20 @@
 }
 
 - (BOOL)hasAssociatedObjectForKey:(const char *)key {
-    const char * propName = key; // [[NSString stringWithFormat:@"%@.%s", NSStringFromClass([self class]), key] UTF8String];
-    
+    const char * propName = key;
     id currValue = objc_getAssociatedObject( self, propName );
     return currValue != nil;
 }
 
 - (id)getAssociatedObjectForKey:(const char *)key {
-    const char * propName = key; // [[NSString stringWithFormat:@"%@.%s", NSStringFromClass([self class]), key] UTF8String];
+    const char * propName = key;
     
     id currValue = objc_getAssociatedObject( self, propName );
     return currValue;
 }
 
 - (id)copyAssociatedObject:(id)obj forKey:(const char *)key {
-    const char * propName = key; // [[NSString stringWithFormat:@"%@.%s", NSStringFromClass([self class]), key] UTF8String];
+    const char * propName = key;
     
     id oldValue = objc_getAssociatedObject( self, propName );
     objc_setAssociatedObject( self, propName, obj, OBJC_ASSOCIATION_COPY );
@@ -129,15 +128,14 @@
 }
 
 - (id)retainAssociatedObject:(id)obj forKey:(const char *)key; {
-    const char * propName = key; // [[NSString stringWithFormat:@"%@.%s", NSStringFromClass([self class]), key] UTF8String];
-    
+    const char * propName = key;
     id oldValue = objc_getAssociatedObject( self, propName );
     objc_setAssociatedObject( self, propName, obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC );
     return oldValue;
 }
 
 - (id)assignAssociatedObject:(id)obj forKey:(const char *)key {
-    const char * propName = key; // [[NSString stringWithFormat:@"%@.%s", NSStringFromClass([self class]), key] UTF8String];
+    const char * propName = key;
     
     id oldValue = objc_getAssociatedObject( self, propName );
     objc_setAssociatedObject( self, propName, obj, OBJC_ASSOCIATION_ASSIGN );
@@ -149,7 +147,7 @@
 }
 
 - (void)removeAssociatedObjectForKey:(const char *)key {
-    const char * propName = key; // [[NSString stringWithFormat:@"%@.%s", NSStringFromClass([self class]), key] UTF8String];
+    const char * propName = key;
     
     objc_setAssociatedObject( self, propName, nil, OBJC_ASSOCIATION_ASSIGN );
 }

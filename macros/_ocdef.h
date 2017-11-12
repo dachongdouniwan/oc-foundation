@@ -44,7 +44,7 @@
 #define is_method_overrided( _subclass_ , _class_ , _selector_ ) [_subclass_ instanceMethodForSelector:_selector_] != [_class_ instanceMethodForSelector:_selector_]
 
 // 判断某个方法是否实现
-#define is_method_implemented( _instance, _method_ ) [_instance respondsToSelector:@selector(_method_)]
+#define is_method_implemented( _object_, _method_ ) ([_object_ respondsToSelector:@selector(_method_)] && [_object_ performSelector:@selector(_method_)])
 
 // 判断某个协议是否被实现
 #define is_protocol_implemented( _instance_, _protocol_ ) [_instance_ conformsToProtocol:@protocol(_protocol_)]
@@ -58,7 +58,8 @@
 // 判断对象是否null
 static inline BOOL is_null(id thing) {
     return thing == nil ||
-    ([thing isEqual:[NSNull null]]);
+    ([thing isEqual:[NSNull null]]) ||
+    ([thing isKindOfClass:[NSNull class]]);
 }
 
 // 判断任何容器是否为空
@@ -66,15 +67,18 @@ static inline BOOL is_null(id thing) {
 static inline BOOL is_empty(id thing) {
     return thing == nil ||
     ([thing isEqual:[NSNull null]]) ||
+    ([thing isKindOfClass:[NSNull class]]) ||
     ([thing respondsToSelector:@selector(length)] && [(NSData *)thing length] == 0) ||
     ([thing respondsToSelector:@selector(count)]  && [(NSArray *)thing count] == 0);
 }
 
 #define return_if( _exp_ ) if (_exp_) { return; }
 
+// 从 String 到 NSURL
 #undef  url_with_string
 #define url_with_string( _str_ ) [NSURL URLWithString:_str_]
 
+// 从 String.filePath 到 NSURL
 #undef  url_with_filepath
 #define url_with_filepath( _path_ ) [NSURL fileURLWithPath:_path_]
 
@@ -89,5 +93,19 @@ static inline BOOL is_empty(id thing) {
 
 #undef  selectorify
 #define selectorify( _code_ ) NSSelectorFromString( @#_code_ )
+
+// 类型转换：从 id 到 NSObject
+
+#undef  objectype
+#define objectype( _val_ ) ((NSObject *)_val_)
+
+#undef  stringtype
+#define stringtype( _val_ ) ((NSString *)_val_)
+
+#undef  arraytype
+#define arraytype( _val_ ) ((NSArray *)_val_)
+
+#undef  dictionarytype
+#define dictionarytype( _val_ ) ((NSDictionary *)_val_)
 
 #endif /* _ocdef_h */
