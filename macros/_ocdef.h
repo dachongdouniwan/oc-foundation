@@ -18,6 +18,9 @@
 #ifndef _ocdef_h
 #define _ocdef_h
 
+// weak, 自动变量为 '_'
+#define weakly( _val_ ) __unused __weak typeof(_val_) _ = _val_;
+
 // 调试代码块
 #ifdef DEBUG
 
